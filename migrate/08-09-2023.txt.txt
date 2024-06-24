@@ -1,0 +1,1 @@
+php artisan migrate:refresh --path=/database/migrations/2023_08_03_134135_create_branch_table.php

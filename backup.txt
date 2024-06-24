@@ -1,0 +1,52 @@
+Function store backup
+
+    public function store(Request $request)
+    {
+        // dd($request);
+        // $validated = $request->validated();
+        $details = array(
+            "item_type" => $request->item_type, 
+            "uom_id" => $request->uom_id,
+            "product_name" => $request->product_name,
+            "product_price" => $request->product_price,
+            "product_desc" => $request->product_desc,
+            "remarks" => $request->remarks, 
+            "brand_id" => $request->brand_id,
+            "category_id" => $request->category_id,
+            "series_id" => $request->series_id,
+            "resolution_id" => $request->resolution_id,
+            "status" => 1,
+            "created_by" => Auth::user()->id,
+            "updated_by" => Auth::user()->id,
+        );
+        ProductItem::create($details);
+        return redirect('/product/item');
+    
+    }
+
+
+
+
+
+
+Function edit backup    public function update(Request $request, ProductItem $id)
+    {
+        // $validated = $request->validated();
+        $details = array(
+            "uom_id" => $request->uom_id,
+            "brand_id" => $request->brand_id,
+            "file_path" => $request->$imagePath,
+            "product_name" => $request->product_name,
+            "product_price" => $request->product_price,
+            "product_desc" => $request->product_desc,
+            "remarks" => $request->remarks, 
+            "category_id" => $request->category_id,
+            "series_id" => $request->series_id,
+            "resolution_id" => $request->resolution_desc,
+            "status" => 1,
+            "created_by" => 0,
+            "updated_by" => Auth::user()->id,
+        );
+        $id->update($details);
+        return redirect('/product/item');
+    }

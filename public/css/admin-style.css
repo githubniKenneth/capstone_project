@@ -1,0 +1,119 @@
+/* Media Responsive */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+    body {
+        margin: 10px;
+    }
+}
+
+@media screen and (min-width: 1025px) {
+    body {
+        font-size: 18px; 
+    }
+}
+
+
+
+/* admin-style.css */
+.admin-page {
+    display: flex;
+    height: 100vh;
+    background-color: rgb(235, 232, 232);
+
+}
+
+#sidebar {
+    background-color: #333;
+    color: white;
+}
+
+.admin-header {
+    background-color: #757373;
+}
+
+.admin-dropdown {
+    position: relative;
+}
+
+#sidebarContainer {
+    background-color: #333;
+}
+
+.admin-sidebar {
+    padding: 20px;
+}
+
+/* Additional styling for the sidebar links */
+.nav-pills .nav-link {
+    color: white;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #555;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #777;
+}
+
+/* Sidebar Collapse */
+
+.sidebar {
+    width: 250px;
+    transition: width 0.1s ease;
+    overflow-x: hidden;
+}
+
+.sidebar.collapsed {
+    width: 0;
+}
+
+.sidebar.collapsed + .w-100 {
+    margin-left: 0;
+}
+   
+.collapsing {
+    display: none;
+}
+
+
+.table-responsive{
+    border-style: solid;
+    border-width: 4px;
+    border-color: rgb(168, 168, 168);
+    border-radius: 10px;
+    padding: 5px;
+    background-color: white;
+}
+
+#header-bars {
+    color: rgb(252, 252, 252);
+    /* padding-top: 10px; */
+    font-size: 30px;
+}
+
+.card{
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(168, 168, 168);
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: 5px 5px 10px #888888;
+    transition: box-shadow 0.3s, transform 0.5s;
+}
+.card:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 1); /* Add shadow */
+    transform: scale(1.01); /* Scale up the card slightly */
+}
+

@@ -1,0 +1,45 @@
+/* #card-header{
+    background-color: #838181;
+    color: white;
+} */
+
+.card-body{
+    height: 500px;
+    display: flex;
+}
+
+/* .card{
+    margin-top: 150px;
+    padding: initial;
+} */
+
+
+.column-60{
+    flex: 60%; /* Set the 60% width */
+    background-color: #f0f0f0; /* Just for demonstration */
+}
+
+.column-40{
+    flex: 40%; /* Set the 40% width */
+    /* background-color: #e0e0e0;  */
+
+}
+
+.center-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+
+
+

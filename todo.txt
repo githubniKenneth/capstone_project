@@ -1,0 +1,33 @@
+Problems
+product-items = REMOVE BUTTON (only)
+product-series = cancel button on create.blade(only)✓
+Product-UOM = Name at the top (ADD NEW GROUP nakalagay) (ONLY)✓
+Product-Resolution = Name at index & create.blade (Manage brand at add new group nakalagay)✓
+
+Deployment-ocular = Cancel button at create.blade, STORE ng database
+Deployment-JobOrder = STORE ng database, edit and delete not working
+deployment-Installation = walang data index
+deployment-Additional/Upgrade = walang data index
+deployment-StructureCabling = walang data index
+deployment-Rehabilitaion/repair= walang data index
+
+sales-quotation = STORE ng database
+sales-order = Walang data index, hindi sure if tama yung create blade
+sales-payments = walang data index, add button directing to qoutation create,
+sales-remittance = web routes error
+
+inventory-receive = edit button hindi nag didisplay ang existing data, delete button not working.
+inventory-stocks = edit and delete button not working
+
+
+
+
+
+CLEARED
+
+Personnel: (ALL)
+
+Product:
+Brand
+Category
+Packages

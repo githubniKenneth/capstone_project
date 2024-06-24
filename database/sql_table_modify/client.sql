@@ -1,0 +1,1 @@
+ALTER TABLE `clients` ADD `client_full_address` TEXT NOT NULL AFTER `client_city`;

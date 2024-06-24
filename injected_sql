@@ -1,0 +1,55 @@
+ALTER TABLE `sales_quotations` ADD `quote_number` INT(11) NOT NULL AFTER `id`;
+ALTER TABLE `sales_quotations` ADD `quote_iteration` INT(11) NOT NULL AFTER `quote_number`;
+ALTER TABLE `sales_quotations` CHANGE `quote_iteration` `quote_iteration` VARCHAR(11) NOT NULL;
+ALTER TABLE `sales_quotations` CHANGE `quote_iteration` `quote_control_number` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
+ALTER TABLE `sales_quotations` CHANGE `quote_number` `quote_number` VARCHAR(11) NOT NULL;
+ALTER TABLE `sales_order_details` ADD `order_qty` INT(11) NOT NULL AFTER `is_package`;
+ALTER TABLE `product_items` CHANGE `product_price` `product_price` DOUBLE(11,2) NOT NULL;
+
+
+ALTER TABLE `clients` CHANGE `client_tele_no` `client_tele_no` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
+
+feb 18, 2024
+ALTER TABLE `sales_quotation_details` ADD `quote_qty` INT(11) NOT NULL AFTER `is_package`, ADD `quote_total_amount` DECIMAL(14,2) NOT NULL AFTER `quote_qty`;
+
+Feb 19, 2024
+ALTER TABLE `sales_quotations` ADD `created_by` INT(11) NOT NULL AFTER `is_posted`, ADD `updated_by` INT(11) NULL AFTER `created_by`;
+ALTER TABLE `product_items` ADD `file_path` VARCHAR(255) NULL AFTER `remarks`; 
+
+March 04, 2024
+ALTER TABLE `sales_quotations` ADD `is_vat` INT(11) NULL AFTER `remarks`, ADD `vat_percentage` INT(11) NULL AFTER `is_vat`, ADD `ewt_percentage` INT(11) NULL AFTER `vat_percentage`, ADD `vat_amount` DOUBLE(11,2) NULL AFTER `ewt_percentage`, ADD `ewt_amount` DOUBLE(11,2) NULL AFTER `vat_amount`, ADD `total_amount` DOUBLE(11,2) NULL AFTER `ewt_amount`;
+ALTER TABLE `sales_quotations` CHANGE `remarks` `remarks` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
+ALTER TABLE `sales_quotations` CHANGE `remarks` `remarks` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
+ALTER TABLE `sales_quotation_details` CHANGE `inv_id` `item_id` INT(11) NOT NULL;
+
+March 06, 2024
+ALTER TABLE `sales_quotations` ADD `quote_material_cost` DOUBLE(11,2) NOT NULL DEFAULT '0' AFTER `remarks`, ADD `quote_labor_cost` DOUBLE(11,2) NOT NULL DEFAULT '0' AFTER `quote_material_cost`, ADD `quote_other_cost` DOUBLE(11,2) NOT NULL DEFAULT '0' AFTER `quote_labor_cost`, ADD `quote_sub_total` DOUBLE(11,2) NOT NULL DEFAULT '0' AFTER `quote_other_cost`, ADD `quote_discount` DOUBLE(11,2) NOT NULL DEFAULT '0' AFTER `quote_sub_total`;
+
+March 11, 2024
+ALTER TABLE `sales_orders` ADD `is_vat` INT NULL AFTER `order_discount`, ADD `vat_percentage` INT NULL AFTER `is_vat`, ADD `ewt_percentage` INT NULL AFTER `vat_percentage`, ADD `vat_amount` DECIMAL(11,2) NULL AFTER `ewt_percentage`, ADD `ewt_amount` DECIMAL(11,2) NULL AFTER `vat_amount`;
+ALTER TABLE `sales_order_details` CHANGE `inv_id` `item_id` INT(11) NOT NULL;
+
+March 12, 2024
+ALTER TABLE `inv_stocks` ADD `ordered_qty` INT(11) NOT NULL AFTER `issued_qty`;
+
+March 16, 2024
+
+ALTER TABLE `sales_order_details` ADD `is_additional` INT(1) NULL DEFAULT '0' AFTER `order_total_amount`;
+
+
+ALTER TABLE `inv_issuances` ADD `status` INT(1) NOT NULL AFTER `remarks`;
+ALTER TABLE `inv_issuances` ADD `emp_id` INT(11) NOT NULL AFTER `issuance_control_no`;
+
+
+ALTER TABLE `job_orders` ADD `jo_number` VARCHAR(50) NOT NULL AFTER `id`, ADD `jo_control_no` VARCHAR(50) NOT NULL AFTER `jo_number`;
+
+ALTER TABLE `users` ADD `status` INT(1) NOT NULL AFTER `remember_token`, ADD `created_by` INT(11) NOT NULL AFTER `status`, ADD `updated_by` INT(11) NULL AFTER `created_by`;
+ALTER TABLE `sales_quotations` ADD `quote_material_cost` DOUBLE(11,2) NOT NULL DEFAULT '0' AFTER `remarks`, 
+ADD `quote_labor_cost` DOUBLE(11,2) NOT NULL DEFAULT '0' AFTER `quote_material_cost`, 
+ADD `quote_other_cost` DOUBLE(11,2) NOT NULL DEFAULT '0' AFTER `quote_labor_cost`, 
+ADD `quote_sub_total` DOUBLE(11,2) NOT NULL DEFAULT '0' AFTER `quote_other_cost`, 
+ADD `quote_discount` DOUBLE(11,2) NOT NULL DEFAULT '0' AFTER `quote_sub_total`;
+ALTER TABLE `sales_quotations` ADD `client_id` INT(11) NULL AFTER `quote_date`;
+
+March 30, 2024
+ALTER TABLE `inv_issuances` ADD `issuance_type` INT(11) NOT NULL AFTER `id`;
