@@ -1,7 +1,7 @@
 <header>
     <nav>
         <div>
-            <a href="{{ route('home') }}">Logo</a>
+            <!-- <a href="{{ route('home') }}">Logo</a> -->
         </div>
         <div>
             <a href="{{ route('home') }}">Home</a>
