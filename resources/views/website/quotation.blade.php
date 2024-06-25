@@ -180,5 +180,4 @@
 </div>
 
 
-@include('website.footer')
 @endsection
