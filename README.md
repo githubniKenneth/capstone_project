@@ -1,7 +1,7 @@
 
 ## Credentials
 
-<p>http://127.0.0.1:8000/login</p>
+<p>http://citi-security.infinityfreeapp.com/login</p>
 <p>test@account.com</p>
 <p>123456</p>
 
