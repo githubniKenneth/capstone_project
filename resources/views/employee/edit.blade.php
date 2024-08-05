@@ -6,8 +6,8 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item "><a href="{{ route('dashboard') }}" class="text-decoration-none">Dashboard</a></li>
                     <li class="breadcrumb-item ">Personnel</li>
-                    <li class="breadcrumb-item "><a href="{{ route('employee.index') }}" class="text-decoration-none">Branch</a></li>
-                    <li class="breadcrumb-item" aria-current="page">Add Branch</li>
+                    <li class="breadcrumb-item "><a href="{{ route('employee.index') }}" class="text-decoration-none">Employe</a></li>
+                    <li class="breadcrumb-item" aria-current="page">Edit Employee</li>
                 </ol>
             </nav>
             <div class="p-3 d-flex justify-content-center">
@@ -25,7 +25,7 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">First Name</label>
+                                            <label for="" class="form-label">First Name <span class="text-danger">*</span></label>
                                             <input class="form-control" type="text" name="emp_first_name" value="{{ $data->emp_first_name }}">
                                             @error('emp_first_name')
                                                 <p class="text-danger">
@@ -45,7 +45,7 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Last Name</label>
+                                            <label for="" class="form-label">Last Name <span class="text-danger">*</span></label>
                                             <input class="form-control" type="text" name="emp_last_name" value="{{ $data->emp_last_name }}">
                                             @error('emp_last_name')
                                                 <p class="text-danger">
@@ -64,7 +64,7 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Branch Name</label>
+                                            <label for="" class="form-label">Branch Name <span class="text-danger">*</span></label>
                                             <select name="branch_id" id="" class="form-select">
                                                 <option value="">Select Role</option>
                                                 
@@ -81,7 +81,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Role</label>
+                                            <label for="" class="form-label">Role <span class="text-danger">*</span></label>
                                             <select name="empr_id" id="" class="form-select">
                                                 <option value="">Select Role</option>
                                                 @foreach ($roles as $role)
@@ -116,7 +116,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Street</label>
+                                            <label for="" class="form-label">Street <span class="text-danger">*</span></label>
                                             <input class="form-control" type="text" name="emp_street" value="{{ $data->emp_street }}">
                                             @error('emp_street')
                                                 <p class="text-danger">
@@ -129,7 +129,7 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Barangay</label>
+                                            <label for="" class="form-label">Barangay <span class="text-danger">*</span></label>
                                             <input class="form-control" type="text" name="emp_brgy" value="{{ $data->emp_brgy }}">
                                             @error('emp_brgy')
                                                 <p class="text-danger">
@@ -140,7 +140,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">City</label>
+                                            <label for="" class="form-label">City <span class="text-danger">*</span></label>
                                             <input class="form-control" type="text" name="emp_city" value="{{ $data->emp_city }}">
                                             @error('emp_city')
                                                 <p class="text-danger">
@@ -170,7 +170,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="" class="form-label">Phone No.</label>
+                                            <label for="" class="form-label">Phone No. <span class="text-danger">*</span></label>
                                             <input class="form-control" type="text" name="emp_phone_no" value="{{ $data->emp_phone_no }}">
                                             @error('emp_phone_no')
                                                 <p class="text-danger">
@@ -181,7 +181,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="" class="form-label">Email</label>
+                                            <label for="" class="form-label">Email <span class="text-danger">*</span></label>
                                             <input class="form-control" type="text" name="emp_email" value="{{ $data->emp_email }}">
                                             @error('emp_email')
                                                 <p class="text-danger">
@@ -204,7 +204,7 @@
                         </div>
                         <div>
                             <a href="{{ route('employee.index') }}" class="btn btn-secondary rounded">Cancel</a>
-                            <button class="btn btn-primary rounded" type="submit">Save Changes</button>
+                            <button class="btn btn-primary rounded" type="submit" {{$buttons['Update']}}>Save Changes</button>
                         </div>
                         
                     </div>

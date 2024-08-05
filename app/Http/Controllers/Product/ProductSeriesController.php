@@ -8,31 +8,31 @@ use App\Models\ProductSeries;
 use App\Http\Requests\ProductSeriesRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\PermissionHelper;
 
 
 class ProductSeriesController extends Controller
 {
     public function index()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/series', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/product/series');
         $data = ProductSeries::orderBy('created_at', 'desc')->get();
-        return view('product.series.index')->with(compact('data'));
+        return view('product.series.index')->with(compact('data', 'buttons'));
     }
 
     public function create()
-    {
+    {	
+        $is_authorized = PermissionHelper::checkAuthorization('/product/series', 'Create');
         return view('product.series.create');
     }
 
     public function store(ProductSeriesRequest $request)
-    {
-        // dd($request); punta tayo sa create
+    {	
+        $is_authorized = PermissionHelper::checkAuthorization('/product/series', 'Create');
         $validated = $request->validated();
         
         $details = array(
-            // column name => $request->input_name,          
-            // "group_code" => $request->group_code,
-            // "group_icon" => $request->group_icon,
-            // "group_description" => $request->group_description,
             "series_name" => $request->series_name, 
             "status" => 1,
             "created_by" => 1,
@@ -44,12 +44,15 @@ class ProductSeriesController extends Controller
 
     public function edit($id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/series', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/product/series');
         $data = ProductSeries::findOrFail($id);
-        return view('product/series.edit', ['series' => $data]);
+        return view('product/series.edit', ['series' => $data, 'buttons' => $buttons]);
     }
 
     public function update(ProductSeriesRequest $request, ProductSeries $id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/series', 'Update');
         $validated = $request->validated();
         $details = array(
             "series_name" => $request->series_name, 
@@ -60,22 +63,23 @@ class ProductSeriesController extends Controller
         return back()->with('message','Data has been updated successfully');
     }
 
-    public function remove(Request $request, $id)
+    public function delete($id)
     {
-        $id = $id;
-        $action = "/product/series/delete/".$id;
-        return view('components.remove-form', compact('action'));
-    }
+        $is_authorized = PermissionHelper::checkAuthorization('/product/series', 'Remove');
+        $series = ProductSeries::find($id);
 
-    public function delete(ProductSeries $ProductSeries, $id)
-    {
-        $current_status = ProductSeries::find($id, ['status']);
-        $new_status = ($current_status->status == "1") ? "0" : "1";
-        $update = array(
-            "status" => $new_status,
-        );
-        $ProductSeries->where('id', $id)->update($update);
-        return redirect('/product/series');
+        if ($series) {
+            $new_status = $series->status == 1 ? 0 : 1;
+            $series->status = $new_status;
+
+            if ($series->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 
 }

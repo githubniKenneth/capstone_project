@@ -39,7 +39,11 @@
                                     <td> {{ $module->module_code }} </td>
                                     <td> {{ $module->module_icon }} </td>
                                     <td> {{ textShortener($module->module_description, $module->id,'module_description', 25) }} </td>
-                                    <td> {{ ($module->cds->toFormattedDateString()) }}</td>
+                                    <td>
+                                        <button class="btn {{$module->status_color}}"> 
+                                        {{ ($module->cds->toFormattedDateString()) }}
+                                        </button>
+                                    </td>
                                     <td> {{ ($module->status == 1) ? "Active":"Inactive" }}</td>
                                     <td> 
                                         <a href="/add-employee-role/{{$module->id}}" class="btn btn-warning rounded">

@@ -18,13 +18,11 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Item Name</th>
-                            <th scope="col">Issued Qty</th>
-                            <th scope="col">Ordered Qty</th>
+                            <th scope="col">Received Qty</th>
                             <th scope="col">Sold Qty</th>
-                            <th scope="col">Adjusted Qty</th>
+                            <th scope="col">Issued Qty</th>
+                            <th scope="col">Returned Qty</th>
                             <th scope="col">Balance Qty</th>
-                            <!-- <th scope="col">Status</th> -->
-                            <!-- <th scope="col">Action</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -32,33 +30,17 @@
                         <tr>
                             <td> {{$loop->iteration}} </td>
                             <td> {{ $stocks->item->product_name }} </td>
-                            <td> {{ $stocks->issued_qty }} </td>
-                            <td> {{ $stocks->ordered_qty }} </td>
+                            <td> {{ $stocks->received_qty }} </td>
                             <td> {{ $stocks->sold_qty }} </td>
-                            <td> {{ $stocks->adjusted_qty }} </td>
+                            <td> {{ $stocks->issued_qty }} </td>
+                            <td> {{ $stocks->returned_qty }} </td>
                             <td> {{ $stocks->balance_qty }} </td>
-                            <!-- <td> {{ $stocks->status }} </td> -->
-                            
-                            <!-- <td> 
-                                <a href="/inventory/stocks/{{$stocks->id}}" class="btn btn-warning rounded">
-                                    <i class="fa-regular fa-pen-to-square text-light"></i>
-                                </a>
-                                <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/inventory/stocks/remove/{{$stocks->id}}" title="Remove Data"
-                                class="btn btn-danger rounded">
-                                    <i class="fas fa-trash text-light"></i>
-                                </a>
-                                <a href="#" class="btn btn-danger rounded">Delete</a>
-                            </td> -->
                         </tr>
                         @endforeach
                     </tbody>                        
                 </table>
             </div>
         </div>
-        <!-- remove modal -->
-        <x-remove-modal/>
-        <script src="{{asset('js/remove-modal/open-modal.js')}}"></script>
-        <!-- remove modal -->
 
 @endsection
 

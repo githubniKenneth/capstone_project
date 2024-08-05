@@ -8,33 +8,33 @@ use App\Models\ProductCategory;
 use App\Http\Requests\ProductCategoryRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\PermissionHelper;
 
 
 class ProductCategoryController extends Controller
 {
     public function index()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/category', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/product/category');
         $data = ProductCategory::orderBy('created_at', 'desc')->get();
         // dd($data);
         // return view('students.index', $data);
-        return view('product.category.index')->with(compact('data'));
+        return view('product.category.index')->with(compact('data', 'buttons'));
     }
 
     public function create()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/category', 'Create');
         return view('product.category.create');
     }
 
     public function store(ProductCategoryRequest $request)
     {
-        // dd($request); punta tayo sa create
+        $is_authorized = PermissionHelper::checkAuthorization('/product/category', 'Create');
         $validated = $request->validated();
         
         $details = array(
-            // column name => $request->input_name,          
-            // "group_code" => $request->group_code,
-            // "group_icon" => $request->group_icon,
-            // "group_description" => $request->group_description,
             "category_name" => $request->category_name, 
             "status" => 1,
             "created_by" => 1,
@@ -46,12 +46,15 @@ class ProductCategoryController extends Controller
 
     public function edit($id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/category', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/product/category');
         $data = ProductCategory::findOrFail($id);
-        return view('product/category.edit', ['category' => $data]);
+        return view('product/category.edit', ['category' => $data, 'buttons' => $buttons]);
     }
 
     public function update(ProductCategoryRequest $request, ProductCategory $id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/category', 'Update');
         $validated = $request->validated();
         $details = array(
             "category_name" => $request->category_name, 
@@ -62,22 +65,22 @@ class ProductCategoryController extends Controller
         return back()->with('message','Data has been updated successfully');
     }
 
-    
-    public function remove(Request $request, $id)
+    public function delete($id)
     {
-        $id = $id;
-        $action = "/product/category/delete/".$id; // kulang yung slug
-        return view('components.remove-form', compact('action'));
-    }
+        $is_authorized = PermissionHelper::checkAuthorization('/product/category', 'Remove');
+        $category = ProductCategory::find($id);
 
-    public function delete(ProductCategory $category, $id)
-    {
-        $current_status = ProductCategory::find($id, ['status']);
-        $new_status = ($current_status->status == "1") ? "0" : "1";
-        $update = array(
-            "status" => $new_status,
-        );
-        $category->where('id', $id)->update($update);
-        return redirect('/product/category'); // kulang yung slug
+        if ($category) {
+            $new_status = $category->status == 1 ? 0 : 1;
+            $category->status = $new_status;
+
+            if ($category->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 }

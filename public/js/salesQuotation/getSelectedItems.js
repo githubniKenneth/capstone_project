@@ -51,9 +51,9 @@ function getDataAndDisplay(url) {
             '<td class="col-md-2 d-none"><input name="item['+ itemCounter++ +'][item_id]" value='+value.id+' class="col-md-5">asd'+
             '<td class="col-md-4">'+value.product_name+'</td>'+
             '<td class="col-md-2">'+value.uom.uom_name+'</td>'+
-            '<td class="col-md-2"><input class="form-control" type="text" id="qty['+ qtyCounter++ +']" name="qty['+ qtyCounter++ +'][item_qty]" value="1"></td>'+
-            '<td class="col-md-2"><input class="form-control" type="text" id="amount['+ amountCounter++ +']" name="amount['+ amountCounter++ +'][order_amount]" value='+value.product_price+'.00></td>'+
-            '<td class="col-md-2"><input class="form-control" type="text" id="total_amount['+ totalAmountCounter++ +']" name="total_amount['+ totalAmountCounter++ +'][order_total_amount]" value='+value.product_price+'.00 readonly></td>'+
+            '<td class="col-md-2"><input required class="form-control" type="text" id="qty['+ qtyCounter++ +']" name="qty['+ qtyCounter++ +'][item_qty]" value="1"></td>'+
+            '<td class="col-md-2"><input required class="form-control" type="text" id="amount['+ amountCounter++ +']" name="amount['+ amountCounter++ +'][order_amount]" value='+value.product_price+'.00></td>'+
+            '<td class="col-md-2"><input required class="form-control" type="text" id="total_amount['+ totalAmountCounter++ +']" name="total_amount['+ totalAmountCounter++ +'][order_total_amount]" value='+value.product_price+'.00 readonly></td>'+
             '<td class="col-md-1"><a class="btn btn-danger rounded"><i class="fas fa-trash text-light"></i></a></td>'+
         '</tr>');
     // console.log($(value))
@@ -131,8 +131,8 @@ function getDataAndDisplay(url) {
           '<td class="col-md-2 d-none"><input name="item['+ itemCounter++ +'][item_id]" value='+value.id+' class="col-md-5">asd'+
           '<td class="col-md-4">'+value.pack_name+'</td>'+
           '<td class="col-md-2">PACKAGE</td>'+
-          '<td class="col-md-2"><input class="form-control" type="text" id="item['+ qtyCounter++ +']" name="item['+ qtyCounter++ +'][item_qty]" value="1"></td>'+
-          '<td class="col-md-2"><input class="form-control" type="text" id="item['+ amountCounter++ +']" name="item['+ amountCounter++ +'][order_amount]" value='+value.pack_price+'.00></td>'+
+          '<td class="col-md-2"><input required class="form-control" type="text" id="item['+ qtyCounter++ +']" name="item['+ qtyCounter++ +'][item_qty]" value="1"></td>'+
+          '<td class="col-md-2"><input required class="form-control" type="text" id="item['+ amountCounter++ +']" name="item['+ amountCounter++ +'][order_amount]" value='+value.pack_price+'.00></td>'+
           '<td class="col-md-2"><input class="form-control" type="text" id="item['+ totalAmountCounter++ +']" name="item['+ totalAmountCounter++ +'][order_total_amount]" value='+value.pack_price+'.00 readonly></td>'+
           '<td class="col-md-1"><a class="btn btn-danger rounded"><i class="fas fa-trash text-light"></i></a></td>'+
           '</tr>');

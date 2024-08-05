@@ -9,9 +9,7 @@ class RemittanceController extends Controller
 {
     public function index()
     {
-        // $data = SalesOrder::orderBy('created_at', 'desc')->get();
-        // dd($data);
-        // return view('students.index', $data);
+        $is_authorized = PermissionHelper::checkAuthorization('/sales/remittance', 'Read'); 
         return view('sales.remittance.index');
     }
 }

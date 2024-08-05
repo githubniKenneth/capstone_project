@@ -24,8 +24,8 @@
                             <div class="row d-flex p-3">
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
-                                        <label for="" class="form-label">Item Name</label>
-                                        <input class="form-control" type="text" name="product_name">
+                                        <label for="" class="form-label">Item Name <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="product_name" value="{{ old('product_name') }}">
                                         @error('product_name')
                                             <p class="text-danger">
                                                 {{$message}}
@@ -35,11 +35,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
-                                        <label for="" class="form-label">Item Type</label>
+                                        <label for="" class="form-label">Item Type <span class="text-danger">*</span></label>
                                         <select name="item_type" id="" class="form-select">
                                             <option value="">Select Group</option>
                                             @foreach ($item_types as $key => $value)
-                                                <option value="{{$key}}">{{$value}}</option>
+                                                <option value="{{$key}}" {{ old('item_type') == $key ? 'selected' : '' }}>{{$value}}</option>
                                             @endforeach
                                             <!-- <option value="">$data-></option> -->
                                             
@@ -55,18 +55,23 @@
                             <div class="row d-flex p-3">
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
-                                        <label for="" class="form-label">Price</label>
-                                        <input class="form-control" type="text" name="product_price">
+                                        <label for="" class="form-label">Price <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="product_price" value="{{ old('product_price') }}">
+                                        @error('product_price')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
-                                        <label for="" class="form-label">Unit of Measurement</label>
+                                        <label for="" class="form-label">Unit of Measurement <span class="text-danger">*</span></label>
                                         <select name="uom_id" id="" class="form-select">
                                             <option value="">Select Unit</option>
                                             <!-- <option value="">$data-></option> -->
                                             @foreach ($uom as $unit)
-                                                <option value="{{$unit->id}}">{{$unit->uom_shortname}}</option>
+                                                <option value="{{$unit->id}}" {{ old('uom_id') == $unit->id ? 'selected' : '' }}>{{$unit->uom_shortname}}</option>
                                             @endforeach
                                         </select>
                                         @error('uom_id')
@@ -81,13 +86,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Description</label>
-                                        <textarea class="form-control" name="product_desc" id="" cols="30" rows="2"></textarea>
+                                        <textarea class="form-control" name="product_desc" id="" cols="30" rows="2" >{{ old('product_desc') }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Remarks</label>
-                                        <textarea class="form-control" name="remarks" id="" cols="30" rows="2"></textarea>
+                                        <textarea class="form-control" name="remarks" id="" cols="30" rows="2">{{ old('remarks') }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -113,13 +118,18 @@
                             <div class="row d-flex p-3">
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
-                                        <label for="" class="form-label">Brand</label>
+                                        <label for="" class="form-label">Brand <span class="text-danger">*</span></label>
                                         <select name="brand_id" id="" class="form-select">
                                             <option value="">Select Group</option>
                                             @foreach ($brands as $brand)
-                                                <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
+                                                <option value="{{$brand->id}}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>{{$brand->brand_name}}</option>
                                             @endforeach
                                         </select>
+                                        @error('brand_id')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -128,7 +138,7 @@
                                         <select name="category_id" id="" class="form-select">
                                             <option value="">Select Group</option>
                                             @foreach ($categories as $category)
-                                                <option value="{{$category->id}}">{{$category->category_name}}</option>
+                                                <option value="{{$category->id}}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{$category->category_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -141,7 +151,7 @@
                                         <select name="series_id" id="" class="form-select">
                                             <option value="">Select Group</option>
                                             @foreach ($series as $series_value)
-                                                <option value="{{$series_value->id}}">{{$series_value->series_name}}</option>
+                                                <option value="{{$series_value->id}}" {{ old('series_id') == $series_value->id ? 'selected' : '' }}>{{$series_value->series_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -152,7 +162,7 @@
                                         <select name="resolution_id" id="" class="form-select">
                                             <option value="">Select Group</option>
                                             @foreach ($camera_resolutions as $resolution)
-                                                <option value="{{$resolution->id}}">{{$resolution->resolution_desc}}</option>
+                                                <option value="{{$resolution->id}}"  {{ old('resolution_id') == $resolution->id ? 'selected' : '' }}>{{$resolution->resolution_desc}}</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -13,7 +13,7 @@
                 </nav>
 
             <div class="d-flex flex-row-reverse pb-3">
-                <a href="{{ route('job-order.create') }}"class="btn btn-success">+</a>
+                <button class="btn btn-success" onclick="window.location.href='{{ route('job-order.create') }}'" {{$buttons['Create']}}>+</button>
             </div>
 
                 <div class="table-responsive">
@@ -39,16 +39,20 @@
                                 <td> {{ textShortener($job_order->jo_landmark, $job_order->id, 'jo_landmark', 25) }} </td>
                                 <td> {{ $job_order->user->employee->emp_full_name }} </td>
                                 <td> {{ ($job_order->cds->toFormattedDateString()) }}</td>
-                                <td> {{ ($job_order->status == 1) ? "Active":"Inactive" }}</td>
                                 <td> 
-                                    <a href="/deployment/job-order/{{$job_order->id}}" class="btn btn-warning rounded">
-                                        <i class="fa-regular fa-pen-to-square text-light"></i>
-                                    </a>
-                                    <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/employee-role/remove/{{$job_order->id}}" title="Remove Data"
-                                    class="btn btn-danger rounded">
-                                        <i class="fas fa-trash text-light"></i>
-                                    </a>
-                                    <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                    <button class="btn {{$job_order->status_color}}">
+                                    {{ ($job_order->status == 1) ? "Active":"Inactive" }}
+                                    </button>
+                                </td>
+                                <td> 
+                                    <a href="{{ route('job-order.edit', $job_order->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                    <button class="btn btn-success rounded" onclick="window.location.href='{{ route('job-order.email', $job_order->id) }}'" title="Send Email"><i class="fa-regular fa-envelope text-light"></i></button>
+                                    <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                        data-id="{{ $job_order->id }}"
+                                        data-status="{{ $job_order->status }}"  
+                                        data-url="{{ route('job-order.delete', $job_order->id) }}" {{$buttons['Remove']}}>
+                                        <i class="fas fa-trash text-light fa-lg"></i>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -65,4 +69,5 @@
             $('#job-order_table').DataTable();
         } );
     </script>
+    <script src="{{asset('js/remove-modal/open-modal.js')}}"></script>
 @endsection

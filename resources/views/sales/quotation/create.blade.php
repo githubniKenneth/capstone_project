@@ -31,8 +31,8 @@
                             <div class="col-md-6">
                                 <div class="form-group d-flex flex-column">
                                     <label for="" class="form-label">Quotation Number</label>
-                                    <input class="form-control d-none" type="text" name="quote_number" value="{{$newQuoteNumber}}" readonly>
-                                    <input class="form-control" type="text" name="quote_control_number" value="{{$newControlNo}}" readonly>
+                                    <input class="form-control d-none" type="text" name="quote_number" value="" readonly>
+                                    <input class="form-control" type="text" name="quote_control_number" value="" readonly>
                                     @error('quote_control_number')
                                         <p class="text-danger">
                                             {{$message}}
@@ -42,7 +42,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group d-flex flex-column">
-                                    <label for="" class="form-label">Date</label>
+                                    <label for="" class="form-label">Date <span class="text-danger">*</span></label>
                                     <input type="date" name="quote_date" class="form-control" value="{{ now()->format('Y-m-d') }}">
                                     @error('quote_date')
                                         <p class="text-danger">
@@ -55,14 +55,14 @@
                         <div class="row d-flex p-3">
                             <div class="col-md-6">
                                 <div class="form-group d-flex flex-column">
-                                    <label for="" class="form-label">Branch</label>
+                                    <label for="" class="form-label">Branch <span class="text-danger">*</span></label>
                                     <select name="branch_id" id="selectBranch" class="form-control">
                                         <option value="">Select Branch</option>
                                         @foreach ($branches as $branch)
                                             <option value="{{$branch->id}}">{{$branch->branch_name}}</option>
                                         @endforeach
                                     </select>
-                                    @error('rec_code')
+                                    @error('branch_id')
                                         <p class="text-danger">
                                             {{$message}}
                                         </p>
@@ -71,7 +71,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group d-flex flex-column">
-                                    <label for="" class="form-label">Client Name</label>
+                                    <label for="" class="form-label">Client Name <span class="text-danger">*</span></label>
                                     <select name="client_id" id="selectClient" class="form-control">
                                         <option value="">Select Client</option>
                                         @foreach ($clients as $client)
@@ -261,12 +261,22 @@
                                 <div class="form-group d-flex flex-column">
                                     <label for="" class="form-label">Labor Cost</label>
                                     <input type="number" name="labor_cost" class="form-control labor_cost" value="0.00" id="labor_cost">
+                                    @error('labor_cost')
+                                        <p class="text-danger">
+                                            {{$message}}
+                                        </p>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group d-flex flex-column">
                                     <label for="" class="form-label">Others</label>
                                     <input type="number" name="other_cost" class="form-control other_cost" value="0.00" id="other_cost">
+                                    @error('other_cost')
+                                        <p class="text-danger">
+                                            {{$message}}
+                                        </p>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -279,6 +289,11 @@
                                 <div class="form-group d-flex flex-column">
                                     <label for="" class="form-label">Discount</label>
                                     <input type="number" name="discount_cost" class="form-control discount_cost" value="0.00" id="discount_cost">
+                                    @error('outdoor_cam_no')
+                                        <p class="text-danger">
+                                            {{$message}}
+                                        </p>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-1">
@@ -341,6 +356,11 @@
                                             Show Item List
                                     </a>
                                 </div>
+                                @error('item')
+                                    <p class="text-danger">
+                                        {{$message}}
+                                    </p>
+                                @enderror
                                 <table class="table" id="itemDetailsTable">
                                     <thead>
                                     <tr>

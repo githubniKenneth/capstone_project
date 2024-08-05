@@ -11,7 +11,7 @@
     </ol>
 </nav>
     <div class="d-flex flex-row-reverse pb-3">
-        <a href="{{ route('issuances.create') }}"class="btn btn-success">+</a>
+        <button class="btn btn-success" onclick="window.location.href='{{ route('issuances.create') }}'" {{$buttons['Create']}}>+</button>
     </div>
 <div class="table-responsive">
     <table class="table table-striped" id="issuancesTable">
@@ -24,7 +24,6 @@
                 <th scope="col">Branch</th>
                 <th scope="col">Remarks</th>
                 <th scope="col">Date</th>
-                <th scope="col">Posting Status</th>
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
             </tr>
@@ -39,18 +38,21 @@
                 <td>  Branch  </td>
                 <td> {{ $issuances->remarks }} </td>
                 <td> {{ ($issuances->cds->toFormattedDateString()) }}</td>
-                <td>{{ ($issuances->is_posted == 1) ? "Posted":"Drafted" }}</td>
-                <td>{{ ($issuances->status == 1) ? "Active":"Inactive" }}</td>
+                <td>
+                    <button class="btn {{$issuances->status_color}}">
+                    {{ ($issuances->status == 1) ? "Active":"Inactive" }}
+                    </button>
+                </td>
                 
                 
                 <td> 
-                    <a href="/inventory/issuances/{{$issuances->id}}" class="btn btn-warning rounded">
-                        <i class="fa-regular fa-pen-to-square text-light"></i>
-                    </a>
-                    <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/inventory/issuances/remove/{{$issuances->id}}" title="Remove Data"
-                    class="btn btn-danger rounded">
-                        <i class="fas fa-trash text-light"></i>
-                    </a>
+                    <a href="{{ route('issuances.edit', $issuances->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                    <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                        data-id="{{ $issuances->id }}"
+                        data-status="{{ $issuances->status }}"
+                        data-url="{{ route('issuances.delete', $issuances->id) }}" {{$buttons['Remove']}}>
+                        <i class="fas fa-trash text-light fa-lg"></i>
+                    </button>
                 </td>
             </tr>
             @endforeach

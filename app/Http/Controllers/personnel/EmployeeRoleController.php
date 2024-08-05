@@ -12,6 +12,10 @@ class EmployeeRoleController extends Controller
     public function index()
     {
         $data = EmployeeRoles::orderBy('created_at', 'desc')->get();
+
+        foreach ($data as $status){
+            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+        }
         return view('employee-role.index')->with(compact('data'));
     }
 

@@ -13,7 +13,7 @@
         </nav>
         
     <div class="d-flex flex-row-reverse pb-3">
-        <a href="{{ route('product-item.create') }}"class="btn btn-success">+</a>
+        <button class="btn btn-success" onclick="window.location.href='{{ route('product-item.create') }}'" {{$buttons['Create']}}>+</button>
     </div>
 
             <div class="table-responsive">
@@ -58,15 +58,19 @@
                                     @endif
                                 </td>                               
                                 <td> {{ ($item->cds->toFormattedDateString()) }}</td>
-                                <td> {{ ($item->status == 1) ? "Active":"Inactive" }}</td>
                                 <td> 
-                                    <a href="/product/item/{{$item->id}}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
-                                    
-                                    <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/product/item/remove/{{$item->id}}" title="Remove Data" 
-                                    class="btn btn-danger rounded">
+                                    <button class="btn {{$item->status_color}}">
+                                    {{ ($item->status == 1) ? "Active":"Inactive" }}
+                                    </button>
+                                </td>
+                                <td> 
+                                    <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                    <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                        data-id="{{ $item->id }}"
+                                        data-status="{{ $item->status }}"
+                                        data-url="{{ route('product.item.delete', $item->id) }}" {{$buttons['Remove']}}>
                                         <i class="fas fa-trash text-light fa-lg"></i>
-                                    </a>
-                                    <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                    </button>
                                 </td>
                              
                             </tr>

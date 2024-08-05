@@ -9,36 +9,33 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\BranchStoreRequest;
 use DataTables;
+use App\Helpers\PermissionHelper;
+use Illuminate\Auth\Access\AuthorizationException;
+
 class BranchController extends Controller
 {
     public function index()
-    {
-        // if(\request()->ajax()){
-        //     $data = Product::latest()->get();
-        //     return DataTables::of($data)
-        //         ->addIndexColumn()
-        //         ->addColumn('action', function($row){
-        //             $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-        //             return $actionBtn;
-        //         })
-        //         ->rawColumns(['action'])
-        //         ->make(true);
-        // }
-        // return view('products.index');
-
+    {   
+        $is_authorized = PermissionHelper::checkAuthorization('/personnel/branch', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/personnel/branch');
         $data = Branch::orderBy('created_at', 'desc')->get();
-        // dd($data);
-        // return view('students.index', $data);
-        return view('branch.index')->with(compact('data'));
+
+        foreach ($data as $status){
+            $status->status_color = $status->branch_status == 1 ? 'status-active' : 'status-inactive';
+        }
+
+        return view('branch.index')->with(compact('data', 'buttons'));
     }
 
     public function create()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/personnel/branch', 'Create');
         return view('branch.create');
     }
 
     public function store(BranchStoreRequest $request)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/personnel/branch', 'Create');
         $validated = $request->validated();
         $full_address = $request->branch_lot_no.' '.$request->branch_street.' '.$request->branch_brgy.' '.$request->branch_city;
 
@@ -58,18 +55,20 @@ class BranchController extends Controller
         );
         Branch::create($details);
         return back()->with('message','Data has been saved successfully');
-        // return redirect('/personnel/branch');
 
     }
 
     public function edit($id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/personnel/branch', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/personnel/branch');
         $data = Branch::findOrFail($id);
-        return view('branch.edit', ['branch' => $data]);
+        return view('branch.edit', ['branch' => $data, 'buttons' => $buttons]);
     }
 
     public function update(BranchStoreRequest $request, Branch $id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/personnel/branch', 'Update');
         $validated = $request->validated();
         $details = array(
             "branch_name" => $request->branch_name, 
@@ -88,22 +87,23 @@ class BranchController extends Controller
         return back()->with('message','Data has been updated successfully');
     }
 
-    public function remove(Request $request, $id)
+    public function delete($id)
     {
-        $id = $id;
-        $action = "/personnel/branch/delete/".$id;
-        return view('components.remove-form', compact('action'));
-    }
+        $is_authorized = PermissionHelper::checkAuthorization('/personnel/branch', 'Remove');
+        $branch = Branch::find($id);
 
-    public function delete(Branch $branch, $id)
-    {
-        $current_status = Branch::find($id, ['branch_status']);
-        $new_status = ($current_status->branch_status == "1") ? "0" : "1";
-        $update = array(
-            "branch_status" => $new_status,
-        );
-        $branch->where('id', $id)->update($update);
-        return redirect('/personnel/branch');
+        if ($branch) {
+            $new_status = $branch->branch_status == 1 ? 0 : 1;
+            $branch->branch_status = $new_status;
+
+            if ($branch->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 }
 

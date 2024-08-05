@@ -37,17 +37,22 @@
                                     <td> {{ $module->module_name }} </td>
                                     <td> {{ $module->module_code }} </td>
                                     <td> {{ textShortener($module->module_description, $module->id, 'module_description', 25) }} </td>
-                                    <td> {{ ($module->cds->toFormattedDateString()) }}</td>
-                                    <td> {{ ($module->status == 1) ? "Active":"Inactive" }}</td>
                                     <td> 
-                                        <a href="/component/module/{{$module->id}}" class="btn btn-warning rounded">
-                                            <i class="fa-regular fa-pen-to-square text-light"></i>
-                                        </a>
-                                        <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/component/module/remove/{{$module->id}}" title="Remove Data"
-                                        class="btn btn-danger rounded">
-                                            <i class="fas fa-trash text-light"></i>
-                                        </a>
-                                        <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                        {{ ($module->cds->toFormattedDateString()) }}
+                                    </td>
+                                    <td> 
+                                        <button class="btn {{$module->status_color}}">
+                                        {{ ($module->status == 1) ? "Active":"Inactive" }}
+                                        </button>
+                                    </td>
+                                    <td> 
+                                        <a href="{{ route('module.edit', $module->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                        <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                            data-id="{{ $module->id }}"
+                                            data-status="{{ $module->status }}"
+                                            data-url="{{ route('module.delete', $module->id) }}">
+                                            <i class="fas fa-trash text-light fa-lg"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach

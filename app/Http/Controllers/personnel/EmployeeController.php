@@ -8,17 +8,25 @@ use App\Models\Employee;
 use App\Models\EmployeeRoles;
 use App\Models\Branch;
 use App\Http\Requests\EmployeeStoreRequest;
+use App\Helpers\PermissionHelper;
 
 class EmployeeController extends Controller
 {
     public function index()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/personnel/employee', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/personnel/employee');
         $data = Employee::orderBy('created_at', 'desc')->get();
-        return view('employee.index')->with(compact('data'));
+
+        foreach ($data as $status){
+            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+        }
+        return view('employee.index')->with(compact('data', 'buttons'));
     }
 
     public function create()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/personnel/employee', 'Create');
         $branches = Branch::select('id','branch_name')->where('branch_status', 1)->get();
         $roles = EmployeeRoles::select('id','empr_role')->where('status', 1)->get();
         return view('employee.create')->with(compact('branches'))->with(compact('roles'));
@@ -26,7 +34,7 @@ class EmployeeController extends Controller
 
     public function store(EmployeeStoreRequest $request)
     {
-        // dd($request);
+        $is_authorized = PermissionHelper::checkAuthorization('/personnel/employee', 'Create');
         $validated = $request->validated();
         
         $full_address = $request->emp_lot_no.' '.$request->emp_street.' '.$request->emp_brgy.' '.$request->emp_city;
@@ -57,15 +65,18 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/personnel/employee', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/personnel/employee');
         $branches = Branch::select('id','branch_name')->where('branch_status', 1)->get();
         $roles = EmployeeRoles::select('id','empr_role')->where('status', 1)->get();
         $data = Employee::findOrFail($id);
         // dd($data);
-        return view('employee.edit')->with(compact('data','branches','roles'));
+        return view('employee.edit')->with(compact('data','branches','roles', 'buttons'));
     }
 
     public function update(EmployeeStoreRequest $request, Employee $id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/personnel/employee', 'Update');
         $validated = $request->validated();
         $full_address = $request->emp_lot_no.' '.$request->emp_street.' '.$request->emp_brgy.', '.$request->emp_city;
         $full_name = $request->emp_first_name.' '.$request->emp_middle_name.' '.$request->emp_last_name.' '.$request->emp_suffix;
@@ -93,22 +104,23 @@ class EmployeeController extends Controller
         return back()->with('message','Data has been saved successfully');
     }
 
-    public function remove(Request $request, $id)
+    public function delete($id)
     {
-        $id = $id;
-        $action = "/personnel/employee/delete/".$id; // kulang yung slug
-        return view('components.remove-form', compact('action'));
-    }
+        $is_authorized = PermissionHelper::checkAuthorization('/personnel/employee', 'Remove');
+        $employee = Employee::find($id);
 
-    public function delete(Employee $employee, $id)
-    {
-        $current_status = Employee::find($id, ['status']);
-        $new_status = ($current_status->status == "1") ? "0" : "1";
-        $update = array(
-            "status" => $new_status,
-        );
-        $employee->where('id', $id)->update($update);
-        return redirect('/personnel/employee'); // kulang yung slug
+        if ($employee) {
+            $new_status = $employee->status == 1 ? 0 : 1;
+            $employee->status = $new_status;
+
+            if ($employee->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 
 }

@@ -35,9 +35,9 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">First Name</label>
-                                            <input class="form-control" type="text" name="client_first_name" >
-                                            @error('client_full_name')
+                                            <label for="" class="form-label">First Name <span class="required-field">*</span></label>
+                                            <input class="form-control" type="text" name="client_first_name" value={{old('client_first_name')}}>
+                                            @error('client_first_name')
                                                 <p class="text-danger">
                                                     {{$message}}
                                                 </p>
@@ -55,9 +55,9 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Last Name</label>
-                                            <input class="form-control" type="text" name="client_last_name">
-                                            @error('emp_last_name')
+                                            <label for="" class="form-label">Last Name <span class="required-field">*</span></label>
+                                            <input class="form-control" type="text" name="client_last_name" value={{old('client_last_name')}}>
+                                            @error('client_last_name')
                                                 <p class="text-danger">
                                                     {{$message}}
                                                 </p>
@@ -68,6 +68,11 @@
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">Suffix</label>
                                             <input class="form-control" type="text" name="client_suffix">
+                                            @error('client_full_name')
+                                                <p class="text-danger">
+                                                    {{$message}}
+                                                </p>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -92,15 +97,20 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Street</label>
+                                            <label for="" class="form-label">Street <span class="required-field">*</span></label>
                                             <input class="form-control" type="text" name="client_street" value={{old('client_street')}}>
+                                            @error('client_street')
+                                                <p class="text-danger">
+                                                    {{$message}}
+                                                </p>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Barangay</label>
+                                            <label for="" class="form-label">Barangay <span class="required-field">*</span></label>
                                             <input class="form-control" type="text" name="client_brgy" value={{old('client_brgy')}}>
                                             @error('client_brgy')
                                                 <p class="text-danger">
@@ -111,7 +121,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">City</label>
+                                            <label for="" class="form-label">City <span class="required-field">*</span></label>
                                             <input class="form-control" type="text" name="client_city" value={{old('client_city')}}>
                                             @error('client_city')
                                                 <p class="text-danger">
@@ -146,7 +156,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="" class="form-label">Phone No.</label>
+                                            <label for="" class="form-label">Phone No. <span class="required-field">*</span></label>
                                             <input class="form-control" type="text" name="client_mobile_no" value={{old('client_mobile_no')}}>
                                             @error('client_mobile_no')
                                                 <p class="text-danger">
@@ -157,7 +167,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="" class="form-label">Email</label>
+                                            <label for="" class="form-label">Email <span class="required-field">*</span></label>
                                             <input class="form-control" type="text" name="client_email" value={{old('client_email')}}>
                                             @error('client_email')
                                                 <p class="text-danger">

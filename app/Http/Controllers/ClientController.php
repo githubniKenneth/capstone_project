@@ -7,24 +7,35 @@ use App\Http\Requests\ClientStoreRequest;
 use App\Models\Client;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\PermissionHelper;
 
 class ClientController extends Controller
 {
     public function index()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/client/', 'Read'); 
+        $buttons = PermissionHelper::getButtonStates('/client/');
         $data = Client::orderBy('created_at', 'desc')->get();
         // dd($data);
         // return view('students.index', $data);
-        return view('client.index')->with(compact('data'));
+
+
+        foreach ($data as $status){
+            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+        }
+
+        return view('client.index')->with(compact('data', 'buttons'));
     }
 
     public function create()
-    {
+    {	
+        $is_authorized = PermissionHelper::checkAuthorization('/client/', 'Create');
         return view('client.create');
     }
 
     public function store(ClientStoreRequest $request)
-    {
+    {	
+        $is_authorized = PermissionHelper::checkAuthorization('/client/', 'Create');
         $validated = $request->validated();
         
         $full_address = implode(" ", array_filter([$request->client_lot_no, $request->client_street, $request->client_brgy, $request->client_city]));
@@ -56,12 +67,14 @@ class ClientController extends Controller
 
     public function edit($id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/client/', 'Read');
         $data = Client::findOrFail($id);
         return view('client.edit', ['client' => $data]);
     }
 
     public function update(ClientStoreRequest $request, Client $id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/client/', 'Update');
         $validated = $request->validated();
         $details = array(
             "client_business_name" => $request->client_business_name,
@@ -85,16 +98,9 @@ class ClientController extends Controller
         return back()->with('message','Data has been updated successfully');
     }
 
-    
-    public function remove(Request $request, $id)
-    {
-        $id = $id;
-        $action = "/client/delete/".$id; // kulang yung slug
-        return view('components.remove-form', compact('action'));
-    }
-
     public function delete(Client $client, $id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/client/', 'Remove');
         $current_status = Client::find($id, ['status']);
         $new_status = ($current_status->status == "1") ? "0" : "1";
         $update = array(

@@ -24,19 +24,8 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Username</label>
-                                            <input class="form-control" type="text" name="username">
-                                            @error('username')
-                                                <p class="text-danger">
-                                                    {{$message}}
-                                                </p>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Employee</label>
-                                            <select name="emp_id" id="" class="form-select">
+                                            <label for="" class="form-label">Employee <span class="text-danger">*</span></label>
+                                            <select name="emp_id" class="form-select">
                                                 <option value="">Select Employee</option>
                                                 @foreach ($employees as $employee)
                                                     <option value="{{$employee->id}}">{{$employee->emp_full_name}}</option>
@@ -51,9 +40,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Password</label>
-                                            <input class="form-control" type="password" name="password">
-                                            @error('password')
+                                            <label for="" class="form-label">User Role <span class="text-danger">*</span></label>
+                                            <select name="user_role" class="form-select">
+                                                <option value="">Select Role</option>
+                                                @foreach ($roles as $user_role)
+                                                    <option value="{{$user_role->id}}">{{$user_role->user_role}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('user_role')
                                                 <p class="text-danger">
                                                     {{$message}}
                                                 </p>
@@ -62,7 +56,23 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Email</label>
+                                            <label for="" class="form-label">Data Filter <span class="text-danger">*</span></label>
+                                            <select name="data_access" class="form-select">
+                                                <option value="">Select Accessible Data</option>
+                                                @foreach ($data_access as $key => $value)
+                                                    <option value="{{$key}}">{{$value}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('data_access')
+                                                <p class="text-danger">
+                                                    {{$message}}
+                                                </p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group d-flex flex-column">
+                                            <label for="" class="form-label">Email <span class="text-danger">*</span></label>
                                             <input class="form-control" type="email" name="email">
                                             @error('email')
                                                 <p class="text-danger">
@@ -73,7 +83,18 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Confirm Password</label>
+                                            <label for="" class="form-label">Password <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="password" name="password">
+                                            @error('password')
+                                                <p class="text-danger">
+                                                    {{$message}}
+                                                </p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group d-flex flex-column">
+                                            <label for="" class="form-label">Confirm Password <span class="text-danger">*</span></label>
                                             <input class="form-control" type="password" name="password_confirmation">
                                             @error('password_confirmation')
                                                 <p class="text-danger">

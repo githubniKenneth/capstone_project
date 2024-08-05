@@ -13,6 +13,11 @@ class SubModuleController extends Controller
         $data = SubModule::orderBy('created_at', 'desc')->get();
         // dd($data);
         // return view('students.index', $data);
+
+        foreach ($data as $status){
+            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+        }
+        
         return view('sub-module.index')->with(compact('data'));
     }
 

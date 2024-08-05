@@ -10,8 +10,8 @@
                 </ol>
             </nav>
             
-        <div class="d-flex flex-row-reverse pb-3">
-            <a href="{{ route('user.create') }}"class="btn btn-success">Add</a>
+        <div class="d-flex flex-row-reverse pb-3"> 
+            <button class="btn btn-success" onclick="window.location.href='{{ route('user.create') }}'" {{$buttons['Create']}}>+</button>
         </div>
                 
         <div class="table-responsive">
@@ -20,7 +20,6 @@
                     <tr>
                     <th scope="col">No.</th>
                         <th scope="col">Employee</th>
-                        <th scope="col">Username</th>
                         <th scope="col">Email</th>
                         <th scope="col">Created Date</th>
                         <th scope="col">Created By</th>
@@ -38,28 +37,46 @@
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td> {{ $full_name }}</td>
-                            <td> {{ $user->username}}</td>
                             <td> {{ $user->email}}</td>
                             <td> {{ ($user->cds->toFormattedDateString()) }}</td>
                             <td> {{ $user->creator->emp_full_name }} </td>
-                            <td> {{ ($user->status == 1) ? "Active":"Inactive" }}</td>
                             <td> 
-                                <a href="{{ route('user.edit', $user->id) }} " class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
-                                <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/sales/user/remove/{{$user->id}}" title="Remove Data" 
-                                class="btn btn-danger rounded">
+                                <button class="btn {{$user->status_color}}">
+                                {{ ($user->status == 1) ? "Active":"Inactive" }}
+                                </button>
+                            </td>
+                            <td> 
+                                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                    data-id="{{ $user->id }}"
+                                    data-status="{{ $user->status }}"
+                                    data-url="{{ route('user.delete', $user->id) }}" {{$buttons['Remove']}}>
                                     <i class="fas fa-trash text-light fa-lg"></i>
-                                </a>
-                                <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                </button>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-    </div>        
-    @endsection
+    </div>  
+    
+    @if (Session::has('message'))
+        <script>
+            swal({
+                title: "Success!",
+                text: "{{ Session::get('message') }}",
+                icon: 'success',
+                timer: 2000,
+                buttons: false
+            })
+        </script>
+    @endif    
+
+@endsection
 
 @section('script')
+<script src="{{asset('js/remove-modal/open-modal.js')}}"></script>
     <script>
         $(document).ready( function () {
             $('#user_table').DataTable();

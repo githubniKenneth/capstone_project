@@ -57,27 +57,63 @@ a:hover{
 }
 
 nav a {
-    margin-right: 30px; /* Add right margin between navigation links */
+    margin-right: 30px; 
   }
 
 .welcome {
-    height: 500px;
-    margin-left: 290px;
-    margin-top: 200px;
-    margin-right: 50px;
+    position: absolute;
+    left: 300px;
+    top: 300px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
+    background-color: rgba(0, 0, 0, 0.1); 
+    padding: 20px;
 }
 
 .welcome h2 {
-    font-size: 50px;
+    font-size: 70px;
+    color: #D3C6C6;
 }
 
 .welcome p {
     font-size: 30px;
+    color: #D3C6C6;
 }
 
-#quote-btn {
+.welcome button {
+    background: #A96969;
+    color: white; 
+    border: none; 
+    padding: 15px 30px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: background-color 0.3s, transform 0.3s; 
+    border-radius: 5px; 
+}
+
+.welcome button:hover {
   background: #A96969;
-  color: #fff;
+  color: white;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  transform: scale(1.05);
+}
+
+#quote-btn:hover {
+  /* font-size: 30px; */
+  background: #A96969;
+  color: white;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  transform: scale(1.05); 
+}
+
+#quote-btn  {
+  background: #A96969;
+  color: white; 
+  border: none; 
+  padding: 15px 30px; 
+  font-size: 16px; 
+  cursor: pointer; 
+  transition: background-color 0.3s, transform 0.3s; 
+  border-radius: 5px; 
 }
 
 .story-section, .contact{
@@ -515,7 +551,7 @@ body{
     height: 40rem;
     width: 100%;
     object-fit: cover;
-    box-shadow: 2.5rem 2.5rem 0 1rem rgb(255, 168, 168);
+    box-shadow: 2.5rem 2.5rem 0 1rem #D3C6C6;
   }
   
   .about .info {
@@ -729,7 +765,7 @@ body{
     color: black;
     margin: 0 auto;
   }
-  
+/*   
   .border {
     height: 2px;
     margin: 20px auto 20px;
@@ -737,29 +773,17 @@ body{
     width: 80px;
     background: crimson;
     margin-bottom: 60px;
-  }
+  } */
   
   .services .service-block.color-bg {
-    background: crimson;
-    color: #fff;
+    background: #D3C6C6;
+    color: black;
   }
   
   .services .service-block.color-bg i,
   .services .service-block.color-bg h2,
   .services .service-block.color-bg p {
-    color: #fff;
-  }
-  
-  .services .service-block h2 {
     color: black;
-    font-size: 18px;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  
-  .services .service-block p {
-    font-size: 14px;
-    color: #fff;
   }
   
   .services .service-block h2 {
@@ -774,10 +798,22 @@ body{
     color: black;
   }
   
+  .services .service-block h2 {
+    color: black;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  .services .service-block p {
+    font-size: 14px;
+    color: black;
+  }
+  
   .services .service-block.color-bg i,
   .services .service-block.color-bg h2,
   .services .service-block.color-bg p {
-    color: #fff;
+    color: black;
   }
   
   .services .service-block i {
@@ -812,9 +848,9 @@ body{
     height: 25rem;
     width: 25rem;
     box-shadow: 0 .2rem .5rem rgba(0, 0, 0, .3);
-    border-left: .5rem solid red;
+    border-left: .5rem solid #D3C6C6;
     border-right: .5rem solid black;
-    border-top: .5rem solid red;
+    border-top: .5rem solid #D3C6C6;
     border-bottom: .5rem solid black;
     border-radius: .5rem;
     text-align: center;
@@ -992,3 +1028,15 @@ body{
     font-weight: bolder;
   }
 
+  select {
+    appearance: none; /* Remove default arrow */
+    -webkit-appearance: none; /* Remove default arrow for Safari */
+    -moz-appearance: none; /* Remove default arrow for Firefox */
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="black" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+    background-size: 16px 16px;
+    padding-right: 30px; /* Space for the arrow */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+}

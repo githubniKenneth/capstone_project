@@ -48,7 +48,7 @@
                         </div>
                         <div>
                             <a href="{{ route('product-series.index') }}" class="btn btn-secondary rounded">Cancel</a>
-                            <button class="btn btn-primary rounded" type="submit">Save Changes</button>
+                            <button class="btn btn-primary rounded" type="submit" {{$buttons['Update']}}>Save Changes</button>
                         </div>
                         
                     </div>

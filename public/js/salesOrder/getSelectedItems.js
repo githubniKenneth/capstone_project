@@ -89,8 +89,8 @@ function getDataAndDisplay(url, event) {
               '<td class="col-md-1">'+ rowCount +'</td>'+
               '<td class="col-md-6">'+value.product_name+'</td>'+
               '<td class="col-md-2">'+value.uom.uom_name+'</td>'+
-              '<td class="col-md-2"><input class="form-control quantity" type="number" id="" name='+itemType+'['+ rowCount +'][issued_qty]" value="1"></td>'+
-              '<td class="col-md-1"><a class="btn btn-danger rounded"><i class="fas fa-trash text-light"></i></a></td>'+
+              '<td class="col-md-2"><input class="form-control quantity" type="number" id="" name='+itemType+'['+ rowCount +'][issued_qty]" value="1" required></td>'+
+              '<td class="col-md-1"><button class="btn btn-danger removeItem" type="button" id="'+ rowCount +'"><i class="fa-solid fa-trash"></i></button></td>'+
           '</tr>');
       })
     }else{
@@ -106,9 +106,9 @@ function getDataAndDisplay(url, event) {
               '<td class="col-md-1">'+ rowCount +'</td>'+
               '<td class="col-md-3">'+value.product_name+'</td>'+
               '<td class="col-md-2">'+value.uom.uom_name+'</td>'+
-              '<td class="col-md-2"><input class="form-control quantity" type="number" id="" name='+itemType+'['+ rowCount +'][item_qty]" value="1"></td>'+
-              '<td class="col-md-2"><input class="form-control price" type="number" id="" name='+itemType+'['+ rowCount +'][order_amount]" value='+value.product_price+'.00></td>'+
-              '<td class="col-md-2"><input class="form-control totalAmount" type="number" id="" name='+itemType+'['+ rowCount +'][order_total_amount]" value='+value.product_price+'.00 readonly></td>'+
+              '<td class="col-md-2"><input class="form-control quantity" type="number" id="" name='+itemType+'['+ rowCount +'][item_qty]" value="1" required></td>'+
+              '<td class="col-md-2"><input required class="form-control price" type="number" id="" name='+itemType+'['+ rowCount +'][order_amount]" value='+value.product_price+'.00></td>'+
+              '<td class="col-md-2"><input required class="form-control totalAmount" type="number" id="" name='+itemType+'['+ rowCount +'][order_total_amount]" value='+value.product_price+'.00 readonly></td>'+
               '<td class="col-md-1"><button class="btn btn-danger removeItem" data-pack="pack-'+value.package_id+'" type="button" id="'+ rowCount +'"><i class="fa-solid fa-trash"></i></button></td>'+
           '</tr>');
       })
@@ -215,9 +215,9 @@ function getDataAndDisplay(url, event) {
               '<td class="d-none"><input name='+itemType+'['+ packageCounter +'][is_additional]" value='+is_additional+' ">'+
               '<td class="col-md-4">'+package.pack_name+'</td>'+
               '<td class="col-md-2">PACKAGE</td>'+
-              '<td class="col-md-2"><input class="form-control quantity" id="'+package.id+'" type="text" name='+itemType+'['+ packageCounter +'][item_qty]" value="1"></td>'+
-              '<td class="col-md-2"><input class="form-control price" type="text" name='+itemType+'['+ packageCounter +'][order_amount]" value='+package.pack_price+'.00></td>'+
-              '<td class="col-md-2"><input class="form-control totalAmount" type="text" name='+itemType+'['+ packageCounter +'][order_total_amount]" value='+package.pack_price+'.00 readonly></td>'+
+              '<td class="col-md-2"><input required class="form-control quantity" id="'+package.id+'" type="text" name='+itemType+'['+ packageCounter +'][item_qty]" value="1"></td>'+
+              '<td class="col-md-2"><input required class="form-control price" type="text" name='+itemType+'['+ packageCounter +'][order_amount]" value='+package.pack_price+'.00></td>'+
+              '<td class="col-md-2"><input required class="form-control totalAmount" type="text" name='+itemType+'['+ packageCounter +'][order_total_amount]" value='+package.pack_price+'.00 readonly></td>'+
               '<td class="col-md-1"><button class="btn btn-danger removeItem" data-pack="pack-'+package.package_id+'" type="button" id="'+ packageCounter +'"><i class="fa-solid fa-trash"></i></button></td>'+
           '</tr>');
 
@@ -232,9 +232,9 @@ function getDataAndDisplay(url, event) {
                   '<td class="d-none"><input name='+itemType+'['+ packageCounter +'][is_additional]" value='+is_additional+' ">'+
                   '<td class="col-md-4">'+item.item.product_name+'</td>'+  
                   '<td class="col-md-2">'+item.item.uom.uom_name+'</td>'+
-                  '<td class="col-md-2"><input class="form-control quantity pack_'+package.id +'" type="text" id="" name='+itemType+'['+ packageCounter +'][item_qty]" value="'+item.item_qty+'" readonly></td>'+
-                  '<td class="col-md-2"><input class="form-control price" type="text" id="" name='+itemType+'['+ packageCounter +'][order_amount]" value=0 readonly></td>'+
-                  '<td class="col-md-2"><input class="form-control totalAmount" type="text" id="" name='+itemType+'['+ packageCounter +'][order_total_amount]" value=0 readonly></td>'+
+                  '<td class="col-md-2"><input class="form-control required quantity pack_'+package.id +'" type="text" id="" name='+itemType+'['+ packageCounter +'][item_qty]" value="'+item.item_qty+'" readonly></td>'+
+                  '<td class="col-md-2"><input class="form-control required price" type="text" id="" name='+itemType+'['+ packageCounter +'][order_amount]" value=0 readonly></td>'+
+                  '<td class="col-md-2"><input class="form-control required totalAmount" type="text" id="" name='+itemType+'['+ packageCounter +'][order_total_amount]" value=0 readonly></td>'+
               '</tr>');
         });
       if (is_additional == 0){

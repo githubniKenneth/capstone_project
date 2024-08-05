@@ -29,7 +29,7 @@
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Package Name</label>
                                         <input class="form-control" type="text" name="pack_name" value="{{ $packages->pack_name }}">
-                                        @error('product_name')
+                                        @error('pack_name')
                                             <p class="text-danger">
                                                 {{$message}}
                                             </p>
@@ -40,6 +40,11 @@
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Camera Number</label>
                                         <input class="form-control" type="text" name="camera_number" value="{{ $packages->camera_number }}">
+                                        @error('camera_number')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -48,6 +53,11 @@
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Price</label>
                                         <input class="form-control" type="text" name="pack_price" value="{{ $packages->pack_price }}">
+                                        @error('pack_price')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -59,6 +69,11 @@
                                                     <option value="{{$brand->id}}" {{($packages->brand_id == $brand->id) ? "selected" :""}}>{{ $brand->brand_name }}</option>
                                             @endforeach
                                         </select>
+                                        @error('brand_id')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -72,6 +87,11 @@
                                                 <option value="{{$resolution->id}}"{{($packages->resolution_id == $resolution->id) ? "selected" :""}}>{{$resolution->resolution_desc}}</option>
                                             @endforeach
                                         </select>
+                                        @error('resolution_id')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -116,6 +136,11 @@
                                             Show Item List
                                     </a>
                                 </div>
+                                @error('item')
+                                    <p class="text-danger">
+                                        {{$message}}
+                                    </p>
+                                @enderror
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -149,7 +174,7 @@
                     <div class="d-flex justify-content-end mt-2">
                         <div>
                             <a href="{{ route('product-packages.index') }}" class="btn btn-secondary rounded">Cancel</a>
-                            <button class="btn btn-primary rounded" type="submit">Save Changes</button>
+                            <button class="btn btn-primary rounded" type="submit" {{$buttons['Update']}}>Save Changes</button>
                         </div>
                         
                     </div>

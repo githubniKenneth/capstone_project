@@ -1,8 +1,7 @@
 @extends('partials.header')
     @section('content')
 
-      <div class="table-listing-color m-3 p-3">
-
+            <div class="table-listing-color m-3 p-3">
                     <h2>Manage Branches</h2>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -13,7 +12,8 @@
                     </nav>
                     
                 <div class="d-flex flex-row-reverse pb-3">
-                    <a href="{{ route('add-branch.create') }}"class="btn btn-success">+</a>
+                    <button class="btn btn-success" onclick="window.location.href='{{ route('add-branch.create') }}'" {{$buttons['Create']}}>+</button>
+                    <!-- <a href="{{ route('add-branch.create') }}"class="btn btn-success">+</a> -->
                 </div>
                 
                 <div class="table-responsive">
@@ -41,14 +41,19 @@
                                     <td> {{ $branch->branch_phone_no }} </td>
                                     <td> {{ $branch->branch_email }} </td>
                                     <td> {{ ($branch->cds->toFormattedDateString()) }}</td>
-                                    <td> {{ ($branch->branch_status == 1) ? "Active":"Inactive" }}</td>
+                                    <td>
+                                        <button class="btn {{$branch->status_color}}">
+                                        {{ ($branch->branch_status == 1) ? "Active":"Inactive" }}
+                                        </button>
+                                    </td>
                                     <td> 
-                                        <a href="/personnel/branch/{{$branch->id}}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
-                                        <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/personnel/branch/remove/{{$branch->id}}" title="Remove Data" 
-                                        class="btn btn-danger rounded">
+                                        <a href="{{ route('branch.edit', $branch->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                        <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                            data-id="{{ $branch->id }}"
+                                            data-status="{{ $branch->branch_status }}"
+                                            data-url="{{ route('branch.delete', $branch->id) }}" {{$buttons['Remove']}}>
                                             <i class="fas fa-trash text-light fa-lg"></i>
-                                        </a>
-                                        <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -56,11 +61,7 @@
                     </table>
                 </div>
             </div>
-            <!-- remove modal -->
-            <x-remove-modal/>
-            <script src="{{asset('js/remove-modal/open-modal.js')}}"></script>
-            <!-- remove modal -->
-       
+        </div>
     @endsection
 
 @section('script')
@@ -69,4 +70,7 @@
         $('#branch_table').DataTable();
     } );
 </script>
+
+
+<script src="{{asset('js/remove-modal/open-modal.js')}}"></script>
 @endsection

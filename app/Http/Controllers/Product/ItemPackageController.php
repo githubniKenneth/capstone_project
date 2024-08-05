@@ -9,9 +9,8 @@ use App\Models\ProductPackages;
 use App\Models\ProductPackagesDetails;
 use App\Models\ProductBrand;
 use App\Models\ProductResolution;
-
 use App\Models\UnitOfMeasurement;
-
+use App\Helpers\PermissionHelper;
 use Illuminate\Support\Facades\DB;
 use Auth;
 
@@ -19,12 +18,18 @@ class ItemPackageController extends Controller
 {
     public function index()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/packages', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/product/packages');
         $data = ProductPackages::orderBy('created_at', 'desc')->get();
-        return view('product.packages.index')->with(compact('data'));
+        foreach ($data as $status){
+            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+        }
+        return view('product.packages.index')->with(compact('data', 'buttons'));
     }
     
     public function create()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/packages', 'Create');
         $product = ProductItem::select('*')
         ->orderBy('created_at', 'desc')
         ->get();
@@ -38,8 +43,23 @@ class ItemPackageController extends Controller
 
     public function store(Request $request)
     {
-
-        // dd($request->qty);
+        $is_authorized = PermissionHelper::checkAuthorization('/product/packages', 'Create');
+        $validatedData = $request->validate([
+            'pack_name' => 'required',
+            'pack_price' => 'required',
+            'brand_id' => 'required',
+            'resolution_id' => 'required',
+            'camera_number' => 'required',
+            'item' => 'required',
+        ], [
+            'pack_name.required' => 'The Name field is required.',
+            'pack_price.required' => 'The Price field is required.',
+            'brand_id.required' => 'The Brand field is required.',
+            'resolution_id.required' => 'The Resolution field is required.',
+            'camera_number.required' => 'The Camera No. field is required.',
+            'item.required' => 'Please select item.',
+        ]);
+        
         $packaged_items = array(
             "pack_name" => $request->pack_name,
             "pack_price" => $request->pack_price, 
@@ -117,6 +137,8 @@ class ItemPackageController extends Controller
 
     public function edit($id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/packages', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/product/packages');
         $product = ProductItem::select('*')
         ->orderBy('created_at', 'desc')
         ->get();
@@ -126,11 +148,29 @@ class ItemPackageController extends Controller
         
         $package_details = ProductPackagesDetails::get();
         // dd($package_details);
-        return view('product/packages.edit')->with(compact('packages','brands','camera_resolutions','package_details', 'product'));
+        return view('product/packages.edit')->with(compact('packages','brands','camera_resolutions','package_details', 'product','buttons'));
     }
 
     public function update(Request $request, ProductPackages $id)
     {
+
+        $is_authorized = PermissionHelper::checkAuthorization('/product/packages', 'Update');
+        $validatedData = $request->validate([
+            'pack_name' => 'required',
+            'pack_price' => 'required',
+            'brand_id' => 'required',
+            'resolution_id' => 'required',
+            'camera_number' => 'required',
+            'item' => 'required',
+        ], [
+            'pack_name.required' => 'The Name field is required.',
+            'pack_price.required' => 'The Price field is required.',
+            'brand_id.required' => 'The Brand field is required.',
+            'resolution_id.required' => 'The Resolution field is required.',
+            'camera_number.required' => 'The Camera No. field is required.',
+            'item.required' => 'Please select item.',
+        ]);
+        
         $packaged_items = array(
             "pack_name" => $request->pack_name,
             "pack_price" => $request->pack_price, 
@@ -148,5 +188,23 @@ class ItemPackageController extends Controller
         return back()->with('message','Data has been update successfully');
     }
 
+    public function delete($id)
+    {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/packages', 'Remove');
+        $package = ProductPackages::find($id);
+
+        if ($package) {
+            $new_status = $package->status == 1 ? 0 : 1;
+            $package->status = $new_status;
+
+            if ($package->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
+        }
+    }
     
 }

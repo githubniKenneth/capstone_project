@@ -13,7 +13,7 @@
             </nav>
 
             <div class="d-flex flex-row-reverse pb-3">
-                <a href="{{ route('product-uom.create') }}"class="btn btn-success">+</a>
+                <button class="btn btn-success" onclick="window.location.href='{{ route('product-uom.create') }}'" {{$buttons['Create']}}>+</button>
             </div>
 
                 <div class="table-responsive">
@@ -38,14 +38,13 @@
                                     <td> {{ ($uom->cds->toFormattedDateString()) }}</td> 
                                     <td> {{ ($uom->status == 1) ? "Active":"Inactive" }}</td>
                                     <td> 
-                                        <a href="/product/uom/{{$uom->id}}" class="btn btn-warning rounded">
-                                            <i class="fa-regular fa-pen-to-square text-light"></i>
-                                        </a>
-                                        <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/product/uom/remove/{{$uom->id}}" title="Remove Data"
-                                        class="btn btn-danger rounded">
-                                            <i class="fas fa-trash text-light"></i>
-                                        </a>
-                                        <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                        <a href="{{ route('product-uom.edit', $uom->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                        <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                            data-id="{{ $uom->id }}"
+                                            data-status="{{ $uom->status }}"
+                                            data-url="{{ route('product-uom.delete', $uom->id) }}" {{$buttons['Remove']}}>
+                                            <i class="fas fa-trash text-light fa-lg"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach

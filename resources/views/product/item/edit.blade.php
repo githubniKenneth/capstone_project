@@ -25,7 +25,7 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Item Name</label>
+                                            <label for="" class="form-label">Item Name <span class="text-danger">*</span></label>
                                             <input class="form-control" type="text" name="product_name" value="{{ $item->product_name }}">
                                             @error('product_name')
                                                 <p class="text-danger">
@@ -36,7 +36,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Item Type</label>
+                                            <label for="" class="form-label">Item Type <span class="text-danger">*</span></label>
                                             <select name="item_types" id="" class="form-select">
                                                 <option value="">Select Item Type</option>
                                                 @foreach ($item_types as $key => $value) <!-- run mo-->
@@ -55,7 +55,7 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Price</label>
+                                            <label for="" class="form-label">Price <span class="text-danger">*</span></label>
                                             <input class="form-control" type="text" name="product_price" value="{{ $item->product_price }}">
                                             @error('product_price')
                                                 <p class="text-danger">
@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">UOM</label>
+                                            <label for="" class="form-label">UOM <span class="text-danger">*</span></label>
                                             <select name="uom_id" id="" class="form-select">
                                                 <option value="">Select Unit</option>
                                                 @foreach ($uom as $unit) <!--$uom sa controller, pinasa gamit compact which is data from unit table-->
@@ -87,22 +87,12 @@
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">Description</label>
                                             <textarea class="form-control" name="product_desc" id="" cols="30" rows="2">{{ $item->product_desc }}</textarea>
-                                            @error('product_desc')
-                                                <p class="text-danger">
-                                                    {{$message}}
-                                                </p>
-                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">Remarks</label>
                                             <textarea class="form-control" name="remarks" id="" cols="30" rows="2">{{ $item->remarks }}</textarea>
-                                            @error('remarks')
-                                                <p class="text-danger">
-                                                    {{$message}}
-                                                </p>
-                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -146,12 +136,11 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Brand</label>
+                                            <label for="" class="form-label">Brand <span class="text-danger">*</span></label>
                                             <select name="brand_id" id="" class="form-select">
                                                 <option value="">Select Brand</option>
-                                                @foreach ($brands as $brand) <!--$brands sa controller, pinasa gamit compact which is data from unit table-->
-                                                        <!-- <option value="{{$brand->id}}">{{$unit->uom_shortname}}</option> -->
-                                                        <option value="{{$brand->id}}" {{($item->brand_id == $brand->id) ? "selected" :""}}>{{$brand->brand_name}}</option>
+                                                @foreach ($brands as $brand) 
+                                                    <option value="{{$brand->id}}" {{($item->brand_id == $brand->id) ? "selected" :""}}>{{$brand->brand_name}}</option>
                                                 @endforeach
                                             </select>
                                             @error('brand_id')
@@ -166,16 +155,10 @@
                                             <label for="" class="form-label">Category</label>
                                             <select name="category_id" id="" class="form-select">
                                                 <option value="">Select Category</option>
-                                                @foreach ($categories as $category) <!--$uom sa controller, pinasa gamit compact which is data from unit table-->
-                                                        <!-- <option value="{{$unit->id}}">{{$unit->uom_shortname}}</option> -->
-                                                        <option value="{{$category->id}}" {{($item->category_id == $category->id) ? "selected" :""}}>{{$category->category_name}}</option>
+                                                @foreach ($categories as $category) 
+                                                    <option value="{{$category->id}}" {{($item->category_id == $category->id) ? "selected" :""}}>{{$category->category_name}}</option>
                                                 @endforeach
                                             </select>
-                                            @error('category_id')
-                                                    <p class="text-danger">
-                                                        {{$message}}
-                                                    </p>
-                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -185,16 +168,10 @@
                                             <label for="" class="form-label">Series</label>
                                             <select name="series_id" id="" class="form-select">
                                                 <option value="">Select Series</option>
-                                                @foreach ($series as $ser) <!--$uom sa controller, pinasa gamit compact which is data from unit table-->
-                                                        <!-- <option value="{{$unit->id}}">{{$unit->uom_shortname}}</option> -->
-                                                        <option value="{{$ser->id}}" {{($item->series_id == $ser->id) ? "selected" :""}}>{{$ser->series_name}}</option>
+                                                @foreach ($series as $ser) 
+                                                    <option value="{{$ser->id}}" {{($item->series_id == $ser->id) ? "selected" :""}}>{{$ser->series_name}}</option>
                                                 @endforeach
                                             </select>
-                                            @error('series_id')
-                                                    <p class="text-danger">
-                                                        {{$message}}
-                                                    </p>
-                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -202,16 +179,10 @@
                                             <label for="" class="form-label">Camera Resolution</label>
                                             <select name="resolution_desc" id="" class="form-select">
                                                 <option value="">Select Camera Resolution</option>
-                                                @foreach ($camera_resolutions as $resolution) <!--$uom sa controller, pinasa gamit compact which is data from unit table-->
-                                                        <!-- <option value="{{$unit->id}}">{{$unit->uom_shortname}}</option> -->
-                                                        <option value="{{$resolution->id}}" {{($item->resolution_id == $resolution->id) ? "selected" :""}}>{{$resolution->resolution_desc}}</option>
+                                                @foreach ($camera_resolutions as $resolution) X
+                                                    <option value="{{$resolution->id}}" {{($item->resolution_id == $resolution->id) ? "selected" :""}}>{{$resolution->resolution_desc}}</option>
                                                 @endforeach
                                             </select>
-                                            @error('resolution_desc')
-                                                    <p class="text-danger">
-                                                        {{$message}}
-                                                    </p>
-                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -221,7 +192,7 @@
                     <div class="d-flex justify-content-end mt-2">
                         <div>
                             <a href="{{ route('product-item.index') }}" class="btn btn-secondary rounded">Cancel</a>
-                            <button class="btn btn-primary rounded" type="submit">Save Changes</button>
+                            <button class="btn btn-primary rounded" type="submit" {{$buttons['Update']}}>Save Changes</button>
                         </div>        
                     </div>
                 </form>

@@ -14,6 +14,7 @@ use App\Models\ProductPackages;
 use App\Models\Branch;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Helpers\PermissionHelper;
 use Mail;
 use Auth;
 
@@ -21,13 +22,54 @@ class QuotationController extends Controller
 {
     public function index()
     {
-        
+        $is_authorized = PermissionHelper::checkAuthorization('/sales/quotation', 'Read');	
+        $buttons = PermissionHelper::getButtonStates('/sales/quotation');
         $data = SalesQuotation::orderBy('created_at', 'desc')->get();
-        return view('sales.quotation.index')->with(compact('data'));
+
+        foreach ($data as $status){
+            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+        }
+        
+        return view('sales.quotation.index')->with(compact('data', 'buttons'));
     }
 
     public function create()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/sales/quotation', 'Create');
+
+        $products = ProductItem::orderBy('product_name', 'asc')->where('status', '1')->get();
+        $clients = Client::orderBy('created_at', 'desc')->where('status', '1')->get();
+        $brands = ProductBrand::orderBy('brand_name', 'asc')->where('status', '1')->get();
+        $resolutions = ProductResolution::orderBy('resolution_desc', 'asc')->where('status', '1')->get();
+        $packages = ProductPackages::orderBy('created_at', 'desc')->where('status', '1')->get();
+        $payment_type = config('constant.payment_type');
+        $payment_status = config('constant.payment_status');
+        $branches = Branch::orderBy('created_at', 'desc')->where('branch_status', '1')->get();
+        return view('sales.quotation.create')->with(compact('products','clients','brands','resolutions', 'packages', 'payment_type', 'payment_status', 'branches'));
+    }
+
+    public function store(Request $request){
+
+        $is_authorized = PermissionHelper::checkAuthorization('/sales/quotation', 'Create');
+        $validatedData = $request->validate([
+            'quote_date' => 'required',
+            'branch_id' => 'required',
+            'client_id' => 'required',
+            'labor_cost' => 'required',
+            'other_cost' => 'required',
+            'discount_cost' => 'required',
+            'item' => 'required',
+            
+        ], [
+            'quote_date.required' => 'The Date field is required.',
+            'branch_id.required' => 'The Branch field is required.',
+            'labor_cost.required' => 'The Labor Cost field is required.',
+            'client_id.required' => 'The Client field is required.',
+            'other_cost.required' => 'The Other Cost field is required.',
+            'discount_cost.required' => 'The Discount field is required.',
+            'item.required' => 'Please select an Item.',
+        ]);
+
         $currentYear = Carbon::now()->year;
         $lastTwoDigits = substr($currentYear, -2);
         $last_quote_number = SalesQuotation::selectRaw('CAST(quote_number AS INTEGER) as numeric_value')->whereYear('created_at', $currentYear)->orderBy('numeric_value', 'desc')->first();
@@ -39,22 +81,6 @@ class QuotationController extends Controller
         }
 
         $newControlNo = "RFQ".$lastTwoDigits."-".$newQuoteNumber;
-        
-
-        $products = ProductItem::orderBy('product_name', 'asc')->where('status', '1')->get();
-        $clients = Client::orderBy('created_at', 'desc')->where('status', '1')->get();
-        $brands = ProductBrand::orderBy('brand_name', 'asc')->where('status', '1')->get();
-        $resolutions = ProductResolution::orderBy('resolution_desc', 'asc')->where('status', '1')->get();
-        $packages = ProductPackages::orderBy('created_at', 'desc')->where('status', '1')->get();
-        $payment_type = config('constant.payment_type');
-        $payment_status = config('constant.payment_status');
-        $branches = Branch::orderBy('created_at', 'desc')->where('branch_status', '1')->get();
-        return view('sales.quotation.create')->with(compact('products','clients','brands','resolutions', 'packages', 'payment_type', 'payment_status', 'newQuoteNumber','newControlNo', 'branches'));
-    }
-
-    public function store(Request $request){
-        // $validated = $request->validated();
-        // dd($newQuoteNumber);
 
         if ($request->has('action') && $request->input('action') == 'saveButton') {
             $is_posted = 0;
@@ -65,8 +91,8 @@ class QuotationController extends Controller
         $isChecked = $request->has('is_vat') ? 1 : 0;
 
         $details = array(
-            "quote_number" => $request->quote_number,
-            "quote_control_number" => $request->quote_control_number,
+            "quote_number" => $newQuoteNumber,
+            "quote_control_number" => $newControlNo,
             "is_request" => 0,
             "branch_id" => $request->branch_id,
             "brand_id" => $request->brand_id,
@@ -122,15 +148,15 @@ class QuotationController extends Controller
     }
 
     public function edit($id){
-        // $quotation = SalesQuotation::find($id);
-        // $quotation_details = SalesQuotationDetails::find($quotation->id);
-        // dd($quotation_details);
+        
+        $is_authorized = PermissionHelper::checkAuthorization('/sales/quotation', 'Read');
         $packages = ProductPackages::orderBy('created_at', 'desc')->where('status', '1')->get();
         $products = ProductItem::orderBy('product_name', 'asc')->where('status', '1')->get();
         // $clients = Client::orderBy('created_at', 'desc')->where('status', '1')->get();
         // $brands = ProductBrand::orderBy('brand_name', 'asc')->where('status', '1')->get();
         // $resolutions = ProductResolution::orderBy('resolution_desc', 'asc')->where('status', '1')->get();
 
+        $buttons = PermissionHelper::getButtonStates('/sales/quotation');
         $data = [
             'quotation' => SalesQuotation::find($id),
             'quotation_details' => SalesQuotationDetails::where('quotation_id', $id)->get(),
@@ -140,10 +166,30 @@ class QuotationController extends Controller
             'branches' => Branch::orderBy('created_at', 'desc')->where('branch_status', '1')->get(),
         ];
         // dd($data['branches']);
-        return view('sales.quotation.edit')->with(compact('data', 'packages', 'products'));
+        return view('sales.quotation.edit')->with(compact('data', 'packages', 'products', 'buttons'));
     }
 
     public function update(Request $request, SalesQuotation $id, SalesQuotationDetails $details_id){
+
+        $is_authorized = PermissionHelper::checkAuthorization('/sales/quotation', 'Update');
+        $validatedData = $request->validate([
+            'quote_date' => 'required',
+            'branch_id' => 'required',
+            'client_id' => 'required',
+            'labor_cost' => 'required',
+            'other_cost' => 'required',
+            'discount_cost' => 'required',
+            'item' => 'required',
+            
+        ], [
+            'quote_date.required' => 'The Date field is required.',
+            'branch_id.required' => 'The Branch field is required.',
+            'labor_cost.required' => 'The Labor Cost field is required.',
+            'client_id.required' => 'The Client field is required.',
+            'other_cost.required' => 'The Other Cost field is required.',
+            'discount_cost.required' => 'The Discount field is required.',
+            'item.required' => 'Please select an Item.',
+        ]);
 
         if ($request->has('action') && $request->input('action') == 'saveButton') {
             $is_posted = 0;
@@ -308,25 +354,23 @@ class QuotationController extends Controller
 
         return back()->with('message','Email has been sent successfully');
     }
-    // public function removeItem($details_id, $item_id)
-    // {
-    //     $items = SalesQuotationDetails::where('id', $details_id)
-    //                     ->where('item_id', $item_id)
-    //                     ->first();
-    //                     dd($items);
-    //     foreach ($items as $item) {
-            
-    //         dd($item);
-    //         if ($item->item_id == 0)
-    //         {
+    
+    public function delete($id)
+    {
+        $is_authorized = PermissionHelper::checkAuthorization('/sales/quotation', 'Remove');
+        $quotation = SalesQuotation::find($id);
 
-    //         }
-    //         else
-    //         {
-    //             $item->delete();
-    //         }
-    //     }
-        
-    //     return redirect()->back();
-    // }
+        if ($quotation) {
+            $new_status = $quotation->status == 1 ? 0 : 1;
+            $quotation->status = $new_status;
+
+            if ($quotation->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
+        }
+    }
 }

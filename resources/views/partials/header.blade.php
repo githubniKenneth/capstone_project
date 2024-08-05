@@ -23,6 +23,7 @@
     <!-- Alpine.js -->
     <script src="//unpkg.com/alpinejs" defer></script>
     <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
         var _baseUrl = "{{ url('/') }}/";  
@@ -53,7 +54,7 @@
                                 <span>{{Auth::user()->employee->emp_full_name}}</span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="triggerId">
-                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="/profile/{{Auth::user()->id;}}">Profile</a>
                                 <form action="/logout" method="post">
                                     @csrf
                                     <button class="dropdown-item">Logout</button>

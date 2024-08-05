@@ -24,12 +24,12 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Client</label>
+                                            <label for="" class="form-label">Client <span class="text-danger">*</span></label>
                                             <select name="client_id" id="selectClient"  class="form-select">
                                                 <option value="">Select Client</option>
                                                 
                                                 @foreach ($clients as $client)
-                                                    <option value="{{$client->id}}">{{($client->client_full_name) ? $client->client_full_name : $client->client_business_name }}</option>
+                                                    <option value="{{$client->id}}" {{ old('client_id') == $client->id ? 'selected' : '' }}>{{($client->client_full_name) ? $client->client_full_name : $client->client_business_name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('client_id')
@@ -41,7 +41,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Date</label>
+                                            <label for="" class="form-label">Date <span class="text-danger">*</span></label>
                                             <input type="datetime-local" name="ocular_date" class="form-control" value="{{ now()->format('Y-m-d H:i:s') }}">
                                             @error('ocular_date')
                                                 <p class="text-danger">
@@ -56,7 +56,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">Full Name</label>
-                                            <input class="form-control" type="text" name="order_name" id="clientName" readonly>
+                                            <input class="form-control" type="text" name="order_name" id="clientName" value="{{ old('order_name') }}" readonly>
                                             @error('order_name')
                                                 <p class="text-danger">
                                                     {{$message}}
@@ -67,7 +67,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">Email</label>
-                                            <input class="form-control" type="text" name="order_email" id="clientEmail" readonly>
+                                            <input class="form-control" type="text" name="order_email" id="clientEmail" value="{{ old('order_email') }}" readonly>
                                             @error('order_email')
                                                 <p class="text-danger">
                                                     {{$message}}
@@ -80,7 +80,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">Contact Number</label>
-                                            <input class="form-control" type="text" name="order_contact_no" id="clientContactNo" readonly>
+                                            <input class="form-control" type="text" name="order_contact_no" id="clientContactNo" value="{{ old('order_contact_no') }}" readonly>
                                             @error('order_contact_no')
                                                 <p class="text-danger">
                                                     {{$message}}
@@ -91,7 +91,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">Address</label>
-                                            <input class="form-control" type="text" id="client_address" name="order_address" readonly>
+                                            <input class="form-control" type="text" id="client_address" name="order_address" value="{{ old('order_address') }}" readonly>
                                             @error('order_address')
                                                 <p class="text-danger">
                                                     {{$message}}
@@ -104,19 +104,24 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Status</label>
+                                            <label for="" class="form-label">Status <span class="text-danger">*</span></label>
                                         <select name="ocular_status" id="ocularStatus"  class="form-select">
                                         <option value="">Select Status</option>
                                             @foreach ($ocular_status as $key => $value)
-                                                <option value="{{$key}}">{{$value}}</option>
+                                                <option value="{{$key}}" {{ old('ocular_status') == $key ? 'selected' : '' }}>{{$value}}</option>
                                             @endforeach
                                         </select>
+                                        @error('status')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">Landmark</label>
-                                            <textarea class="form-control" name="jo_landmark" id="" cols="60" rows="1"></textarea>
+                                            <textarea class="form-control" name="jo_landmark" id="" cols="60" rows="1">{{ old('jo_landmark') }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -135,11 +140,13 @@
                             </h2>                            <div id="flush-employee" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordion-flush-employee">
                                 <div class="p-3">
                                     <div class="d-flex justify-content-end addEmployee" >
-                                        <!-- <a href="#" class="btn btn-success add-row">+</a> -->
                                         <button class="btn btn-success add-row" type="button">+</button>
-                                        <!-- <button onclick="myFunction()" class="btn btn-success addEmployeeRow">+</button> -->
                                     </div>
-
+                                    @error('name')
+                                        <p class="text-danger">
+                                            {{$message}}
+                                        </p>
+                                    @enderror
                                     <div id="emp-table" class="row">
                                         <div>
                                             <div class="row my-2">

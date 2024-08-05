@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
-use App\Models\EmployeeRoles;
+use App\Models\UserRole;
 use App\Models\Group;
 use App\Models\Module;
 use App\Models\Permission;
@@ -16,66 +16,79 @@ use App\Http\Requests\UserStoreRequest;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Helpers\PermissionHelper;
 
 class UserController extends Controller
 {
     public function index()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/user-account/user', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/user-account/user');
         $data = User::orderBy('created_at', 'desc')->get();
-        return view('user.index')->with(compact('data'));
+
+        foreach ($data as $status){
+            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+        }
+        
+        return view('user.index')->with(compact('data','buttons'));
     }
 
     public function create()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/user-account/user', 'Create');
         $modules = Module::select('id','module_name', 'group_id')->where('status', 1)->get();
         $employees = Employee::select('id','emp_full_name')->where('status', 1)->get();
-        $roles = EmployeeRoles::select('id','empr_role')->where('status', 1)->get();
+        $roles = UserRole::select('id','user_role')->where('status', 1)->get();
         $groups = Group::select('id','group_name')->where('status', 1)->get();
         $permissions = Permission::select('id','name')->get();
-        return view('user.create')->with(compact('employees','groups','modules','permissions','roles'));
+        $data_access = config('constant.data_access');
+        return view('user.create')->with(compact('employees','groups','modules','permissions','roles', 'data_access'));
     }
 
     public function store(UserStoreRequest $request)
     {
-        // dd($request->emp_id);
+        $is_authorized = PermissionHelper::checkAuthorization('/user-account/user', 'Create');
         $validated = $request->validated();
-        // dd($request->emp_id);
         $emp_id = ($request->emp_id == null) ? '0' : $request->emp_id ;
         $details = array(
             "emp_id" => $emp_id, 
-            "username" => $request->username,
+            "role_id" => $request->user_role, 
+            "data_access" => $request->data_access,
+            "username" => null,
             "email" => $request->email,
             "password" => bcrypt($request->password),
             "status" => 1,
             "created_by" => Auth::user()->id,
         );
-        // dd($details);
 
         User::create($details);
-        return view('user.index');
+        return redirect('user-account/user')->with('message','Data has been saved successfully');
     }
 
     
     public function edit($id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/user-account/user', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/user-account/user');
         $data = User::findOrFail($id);
         $modules = Module::select('id','module_name', 'group_id')->where('status', 1)->get();
         $employees = Employee::select('id','emp_full_name')->where('status', 1)->get();
-        $roles = EmployeeRoles::select('id','empr_role')->where('status', 1)->get();
+        $roles = UserRole::select('id','user_role')->where('status', 1)->get();
         $groups = Group::select('id','group_name')->where('status', 1)->get();
         $permissions = Permission::select('id','name')->get();
-
+        $data_access = config('constant.data_access');
 
         // Fetch user access groups and modules
         
         $userAccessGroups = UserAccessGroup::where('user_id', $id)->get();
         $userAccessModules = UserAccessModule::where('user_id', $id)->get();
         // dd($userAccessGroups);
-        return view('user.edit')->with(compact('data','employees','groups','modules','permissions','roles', 'userAccessGroups', 'userAccessModules'));
+        return view('user.edit')->with(compact('data','employees','groups','modules','permissions','data_access', 'userAccessGroups', 'userAccessModules', 'roles', 'buttons'));
     }
 
     public function update(UserStoreRequest $request, User $id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/user-account/user', 'Update');
         $validated = $request->validated();
         // Check if a new password is provided
         if ($request->filled('password')) {
@@ -89,10 +102,11 @@ class UserController extends Controller
         $emp_id = ($request->emp_id == null) ? '0' : $request->emp_id ;
         $details = array(
             "emp_id" => $emp_id, 
-            "username" => $request->username,
+            "role_id" => $request->user_role, 
+            "data_access" => $request->data_access,
             "email" => $request->email,
             "status" => 1,
-            "created_by" => Auth::user()->id,
+            "updated_by" => Auth::user()->id,
         );
 
         if ($request->filled('password')) {
@@ -182,5 +196,24 @@ class UserController extends Controller
         return redirect('user-account/user');
 
 
+    }
+
+    public function delete($id)
+    {
+        $is_authorized = PermissionHelper::checkAuthorization('/user-account/user', 'Remove');
+        $user = User::find($id);
+
+        if ($user) {
+            $new_status = $user->status == 1 ? 0 : 1;
+            $user->status = $new_status;
+
+            if ($user->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 }

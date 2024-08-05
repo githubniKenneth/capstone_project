@@ -12,8 +12,8 @@
                         </ol>
                     </nav>
                     
-                <div class="d-flex flex-row-reverse pb-3">
-                    <a href="{{ route('sales-quotation.create') }}"class="btn btn-success">+</a>
+                <div class="d-flex flex-row-reverse pb-3"> 
+                    <button class="btn btn-success" onclick="window.location.href='{{ route('sales-quotation.create') }}'" {{$buttons['Create']}}>+</button>
                 </div>
                 
                 <div class="table-responsive">
@@ -43,16 +43,21 @@
                                     <td>{{ $Quotation->quote_name }}</td>
                                     <td>{{ $Quotation->quote_email }}</td>
                                     <td>{{ ($Quotation->is_request == 0) ? "Admin Side":"Client Side"   }}</td>
-                                    <td>{{ $Quotation->user->employee->emp_full_name }}</td>
-                                    <td> {{ ($Quotation->status == 1) ? "Active":"Inactive" }}</td>
+                                    <td>{{ $Quotation->created_by == 0 ? "Client" : $Quotation->user->employee->emp_full_name }}</td>
                                     <td> 
-                                        <a href="{{ route('sales-quotation.edit', $Quotation->id) }} " title="Edit Data" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                        <button class="btn {{$Quotation->status_color}}">
+                                        {{ ($Quotation->status == 1) ? "Active":"Inactive" }}
+                                        </button>
+                                    </td>
+                                    <td> 
+                                        <a href="{{ route('sales-quotation.edit', $Quotation->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
                                         <a href="{{ route('sales-quotation.email', $Quotation->id) }} " title="Send Email" class="btn btn-success rounded"><i class="fa-regular fa-envelope text-light"></i></a>
-                                        <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/sales/quotation/remove/{{$Quotation->id}}" title="Remove Data" 
-                                        class="btn btn-danger rounded">
+                                        <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                            data-id="{{ $Quotation->id }}"
+                                            data-status="{{ $Quotation->status }}"
+                                            data-url="{{ route('sales-quotation.delete', $Quotation->id) }}" {{$buttons['Remove']}}>
                                             <i class="fas fa-trash text-light fa-lg"></i>
-                                        </a>
-                                        <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach

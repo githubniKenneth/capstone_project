@@ -13,7 +13,7 @@
                 </nav>
 
             <div class="d-flex flex-row-reverse pb-3">
-                <a href="{{ route('product-series.create') }}"class="btn btn-success">+</a>
+                <button class="btn btn-success" onclick="window.location.href='{{ route('product-series.create') }}'" {{$buttons['Create']}}>+</button>
             </div>
 
                 <div class="table-responsive">
@@ -36,12 +36,13 @@
                                     <td> {{ ($series->cds->toFormattedDateString()) }}</td> 
                                     <td> {{ ($series->status == 1) ? "Active":"Inactive" }}</td>
                                     <td> 
-                                        <a href="/product/series/{{$series->id}}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
-                                        <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/product/series/remove/{{$series->id}}" title="Remove Data"
-                                        class="btn btn-danger rounded">
-                                            <i class="fas fa-trash text-light"></i>
-                                        </a>
-                                        <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                        <a href="{{ route('product-series.edit', $series->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                        <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                            data-id="{{ $series->id }}"
+                                            data-status="{{ $series->status }}"
+                                            data-url="{{ route('product-series.delete', $series->id) }}" {{$buttons['Remove']}}>
+                                            <i class="fas fa-trash text-light fa-lg"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach

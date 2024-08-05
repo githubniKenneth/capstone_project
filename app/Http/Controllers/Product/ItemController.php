@@ -12,8 +12,7 @@ use App\Models\ProductCategory;
 use App\Models\ProductSeries;
 use App\Models\ProductResolution;
 use App\Models\UnitOfMeasurement;
-
-
+use App\Helpers\PermissionHelper;
 use App\Http\Requests\ProductItemRequest;
 use Auth;
 
@@ -21,16 +20,23 @@ class ItemController extends Controller
 {
     public function index()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/item', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/product/item');
         $data = ProductItem::select('product_items.*', 'product_brands.brand_name', 'unit_of_measurements.uom_shortname')
         ->orderBy('product_items.created_at', 'desc')
         ->leftJoin('product_brands', 'product_brands.id', '=', 'product_items.brand_id')
         ->leftJoin('unit_of_measurements', 'unit_of_measurements.id', '=', 'product_items.uom_id')
         ->get();
         // dd($data);
-        return view('product.item.index')->with(compact('data'));
+
+        foreach ($data as $status){
+            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+        }
+        return view('product.item.index')->with(compact('data', 'buttons'));
     }
     public function create()
-    {
+    {	
+        $is_authorized = PermissionHelper::checkAuthorization('/product/item', 'Create');
         $uom = UnitOfMeasurement::orderBy('uom_shortname', 'asc')->where('status', '1')->get();
         $brands = ProductBrand::orderBy('brand_name', 'asc')->where('status', '1')->get();
         $categories = ProductCategory::orderBy('category_name', 'asc')->where('status', '1')->get();;
@@ -42,6 +48,8 @@ class ItemController extends Controller
 
     public function edit($id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/item', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/product/item');
         $item = ProductItem::findOrFail($id);
         $uom = UnitOfMeasurement::orderBy('uom_shortname', 'asc')->where('status', '1')->get();
         $brands = ProductBrand::orderBy('brand_name', 'asc')->where('status', '1')->get();
@@ -50,11 +58,26 @@ class ItemController extends Controller
         $camera_resolutions = ProductResolution::orderBy('resolution_desc', 'asc')->where('status', '1')->get();
         $item_types = config('constant.item_type');
         // return view('product/item.edit', ['item' => $data]);
-        return view('product/item.edit')->with(compact('item','uom','brands', 'categories', 'series','camera_resolutions','item_types'));
+        return view('product/item.edit')->with(compact('item','uom','brands', 'categories', 'series','camera_resolutions','item_types','buttons'));
     }
 
     public function update(Request $request, ProductItem $id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/item', 'Update');
+        $validatedData = $request->validate([
+            'product_name' => 'required',
+            'item_type' => 'required',
+            'product_price' => 'required',
+            'uom_id' => 'required',
+            'brand_id' => 'required',
+        ], [
+            'product_name.required' => 'The Item Name field is required.',
+            'item_type.required' => 'The Item Type field is required.',
+            'product_price.required' => 'The Price field is required.',
+            'uom_id.required' => 'The Unit field is required.',
+            'brand_id.required' => 'The Brand field is required.',
+        ]);
+        
         $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -98,7 +121,22 @@ class ItemController extends Controller
 
     // STORE
     public function store(Request $request)
-    {
+    {	
+        $is_authorized = PermissionHelper::checkAuthorization('/product/item', 'Create');
+        $validatedData = $request->validate([
+            'product_name' => 'required',
+            'item_type' => 'required',
+            'product_price' => 'required',
+            'uom_id' => 'required',
+            'brand_id' => 'required',
+        ], [
+            'product_name.required' => 'The Item Name field is required.',
+            'item_type.required' => 'The Item Type field is required.',
+            'product_price.required' => 'The Price field is required.',
+            'uom_id.required' => 'The Unit field is required.',
+            'brand_id.required' => 'The Brand field is required.',
+        ]);
+
         $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -148,24 +186,22 @@ class ItemController extends Controller
         return view('product.item.item-list-modal')->with(compact('items'));
     }
 
-
-    public function remove(Request $request, $id)
+    public function delete($id)
     {
-        $id = $id;
-        $action = "/product/item/delete/".$id; // kulang yung slug
-        return view('components.remove-form', compact('action'));
-    }
+        $is_authorized = PermissionHelper::checkAuthorization('/product/item', 'Remove');
+        $item = ProductItem::find($id);
+        if ($item) {
+            $new_status = $item->status == 1 ? 0 : 1;
+            $item->status = $new_status;
 
-
-    public function delete(ProductItem $items, $id)
-    {
-        $current_status = ProductItem::find($id, ['status']);
-        $new_status = ($current_status->status == "1") ? "0" : "1";
-        $update = array(
-            "status" => $new_status,
-        );
-        $items->where('id', $id)->update($update);
-        return redirect('/product/item'); // kulang yung slug
+            if ($item->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 
 }

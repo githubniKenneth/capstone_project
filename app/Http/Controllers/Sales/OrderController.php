@@ -17,31 +17,28 @@ use App\Models\Client;
 use App\Models\Branch;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use App\Helpers\PermissionHelper;
 
 class OrderController extends Controller
 {
     public function index()
     {
-        // $data = SalesOrder::orderBy('created_at', 'desc')->get();
+        $is_authorized = PermissionHelper::checkAuthorization('/sales/order', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/sales/order');
         $data = SalesOrder::orderBy('created_at', 'desc')->get();
-        return view('sales.order.index')->with(compact('data'));
+
+        foreach ($data as $status){
+            $status->status_color = $status->order_status == 1 ? 'status-active' : 'status-inactive';
+        }
+        
+        return view('sales.order.index')->with(compact('data', 'buttons'));
         // return view('sales.order.index');
     }
 
     public function create()
     {
-        $currentYear = Carbon::now()->year;
-        $lastTwoDigits = substr($currentYear, -2);
-        $last_order_number = SalesOrder::selectRaw('CAST(order_number AS INTEGER) as numeric_value')->whereYear('created_at', $currentYear)->orderBy('numeric_value', 'desc')->first();
-        
-        if ($last_order_number) {
-            $newOrderNumber = str_pad($last_order_number->numeric_value + 1, 5, '0', STR_PAD_LEFT);
-        } else {
-            $newOrderNumber = '00001';
-        }
 
-        $newControlNo = "O".$lastTwoDigits."-".$newOrderNumber;
-
+        $is_authorized = PermissionHelper::checkAuthorization('/sales/order', 'Create');
         $quotation_numbers = SalesQuotation::orderBy('quote_number', 'asc')->where('status', '1')->get();
         $packages = ProductPackages::orderBy('created_at', 'desc')->where('status', '1')->get();
         $products = ProductItem::orderBy('product_name', 'asc')->where('status', '1')->get();
@@ -51,7 +48,7 @@ class OrderController extends Controller
         $branches = Branch::orderBy('created_at', 'desc')->where('branch_status', '1')->get();
         $payment_type = config('constant.payment_type');
         $payment_status = config('constant.payment_status');
-        return view('sales.order.create')->with(compact('branches','products','payment_type','payment_status','quotation_numbers','clients','brands','resolutions', 'packages', 'newOrderNumber', 'newControlNo'));
+        return view('sales.order.create')->with(compact('branches','products','payment_type','payment_status','quotation_numbers','clients','brands','resolutions', 'packages'));
     }
 
     public function checkItemAvailability($item_id){
@@ -61,7 +58,31 @@ class OrderController extends Controller
 
     public function store(Request $request){
 
-        // dd($request);
+        $is_authorized = PermissionHelper::checkAuthorization('/sales/order', 'Create');
+        $validatedData = $request->validate([
+            'quotation_id' => 'required',
+            'branch_id' => 'required',
+            'order_date' => 'required',
+            'client_id' => 'required',
+            'payment_type' => 'required',
+            'payment_status' => 'required',
+            'order_labor_cost' => 'required',
+            'order_other_cost' => 'required',
+            'order_discount' => 'required',
+            'item' => 'required',
+        ], [
+            'quotation_id.required' => 'The Quotation No. field is required.',
+            'branch_id.required' => 'The Branch field is required.',
+            'order_date.required' => 'The Date field is required.',
+            'client_id.required' => 'The Client field is required.',
+            'payment_type.required' => 'The Payment Type field is required.',
+            'payment_status.required' => 'The Payment Status field is required.',
+            'order_labor_cost.required' => 'The Labor Cost field is required.',
+            'order_other_cost.required' => 'The Other Cost field is required.',
+            'order_discount.required' => 'The Discount field is required.',
+            'item.required' => 'Please select an Item.',
+        ]);
+
         // items
         $orderedItems = $request->item;
         if($request->item)
@@ -130,14 +151,26 @@ class OrderController extends Controller
             $is_posted = 1;
         }
 
+        $currentYear = Carbon::now()->year;
+        $lastTwoDigits = substr($currentYear, -2);
+        $last_order_number = SalesOrder::selectRaw('CAST(order_number AS INTEGER) as numeric_value')->whereYear('created_at', $currentYear)->orderBy('numeric_value', 'desc')->first();
+        
+        if ($last_order_number) {
+            $newOrderNumber = str_pad($last_order_number->numeric_value + 1, 5, '0', STR_PAD_LEFT);
+        } else {
+            $newOrderNumber = '00001';
+        }
+
+        $newControlNo = "O".$lastTwoDigits."-".$newOrderNumber;
+
         $is_vat = ($request->is_vat == "on") ? "1" : "0";
         // dd($is_vat);
         $details = array(
             "quotation_id" => $request->quotation_id,
             "branch_id" => $request->branch_id,
             "client_id" => $request->client_id,
-            "order_control_no" => $request->order_control_no,
-            "order_number" => $request->order_number,
+            "order_control_no" => $newControlNo,
+            "order_number" => $newOrderNumber,
             "order_material_cost" => $request->order_material_cost,
             "order_sub_total" => $request->order_sub_total,
             "order_labor_cost" => $request->order_labor_cost,
@@ -274,6 +307,9 @@ class OrderController extends Controller
     }
 
     public function edit($id){
+        
+    $is_authorized = PermissionHelper::checkAuthorization('/sales/order', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/sales/order');
         $sales_order = SalesOrder::find($id);
         // $quotation_details = SalesQuotationDetails::find($quotation->id);
         // dd($quotation_details);
@@ -290,12 +326,13 @@ class OrderController extends Controller
         $payment_status = config('constant.payment_status');
 
         // dd($payment_type);
-        return view('sales.order.edit')->with(compact('order_details','order_additional','sales_order','products','payment_type','payment_status','quotation_numbers','clients','brands','resolutions', 'packages','branches'));
+        return view('sales.order.edit')->with(compact('order_details','order_additional','sales_order','products','payment_type','payment_status','quotation_numbers','clients','brands','resolutions', 'packages','branches', 'buttons'));
     }
 
     public function update(Request $request, SalesOrder $id, SalesOrderDetails $details_id){
         
-        // dd($request->item, $request->additionalItem);
+        
+        $is_authorized = PermissionHelper::checkAuthorization('/sales/order', 'Update');
         
         $orderedItems = $request->item;
         if($request->item)
@@ -493,5 +530,24 @@ class OrderController extends Controller
 
 
         return back()->with('message','Data has been saved successfully');
+    }
+
+    public function delete($id)
+    {
+        $is_authorized = PermissionHelper::checkAuthorization('/sales/order', 'Remove');
+        $order = SalesOrder::find($id);
+
+        if ($order) {
+            $new_status = $order->order_status == 1 ? 0 : 1;
+            $order->order_status = $new_status;
+
+            if ($order->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 }

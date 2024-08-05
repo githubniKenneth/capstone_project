@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row p-4">
-    <div class="col-md-3">
+    <div class="col-md-3 mb-5 {{ $dashboard_access['Total Clients'] }}">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Total Clients</h5>
@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mb-5 {{ $dashboard_access['Quotations'] }}">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Quotations Today</h5>
@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mb-5 {{ $dashboard_access['Orders'] }}">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Orders Today</h5>
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mb-5 {{ $dashboard_access['Sales Value'] }}">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Total Sales</h5>
@@ -36,10 +36,7 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="row p-4">
-    <div class="col-md-3">
+    <div class="col-md-3 mb-5 {{ $dashboard_access['Employees'] }}">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Total Employees</h5>
@@ -47,7 +44,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mb-5 {{ $dashboard_access['Oculars'] }}">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Oculars Today</h5>
@@ -55,7 +52,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mb-5 {{ $dashboard_access['Job Orders'] }}">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Job Orders Today</h5>
@@ -63,7 +60,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mb-5 {{ $dashboard_access['Pending Payment'] }}">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Pending Payment</h5>
@@ -74,13 +71,13 @@
 </div>
 
 <div class="row p-4">
-    <h5 class="col-md-6">Recent Deployments</h5>
-    <h5 class="col-md-6">Recent Sales</h5>
+    <h5 class="col-md-6 {{ $dashboard_access['Recent Deployments'] }}">Recent Deployments</h5>
+    <h5 class="col-md-6 {{ $dashboard_access['Recent Sales'] }}">Recent Sales</h5>
 </div>
 
 <div class="row p-4">
 
-    <div class="col-md-6">
+    <div class="col-md-6 {{ $dashboard_access['Recent Deployments'] }}">
         <div class="card">
             <div class="card-body">
                 <table class="table">
@@ -103,7 +100,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 {{ $dashboard_access['Recent Sales'] }}">
         <div class="card">
             <div class="card-body">
                 <table class="table">

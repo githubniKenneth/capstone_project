@@ -254,13 +254,19 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Material Cost</label>
-                                        <input class="form-control material_cost" type="number" name="material_cost" value="{{$data['quotation']->quote_material_cost}}" id="material_cost" readonly>
+                                        <input class="form-control material_cost" type="number" name="material_cost" value="{{ number_format($data['quotation']->quote_material_cost, 2, '.', ',')}}" id="material_cost" readonly>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Labor Cost</label>
                                         <input type="number" name="labor_cost" class="form-control labor_cost" value="{{$data['quotation']->quote_labor_cost}}" id="labor_cost">
+                                        @error('labor_cost')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -269,6 +275,11 @@
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Others</label>
                                         <input type="number" name="other_cost" class="form-control other_cost" value="{{$data['quotation']->quote_other_cost}}" id="other_cost">
+                                        @error('other_cost')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -283,6 +294,11 @@
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">Discount</label>
                                             <input type="number" name="discount_cost" class="form-control discount_cost" value="{{$data['quotation']->quote_discount}}" id="discount_cost">
+                                            @error('outdoor_cam_no')
+                                                <p class="text-danger">
+                                                    {{$message}}
+                                                </p>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-1">
@@ -352,6 +368,11 @@
                                             Show Item List
                                     </a>
                                 </div>
+                                @error('item')
+                                    <p class="text-danger">
+                                        {{$message}}
+                                    </p>
+                                @enderror
                                 <table class="table" id="itemDetailsTable">
                                     <thead>
                                         <tr>
@@ -435,8 +456,8 @@
                     <div class="d-flex justify-content-end mt-2">
                         <div>
                             <a href="{{ route('sales-quotation.index') }}" class="btn btn-secondary rounded">Cancel</a>
-                            <button class="btn btn-primary rounded" type="susbmit" name="action" value="submitButton">Submit</button>
-                            <button class="btn btn-primary rounded" type="submit" name="action" value="saveButton">Save Changes</button>
+                            <button class="btn btn-primary rounded" type="susbmit" name="action" value="submitButton" {{$buttons['Update']}}>Submit</button>
+                            <button class="btn btn-primary rounded" type="submit" name="action" value="saveButton" {{$buttons['Update']}}>Save Changes</button>
                         </div>
                     </div>
                 </div>

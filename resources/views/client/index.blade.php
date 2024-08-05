@@ -12,7 +12,7 @@
                 </nav>
 
                 <div class="d-flex flex-row-reverse pb-3">
-                    <a href="{{ 'client/add' }}"class="btn btn-success">Add</a>
+                    <button class="btn btn-success" onclick="window.location.href='{{ route('client.create') }}'" {{$buttons['Create']}}>+</button> 
                 </div>
 
             <!-- </div> -->
@@ -44,14 +44,19 @@
                                     <td> {{ $client->client_mobile_no }} </td>
                                     <td> {{ $client->client_email }} </td>
                                     <td> {{ ($client->cds->toFormattedDateString()) }}</td>
-                                    <td> {{ ($client->status == 1) ? "Active":"Inactive" }}</td>
                                     <td> 
-                                        <a href="/client/{{$client->id}}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
-                                        <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/client/remove/{{$client->id}}" title="Remove Data" 
-                                        class="btn btn-danger rounded">
+                                        <button class="btn {{$client->status_color}}">
+                                        {{ ($client->status == 1) ? "Active":"Inactive" }}
+                                        </button>
+                                    </td>
+                                    <td> 
+                                        <a href="{{ route('client.edit', $client->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                        <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                            data-id="{{ $client->id }}"
+                                            data-status="{{ $client->status }}"
+                                            data-url="{{ route('client.delete', $client->id) }}" {{$buttons['Remove']}}>
                                             <i class="fas fa-trash text-light fa-lg"></i>
-                                        </a>
-                                        <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                        </button> 
                                     </td>
                                 </tr>
                             @endforeach

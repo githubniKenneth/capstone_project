@@ -14,25 +14,24 @@ class ResolutionController extends Controller
 {
     public function index()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/resolution', 'Read');	
+        $buttons = PermissionHelper::getButtonStates('/product/resolution');
         $data = ProductResolution::orderBy('created_at', 'desc')->get();
         return view('product.resolution.index')->with(compact('data'));
     }
 
     public function create()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/resolution', 'Create');
         return view('product.resolution.create');
     }
 
     public function store(ProductResolutionRequest $request)
     {
-        // dd($request); punta tayo sa create
+        $is_authorized = PermissionHelper::checkAuthorization('/product/resolution', 'Create');
         $validated = $request->validated();
         
         $details = array(
-            // column name => $request->input_name,          
-            // "group_code" => $request->group_code,
-            // "group_icon" => $request->group_icon,
-            // "group_description" => $request->group_description,
             "resolution_desc" => $request->resolution_desc, 
             "status" => 1,
             "created_by" => 1,
@@ -44,12 +43,15 @@ class ResolutionController extends Controller
 
     public function edit($id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/resolution', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/product/resolution');
         $data = ProductResolution::findOrFail($id);
-        return view('product/resolution.edit', ['resolution' => $data]);
+        return view('product/resolution.edit', ['resolution' => $data, 'buttons' => $buttons]);
     }
 
     public function update(ProductResolutionRequest $request, ProductResolution $id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/product/resolution', 'Update');
         $validated = $request->validated();
         $details = array(
             "resolution_desc" => $request->resolution_desc, 
@@ -60,22 +62,23 @@ class ResolutionController extends Controller
         return back()->with('message','Data has been updated successfully');
     }
 
-    public function remove(Request $request, $id)
+    public function delete($id)
     {
-        $id = $id;
-        $action = "/product/resolution/delete/".$id; // kulang yung slug
-        return view('components.remove-form', compact('action'));
-    }
+        $is_authorized = PermissionHelper::checkAuthorization('/product/resolution', 'Remove');
+        $resolution = ProductResolution::find($id);
 
-    public function delete(ProductResolution $resolution, $id)
-    {
-        $current_status = ProductResolution::find($id, ['status']);
-        $new_status = ($current_status->status == "1") ? "0" : "1";
-        $update = array(
-            "status" => $new_status,
-        );
-        $resolution->where('id', $id)->update($update);
-        return redirect('/product/resolution'); // kulang yung slug
+        if ($resolution) {
+            $new_status = $resolution->status == 1 ? 0 : 1;
+            $resolution->status = $new_status;
+
+            if ($resolution->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 
 }

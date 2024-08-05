@@ -12,14 +12,20 @@ class ModuleController extends Controller
 {
     public function index()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/component/module', 'Read');	
         $data = Module::orderBy('created_at', 'desc')->get();
         // dd($data);
         // return view('students.index', $data);
+        foreach ($data as $status){
+            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+        }
+        
         return view('module.index')->with(compact('data'));
     }
 
     public function create()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/component/module', 'Create');
         $groups = Group::select('id','group_name')->where('status', 1)->get();
         // $roles = EmployeeRoles::select('id','empr_role')->where('status', 1)->get();
         return view('module.create')->with(compact('groups'));
@@ -28,6 +34,7 @@ class ModuleController extends Controller
 
     public function store(ModuleStoreRequest $request)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/component/module', 'Create');
         $validated = $request->validated();
         
         $details = array(
@@ -45,6 +52,7 @@ class ModuleController extends Controller
 
     public function edit($id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/component/module', 'Read');
         $groups = Group::select('id','group_name')->where('status', 1)->get();
         $data = Module::findOrFail($id);
         return view('module.edit', ['module' => $data, 'groups' => $groups]);
@@ -52,6 +60,7 @@ class ModuleController extends Controller
 
     public function update(ModuleStoreRequest $request, Module $id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/component/module', 'Update');
         $validated = $request->validated();
         
         $details = array(
@@ -67,22 +76,23 @@ class ModuleController extends Controller
         return back()->with('message','Data has been updated successfully');
     }
 
-    public function remove(Request $request, $id)
+    public function delete($id)
     {
-        $id = $id;
-        $action = "/component/module/delete/".$id; // kulang yung slug
-        return view('components.remove-form', compact('action'));
-    }
+        $is_authorized = PermissionHelper::checkAuthorization('/component/module', 'Remove');
+        $module = Module::find($id);
 
-    public function delete(Module $module, $id)
-    {
-        $current_status = Module::find($id, ['status']);
-        $new_status = ($current_status->status == "1") ? "0" : "1";
-        $update = array(
-            "status" => $new_status,
-        );
-        $module->where('id', $id)->update($update);
-        return redirect('/component/module'); // kulang yung slug
+        if ($module) {
+            $new_status = $module->status == 1 ? 0 : 1;
+            $module->status = $new_status;
+
+            if ($module->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
     
 }

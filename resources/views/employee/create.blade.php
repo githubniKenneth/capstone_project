@@ -24,8 +24,8 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">First Name</label>
-                                            <input class="form-control" type="text" name="emp_first_name" >
+                                            <label for="" class="form-label">First Name <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" name="emp_first_name" value="{{ old('emp_first_name') }}">
                                             @error('emp_first_name')
                                                 <p class="text-danger">
                                                     {{$message}}
@@ -36,7 +36,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">Middle Name</label>
-                                            <input class="form-control" type="text" name="emp_middle_name">
+                                            <input class="form-control" type="text" name="emp_middle_name" value="{{ old('emp_middle_name') }}">
                                         </div>
                                     </div>
                                     
@@ -44,8 +44,8 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Last Name</label>
-                                            <input class="form-control" type="text" name="emp_last_name">
+                                            <label for="" class="form-label">Last Name <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" name="emp_last_name" value="{{ old('emp_last_name') }}">
                                             @error('emp_last_name')
                                                 <p class="text-danger">
                                                     {{$message}}
@@ -56,19 +56,18 @@
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">Suffix</label>
-                                            <input class="form-control" type="text" name="emp_suffix">
+                                            <input class="form-control" type="text" name="emp_suffix" value="{{ old('emp_suffix') }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Branch Name</label>
+                                            <label for="" class="form-label">Branch Name <span class="text-danger">*</span></label>
                                             <select name="branch_id" id="" class="form-select">
                                                 <option value="">Select Role</option>
-                                                <!-- <option value="">$data-></option> -->
                                                 @foreach ($branches as $branch)
-                                                    <option value="{{$branch->id}}">{{$branch->branch_name}}</option>
+                                                    <option value="{{$branch->id}}" {{ old('branch_id') == $branch->id ? 'selected' : '' }}>{{$branch->branch_name}}</option>
                                                 @endforeach
                                             </select>
                                             @error('branch_id')
@@ -80,11 +79,11 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Role</label>
+                                            <label for="" class="form-label">Role <span class="text-danger">*</span></label>
                                             <select name="empr_id" id="" class="form-select">
                                                 <option value="">Select Role</option>
                                                 @foreach ($roles as $role)
-                                                    <option value="{{$role->id}}">{{$role->empr_role}}</option>
+                                                    <option value="{{$role->id}}" {{ old('empr_id') == $role->id ? 'selected' : '' }}>{{$role->empr_role}}</option>
                                                 @endforeach
                                             </select>
                                             @error('empr_id')
@@ -110,13 +109,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">Lot No.</label>
-                                            <input class="form-control" type="text" name="emp_lot_no">
+                                            <input class="form-control" type="text" name="emp_lot_no" value="{{ old('emp_lot_no') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Street</label>
-                                            <input class="form-control" type="text" name="emp_street">
+                                            <label for="" class="form-label">Street <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" name="emp_street" value="{{ old('emp_street') }}">
                                             @error('emp_street')
                                                 <p class="text-danger">
                                                     {{$message}}
@@ -128,8 +127,8 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Barangay</label>
-                                            <input class="form-control" type="text" name="emp_brgy">
+                                            <label for="" class="form-label">Barangay <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" name="emp_brgy" value="{{ old('emp_brgy') }}">
                                             @error('emp_brgy')
                                                 <p class="text-danger">
                                                     {{$message}}
@@ -139,8 +138,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">City</label>
-                                            <input class="form-control" type="text" name="emp_city">
+                                            <label for="" class="form-label">City <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" name="emp_city" value="{{ old('emp_city') }}">
                                             @error('emp_city')
                                                 <p class="text-danger">
                                                     {{$message}}
@@ -164,13 +163,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="" class="form-label">Telephone No.</label>
-                                            <input class="form-control" type="text" name="emp_tele_no">
+                                            <input class="form-control" type="text" name="emp_tele_no" value="{{ old('emp_tele_no') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="" class="form-label">Phone No.</label>
-                                            <input class="form-control" type="text" name="emp_phone_no">
+                                            <label for="" class="form-label">Phone No. <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" name="emp_phone_no" value="{{ old('emp_phone_no') }}">
                                             @error('emp_phone_no')
                                                 <p class="text-danger">
                                                     {{$message}}
@@ -180,8 +179,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="" class="form-label">Email</label>
-                                            <input class="form-control" type="text" name="emp_email">
+                                            <label for="" class="form-label">Email <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" name="emp_email" value="{{ old('emp_email') }}">
                                             @error('emp_email')
                                                 <p class="text-danger">
                                                     {{$message}}

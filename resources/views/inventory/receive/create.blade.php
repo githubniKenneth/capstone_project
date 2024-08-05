@@ -29,8 +29,14 @@
                                 <div class="col-md-12">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Control Number</label>
-                                        <input class="form-control" type="text" name="rec_code">
-                                        @error('rec_code')
+                                        <input class="form-control" type="text" name="rec_code" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group d-flex flex-column">
+                                        <label for="" class="form-label">Supplier <span class="required-field">*</span></label>
+                                        <input class="form-control" type="text" name="rec_supplier">
+                                        @error('rec_supplier')
                                             <p class="text-danger">
                                                 {{$message}}
                                             </p>
@@ -39,14 +45,13 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group d-flex flex-column">
-                                        <label for="" class="form-label">Supplier</label>
-                                        <input class="form-control" type="text" name="rec_supplier">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Date</label>
-                                        <input type="date" name="rec_date" class="form-control">
+                                        <input type="date" name="rec_date" class="form-control" value="{{ now()->format('Y-m-d') }}">
+                                        @error('rec_date')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -77,6 +82,11 @@
                                             Show Item List
                                     </a>
                                 </div>
+                                @error('item')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -112,7 +122,7 @@
 
 
     <script src="{{asset('js/product-item/itemListModal.js')}}"></script>
-
+    <script src="{{asset('js/inv-receiving/removeItem.js')}}"></script>
     <script src="{{asset('js/inv-receiving/getSelectedItems.js')}}"></script>
 
     <script>

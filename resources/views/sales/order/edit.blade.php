@@ -27,6 +27,12 @@
                             <div class="row d-flex p-3">
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
+                                        <label for="" class="form-label">Order Number</label>
+                                        <input class="form-control" type="text" name="order_control_no" value="{{$sales_order->order_control_no}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Quotation Number</label>
                                         <select name="quotation_id" id="selectQuotation" class="form-control">
                                             <option value="">Select Quotation Number</option>
@@ -41,12 +47,6 @@
                                                 {{$message}}
                                             </p>
                                         @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group d-flex flex-column">
-                                        <label for="" class="form-label">Order Number</label>
-                                        <input class="form-control" type="text" name="order_control_no" value="{{$sales_order->order_control_no}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -74,7 +74,7 @@
                                             <option value="{{$client->id}}" {{($sales_order->client_id == $client->id) ? "selected" :"" }}> {{ $client->client_full_name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('rec_code')
+                                        @error('client_id')
                                             <p class="text-danger">
                                                 {{$message}}
                                             </p>
@@ -161,7 +161,7 @@
                                                 <option value="{{$key}}" {{ ($key == $sales_order->payment_type) ? 'selected': '' }}>{{$value}}</option>
                                             @endforeach
                                         </select>
-                                        @error('rec_code')
+                                        @error('payment_type')
                                             <p class="text-danger">
                                                 {{$message}}
                                             </p>
@@ -177,7 +177,7 @@
                                                 <option value="{{$key}}" {{ ($key == $sales_order->payment_status) ? 'selected': '' }}>{{$value}}</option>
                                             @endforeach
                                         </select>
-                                        @error('rec_code')
+                                        @error('payment_status')
                                             <p class="text-danger">
                                                 {{$message}}
                                             </p>
@@ -189,19 +189,24 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Material Cost</label>
-                                        <input class="form-control material_cost" type="number" name="order_material_cost" value="{{ number_format($sales_order->order_material_cost, 2, '.', '') }}" id="material_cost" readonly>
+                                        <input class="form-control material_cost" type="number" name="order_material_cost" value="{{ number_format($sales_order->order_material_cost, 2, '.', ',') }}" id="material_cost" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Labor Cost</label>
-                                        <input type="number" name="order_labor_total" class="form-control labor_cost" value="{{ number_format($sales_order->order_labor_cost, 2, '.', '') }}" id="labor_cost">
+                                        <input type="number" name="order_labor_total" class="form-control labor_cost" value="{{ number_format($sales_order->order_labor_cost, 2, '.', ',') }}" id="labor_cost">
+                                        @error('order_labor_total')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Others</label>
-                                        <input type="number" name="order_other_cost" class="form-control other_cost" value="{{ number_format($sales_order->order_other_cost, 2, '.', '') }}" id="other_cost" readonly>
+                                        <input type="number" name="order_other_cost" class="form-control other_cost" value="{{ number_format($sales_order->order_other_cost, 2, '.', ',') }}" id="other_cost" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -210,14 +215,19 @@
 
                                         <!-- <input class="form-control" type="text" id="order_sub_total" name="order_sub_total" value="{{ $sales_order->order_sub_total }}" readonly> -->
 
-                                        <input class="form-control sub_total_cost" type="number" id="sub_total_cost"  name="order_sub_total" value="{{ number_format($sales_order->order_sub_total, 2, '.', '') }}" readonly>
+                                        <input class="form-control sub_total_cost" type="number" id="sub_total_cost"  name="order_sub_total" value="{{ number_format($sales_order->order_sub_total, 2, '.', ',') }}" readonly>
 
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Discount</label>
-                                        <input type="number" name="order_discount" class="form-control discount_cost" value="{{ number_format($sales_order->order_discount, 2, '.', '') }}" id="discount_cost">
+                                        <input type="number" name="order_discount" class="form-control discount_cost" value="{{ number_format($sales_order->order_discount, 2, '.', ',') }}" id="discount_cost">
+                                        @error('order_discount')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-1">
@@ -241,19 +251,19 @@
                             <div class="col-md-6">
                                 <div class="form-group d-flex flex-column">
                                     <label for="" class="form-label">Vat Amount</label>
-                                    <input type="number" name="vat_amount" class="form-control vat_amount" value="{{ number_format($sales_order->vat_amount, 2, '.', '') }}" id="vat_amount" readonly>
+                                    <input type="number" name="vat_amount" class="form-control vat_amount" value="{{ number_format($sales_order->vat_amount, 2, '.', ',') }}" id="vat_amount" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group d-flex flex-column">
                                     <label for="" class="form-label">EWT Amount</label>
-                                    <input type="number" name="ewt_amount" class="form-control ewt_amount" value="{{ number_format($sales_order->ewt_amount, 2, '.', '') }}" id="ewt_amount" readonly>
+                                    <input type="number" name="ewt_amount" class="form-control ewt_amount" value="{{ number_format($sales_order->ewt_amount, 2, '.', ',') }}" id="ewt_amount" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group d-flex flex-column">
                                     <label for="" class="form-label">Total Amount</label>
-                                    <input type="number" name="order_total_amount" class="form-control" id="total_amount" value="{{ number_format($sales_order->order_total_amount, 2, '.', '') }}" readonly>
+                                    <input type="number" name="order_total_amount" class="form-control" id="total_amount" value="{{ number_format($sales_order->order_total_amount, 2, '.', ',') }}" readonly>
                                 </div>
                             </div>
                             </div>
@@ -279,6 +289,11 @@
                                             Show Item List
                                     </a>
                                 </div>
+                                @error('item')
+                                    <p class="text-danger">
+                                        {{$message}}
+                                    </p>
+                                @enderror
                                 <table class="table" id="itemDetailsTable">
                                     <thead>
                                     <tr>
@@ -305,8 +320,8 @@
                                                     <td class="col-md-4">{{ $order_detail->package->pack_name}}</td>
                                                     <td class="col-md-1">PACKAGE</td>
                                                     <td class="col-md-2"><input class="form-control quantity" id="{{$order_detail->package_id}}" type="text" name="item[{{$rowOrderedCount}}][item_qty]" value="{{ $order_detail->order_qty}}"></td>
-                                                    <td class="col-md-2"><input class="form-control price" type="text" name="item[{{$rowOrderedCount}}][order_amount]" value="{{ $order_detail->order_amount}}"></td>
-                                                    <td class="col-md-2"><input class="form-control totalAmount" type="text" name="item[{{$rowOrderedCount}}][order_total_amount]" value="{{ $order_detail->order_total_amount}}" readonly></td>
+                                                    <td class="col-md-2"><input class="form-control price" type="text" name="item[{{$rowOrderedCount}}][order_amount]" value="{{ number_format($order_detail->order_amount, 2, '.', ',') }}"></td>
+                                                    <td class="col-md-2"><input class="form-control totalAmount" type="text" name="item[{{$rowOrderedCount}}][order_total_amount]" value="{{ number_format($order_detail->order_total_amount, 2, '.', ',')}}" readonly></td>
                                                     <td> 
                                                         <button class="btn btn-danger removeItem" data-pack="pack-{{$order_detail->package_id}}" type="button" id="{{$rowOrderedCount}}"> <i class="fa-solid fa-trash"></i></button>
                                                     </td>
@@ -322,8 +337,8 @@
                                                     <td class="col-md-4">{{ $order_detail->item->product_name }}</td>
                                                     <td class="col-md-1">{{ $order_detail->item->uom->uom_shortname }}</td>
                                                     <td class="col-md-2"><input class="form-control quantity pack_{{$order_detail->package_id}}" type="text" name="item[{{$rowOrderedCount}}][item_qty]" value="{{ $order_detail->order_qty}}" readonly></td>
-                                                    <td class="col-md-2"><input class="form-control price pack_{{$order_detail->package_id}}" type="text" name="item[{{$rowOrderedCount}}][order_amount]" value="{{ $order_detail->order_amount}}" readonly></td>
-                                                    <td class="col-md-2"><input class="form-control totalAmount" type="text" name="item[{{$rowOrderedCount}}][order_total_amount]" value="{{ $order_detail->order_total_amount}}" readonly></td>
+                                                    <td class="col-md-2"><input class="form-control price pack_{{$order_detail->package_id}}" type="text" name="item[{{$rowOrderedCount}}][order_amount]" value="{{ number_format($order_detail->order_amount, 2, '.', ',') }}" readonly></td>
+                                                    <td class="col-md-2"><input class="form-control totalAmount" type="text" name="item[{{$rowOrderedCount}}][order_total_amount]" value="{{ number_format($order_detail->order_total_amount, 2, '.', ',')}}" readonly></td>
                                                 </tr> 
                                                 
                                             {{-- for items --}}
@@ -337,8 +352,8 @@
                                                     <td class="col-md-4">{{ $order_detail->item->product_name }}</td>
                                                     <td class="col-md-1">{{ $order_detail->item->uom->uom_shortname }}</td>
                                                     <td class="col-md-2"><input class="form-control quantity" type="text" name="item[{{$rowOrderedCount}}][item_qty]" value="{{ $order_detail->order_qty}}" readonly></td>
-                                                    <td class="col-md-2"><input class="form-control price" type="text" name="item[{{$rowOrderedCount}}][order_amount]" value="{{ $order_detail->order_amount}}" readonly></td>
-                                                    <td class="col-md-2"><input class="form-control totalAmount" type="text" name="item[{{$rowOrderedCount}}][order_total_amount]" value="{{ $order_detail->order_total_amount}}" readonly></td>
+                                                    <td class="col-md-2"><input class="form-control price" type="text" name="item[{{$rowOrderedCount}}][order_amount]" value="{{ number_format($order_detail->order_amount, 2, '.', ',') }}" readonly></td>
+                                                    <td class="col-md-2"><input class="form-control totalAmount" type="text" name="item[{{$rowOrderedCount}}][order_total_amount]" value="{{ number_format($order_detail->order_total_amount, 2, '.', ',')}}" readonly></td>
                                                     <td> 
                                                         <button class="btn btn-danger removeItem" type="button" id="{{$rowOrderedCount}}">
                                                             <i class="fa-solid fa-trash"></i>
@@ -399,8 +414,9 @@
                                                     <td class="col-md-4">{{ $order_detail->package->pack_name}}</td>
                                                     <td class="col-md-1">PACKAGE</td>
                                                     <td class="col-md-2"><input class="form-control quantity" id="{{$order_detail->package_id}}" type="text" name="additionalItem[{{$rowAdditionalCount}}][item_qty]" value="{{ $order_detail->order_qty}}"></td>
-                                                    <td class="col-md-2"><input class="form-control price" type="text" name="additionalItem[{{$rowAdditionalCount}}][order_amount]" value="{{ $order_detail->order_amount}}"></td>
-                                                    <td class="col-md-2"><input class="form-control totalAmount" type="text" name="additionalItem[{{$rowAdditionalCount}}][order_total_amount]" value="{{ $order_detail->order_total_amount}}" readonly></td>
+                                                    <td class="col-md-2"><input class="form-control price" type="text" name="additionalItem[{{$rowAdditionalCount}}][order_amount]" value="{{ number_format($order_detail->order_amount, 2, '.', ',')}}"></td>
+                                                    <td class="col-md-2"><input class="form-control totalAmount" type="text" name="additionalItem[{{$rowAdditionalCount}}][order_total_amount]" value="{{ number_format($order_detail->order_total_amount, 2, '.', ',')}}" readonly></td>
+                                                    
                                                     <td> 
                                                         <button class="btn btn-danger removeItem" data-pack="pack-{{$order_detail->package_id}}" type="button" id="{{$rowAdditionalCount}}"> <i class="fa-solid fa-trash"></i></button>
                                                     </td>
@@ -416,8 +432,8 @@
                                                     <td class="col-md-4">{{ $order_detail->item->product_name }}</td>
                                                     <td class="col-md-1">{{ $order_detail->item->uom->uom_shortname }}</td>
                                                     <td class="col-md-2"><input class="form-control quantity pack_{{$order_detail->package_id}}" type="text" name="additionalItem[{{$rowAdditionalCount}}][item_qty]" value="{{ $order_detail->order_qty}} " readonly></td>
-                                                    <td class="col-md-2"><input class="form-control price pack_{{$order_detail->package_id}}" type="text" name="additionalItem[{{$rowAdditionalCount}}][order_amount]" value="{{ $order_detail->order_amount}}" readonly></td>
-                                                    <td class="col-md-2"><input class="form-control totalAmount" type="text" name="additionalItem[{{$rowAdditionalCount}}][order_total_amount]" value="{{ $order_detail->order_total_amount}}" readonly></td>
+                                                    <td class="col-md-2"><input class="form-control price pack_{{$order_detail->package_id}}" type="text" name="additionalItem[{{$rowAdditionalCount}}][order_amount]" value="{{ number_format($order_detail->order_amount, 2, '.', ',')}}" readonly></td>
+                                                    <td class="col-md-2"><input class="form-control totalAmount" type="text" name="additionalItem[{{$rowAdditionalCount}}][order_total_amount]" value="{{ number_format($order_detail->order_total_amount, 2, '.', ',')}}" readonly></td>
                                                 </tr> 
                                                 
                                             {{-- for items --}}
@@ -431,8 +447,8 @@
                                                     <td class="col-md-4">{{ $order_detail->item->product_name }}</td>
                                                     <td class="col-md-1">{{ $order_detail->item->uom->uom_shortname }}</td>
                                                     <td class="col-md-2"><input class="form-control quantity" type="text" name="additionalItem[{{$rowAdditionalCount}}][item_qty]" value="{{ $order_detail->order_qty}} " readonly></td>
-                                                    <td class="col-md-2"><input class="form-control price" type="text" name="additionalItem[{{$rowAdditionalCount}}][order_amount]" value="{{ $order_detail->order_amount}}" readonly></td>
-                                                    <td class="col-md-2"><input class="form-control totalAmount" type="text" name="additionalItem[{{$rowAdditionalCount}}][order_total_amount]" value="{{ $order_detail->order_total_amount}}" readonly></td>
+                                                    <td class="col-md-2"><input class="form-control price" type="text" name="additionalItem[{{$rowAdditionalCount}}][order_amount]" value="{{ number_format($order_detail->order_amount, 2, '.', ',')}}" readonly></td>
+                                                    <td class="col-md-2"><input class="form-control totalAmount" type="text" name="additionalItem[{{$rowAdditionalCount}}][order_total_amount]" value="{{ number_format($order_detail->order_total_amount, 2, '.', ',')}}" readonly></td>
                                                     <td> 
                                                         <button class="btn btn-danger removeItem" type="button" id="{{$rowAdditionalCount}}">
                                                             <i class="fa-solid fa-trash"></i>
@@ -451,8 +467,8 @@
                     <div class="d-flex justify-content-end mt-2">
                         <div>
                             <a href="{{ route('order.index') }}" class="btn btn-secondary rounded">Cancel</a>
-                            <button class="btn btn-primary rounded" type="submit" name="action" value="submitButton">Submit</button>
-                            <button class="btn btn-primary rounded" type="submit" name="action" value="saveButton">Save Changes</button>
+                            <button class="btn btn-primary rounded" type="submit" name="action" value="submitButton" {{$buttons['Update']}}>Submit</button>
+                            <button class="btn btn-primary rounded" type="submit" name="action" value="saveButton" {{$buttons['Update']}}>Save Changes</button>
                         </div>
                     </div>
                 </div>

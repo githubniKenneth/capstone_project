@@ -27,9 +27,11 @@ class UserStoreRequest extends FormRequest
         return [
             
                         
-            "username" => ['required', 
+            "email" => ['required', 
                         Rule::unique('users')->ignore($userId),],
-            "email" => ['required','email'], 
+            "emp_id" => ['required'], 
+            "user_role" => ['required'], 
+            "data_access" => ['required'], 
             "password" => ['exclude_if:password,null', 'nullable', 'required', 'confirmed'], 
             "password_confirmation" => ['exclude_if:password_confirmation,null', 'nullable', 'required'],
         ];
@@ -38,13 +40,15 @@ class UserStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.required' => 'Username is required!',
-            'username.unique' => 'Username already exist!',
+            // 'username.required' => 'Username is required!',
+            // 'username.unique' => 'Username already exist!',
+            'emp_id.required' => 'Employee is required!',
             'emp_id.unique' => 'Employee has existing account!',
             'email.required' => 'Email is required!',
             'password.required' => 'Password is required!',
             'password_confirmation.required' => 'Password Confirmation is required!',
             'password.confirm' => 'The password confirmation does not match!',
+            'data_access.required' => 'Data Filter is required!',
         ];
     }
 }

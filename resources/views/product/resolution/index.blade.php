@@ -13,7 +13,7 @@
                 </nav>
 
             <div class="d-flex flex-row-reverse pb-3">
-                <a href="{{ route('product-resolution.create') }}"class="btn btn-success">+</a>
+                <button class="btn btn-success" onclick="window.location.href='{{ route('product-resolution.create') }}'" {{$buttons['Create']}}>+</button>
             </div>
 
                 <div class="table-responsive">
@@ -36,14 +36,13 @@
                                     <td> {{ ($resolution->cds->toFormattedDateString()) }}</td> 
                                     <td> {{ ($resolution->status == 1) ? "Active":"Inactive" }}</td>
                                     <td> 
-                                        <a href="/product/resolution/{{$resolution->id}}" class="btn btn-warning rounded">
-                                            <i class="fa-regular fa-pen-to-square text-light"></i>
-                                        </a>
-                                        <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/product/resolution/remove/{{$resolution->id}}" title="Remove Data"
-                                        class="btn btn-danger rounded">
-                                            <i class="fas fa-trash text-light"></i>
-                                        </a>
-                                        <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                    <a href="{{ route('product-resolution.edit', $resolution->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                        <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                            data-id="{{ $resolution->id }}"
+                                            data-status="{{ $resolution->status }}"
+                                            data-url="{{ route('product-resolution.delete', $resolution->id) }}" {{$buttons['Remove']}}>
+                                            <i class="fas fa-trash text-light fa-lg"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach

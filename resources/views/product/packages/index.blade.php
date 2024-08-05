@@ -13,7 +13,7 @@
             </nav>
             
         <div class="d-flex flex-row-reverse pb-3">
-            <a href="{{ route('product-packages.create') }}"class="btn btn-success">Add</a>
+            <button class="btn btn-success" onclick="window.location.href='{{ route('product-packages.create') }}'" {{$buttons['Create']}}>+</button>
         </div>
 
             <div class="table-responsive">
@@ -40,16 +40,20 @@
                             <td>{{optional($packages->brand)->brand_name}}</td>
                             <td>{{optional($packages->resolution)->resolution_desc}}</td>
                             <td>{{ $packages->camera_number }}</td>
-                            <td> {{ ($packages->status == 1) ? "Active":"Inactive" }}</td>
+                            <td> 
+                                <button class="btn {{$packages->status_color}}">
+                                {{ ($packages->status == 1) ? "Active":"Inactive" }}
+                                </button>
+                            </td>
 
                             <td> 
-                                <a href="/product/packages/{{$packages->id}}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
-                                
-                                <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="product/packages/remove/{{$packages->id}}" title="Remove Data" 
-                                class="btn btn-danger rounded">
+                                <a href="{{ route('product-packages.edit', $packages->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                    data-id="{{ $packages->id }}"
+                                    data-status="{{ $packages->status }}"
+                                    data-url="{{ route('product-packages.delete', $packages->id) }}" {{$buttons['Remove']}}>
                                     <i class="fas fa-trash text-light fa-lg"></i>
-                                </a>
-                                <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                </button>
                             </td>
                         </tr>
                     @endforeach

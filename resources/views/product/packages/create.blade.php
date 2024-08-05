@@ -29,8 +29,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Package Name</label>
-                                        <input class="form-control" type="text" name="pack_name">
-                                        @error('product_name')
+                                        <input class="form-control" type="text" name="pack_name" value="{{ old('pack_name') }}">
+                                        @error('pack_name')
                                             <p class="text-danger">
                                                 {{$message}}
                                             </p>
@@ -40,7 +40,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Camera Number</label>
-                                        <input class="form-control" type="text" name="camera_number">
+                                        <input class="form-control" type="text" name="camera_number" value="{{ old('camera_number') }}">
+                                        @error('camera_number')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +53,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Price</label>
-                                        <input class="form-control" type="text" name="pack_price">
+                                        <input class="form-control" type="text" name="pack_price" value="{{ old('pack_price') }}">
+                                        @error('pack_price')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -57,9 +67,14 @@
                                         <select name="brand_id" id="" class="form-select">
                                             <option value="">Select Group</option>
                                             @foreach ($brands as $brand)
-                                                <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
+                                                <option value="{{$brand->id}}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>{{$brand->brand_name}}</option>
                                             @endforeach
                                         </select>
+                                        @error('brand_id')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -70,9 +85,14 @@
                                         <select name="resolution_id" id="" class="form-select">
                                             <option value="">Select Group</option>
                                             @foreach ($camera_resolutions as $resolution)
-                                                <option value="{{$resolution->id}}">{{$resolution->resolution_desc}}</option>
+                                                <option value="{{$resolution->id}}" {{ old('resolution_id') == $resolution->id ? 'selected' : '' }}>{{$resolution->resolution_desc}}</option>
                                             @endforeach
                                         </select>
+                                        @error('resolution_id')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -81,13 +101,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Description</label>
-                                        <textarea class="form-control" name="pack_description" id="" cols="30" rows="2"></textarea>
+                                        <textarea class="form-control" name="pack_description" id="" cols="30" rows="2">{{ old('pack_description') }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Remarks</label>
-                                        <textarea class="form-control" name="pack_remarks" id="" cols="30" rows="2"></textarea>
+                                        <textarea class="form-control" name="pack_remarks" id="" cols="30" rows="2">{{ old('pack_remarks') }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +115,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Technical Specifications</label>
-                                        <textarea class="form-control" name="technical_specification" id="" cols="30" rows="2"></textarea>
+                                        <textarea class="form-control" name="technical_specification" id="" cols="30" rows="2">{{ old('technical_specification') }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -117,10 +137,14 @@
                                             Show Item List
                                     </a>
                                 </div>
+                                @error('item')
+                                    <p class="text-danger">
+                                        {{$message}}
+                                    </p>
+                                @enderror
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <td class="col-md-1">No</td>
                                             <td class="col-md-4">Item Name</td>
                                             <td class="col-md-2">Unit</td>
                                             <td class="col-md-2">Price</td>

@@ -42,5 +42,24 @@ return [
 		'2' => 'Done',
 		'3' => 'Cancelled',
     ],
+
+	'dashboard' => [
+		'1' => 'Total Clients',
+		'2' => 'Quotations',
+		'3' => 'Orders',
+		'4' => 'Sales Value',
+		'5' => 'Employees',
+		'6' => 'Oculars',
+		'7' => 'Job Orders',
+		'8' => 'Pending Payment',
+		'9' => 'Recent Deployments',
+		'10' => 'Recent Sales',
+    ],
+
+	'data_access' => [
+		'1' => 'All Data',
+		'2' => 'Designated Branch Data',
+		'3' => 'User Data',
+    ],
 // $scope_of_works = config('constant.scope_of_work')
 ];

@@ -13,7 +13,7 @@
                 </nav>
 
             <div class="d-flex flex-row-reverse pb-3">
-                <a href="{{ route('product-brand.create') }}"class="btn btn-success">+</a>
+                <button class="btn btn-success" onclick="window.location.href='{{ route('product-brand.create') }}'" {{$buttons['Create']}}>+</button>
             </div>
 
                 <div class="table-responsive">
@@ -34,16 +34,19 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td> {{ $brand->brand_name }} </td>
                                     <td> {{ ($brand->cds->toFormattedDateString()) }}</td> 
-                                    <td> {{ ($brand->status == 1) ? "Active":"Inactive" }}</td>
                                     <td> 
-                                        <a href="/product/brand/{{$brand->id}}" class="btn btn-warning rounded">
-                                            <i class="fa-regular fa-pen-to-square text-light"></i>
-                                        </a>
-                                        <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/product/brand/remove/{{$brand->id}}" title="Remove Data"
-                                        class="btn btn-danger rounded">
-                                            <i class="fas fa-trash text-light"></i>
-                                        </a>
-                                        <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                        <button class="btn {{$brand->status_color}}">
+                                        {{ ($brand->status == 1) ? "Active":"Inactive" }}
+                                        </button>
+                                    </td>
+                                    <td> 
+                                        <a href="{{ route('product-brand.edit', $brand->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                        <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                            data-id="{{ $brand->id }}"
+                                            data-status="{{ $brand->status }}"
+                                            data-url="{{ route('product-brand.delete', $brand->id) }}" {{$buttons['Remove']}}>
+                                            <i class="fas fa-trash text-light fa-lg"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach

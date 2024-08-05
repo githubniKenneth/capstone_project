@@ -25,7 +25,7 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Client</label>
+                                            <label for="" class="form-label">Client <span class="text-danger">*</span></label>
                                             <select name="client_id" id="selectClient"  class="form-select">
                                                 <option value="">Select Client</option>
                                                 
@@ -42,7 +42,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Date</label>
+                                            <label for="" class="form-label">Date <span class="text-danger">*</span></label>
                                             <input type="date" name="ocular_date" class="form-control" value="{{ $data->ocular_date }}">
                                             @error('ocular_date')
                                                 <p class="text-danger">
@@ -105,7 +105,7 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-6">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Status</label>
+                                            <label for="" class="form-label">Status <span class="text-danger">*</span></label>
                                         <select name="ocular_status" id="ocularStatus"  class="form-select">
                                         <option value="">Select Status</option>
                                             @foreach ($ocular_status as $key => $value)
@@ -198,7 +198,7 @@
                         </div> -->
                         <div>
                             <a href="{{ route('ocular.index') }}" class="btn btn-secondary rounded">Cancel</a>
-                            <button class="btn btn-primary rounded" type="submit">Save Changes</button>
+                            <button class="btn btn-primary rounded" type="submit" {{$buttons['Update']}}>Save Changes</button>
                         </div>
                         
                     </div>

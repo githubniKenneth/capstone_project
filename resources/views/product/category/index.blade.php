@@ -15,7 +15,7 @@
             </div>
 
             <div class="d-flex flex-row-reverse pb-3">
-                <a href="{{ route('product-category.create') }}"class="btn btn-success">+</a>
+                <button class="btn btn-success" onclick="window.location.href='{{ route('product-category.create') }}'" {{$buttons['Create']}}>+</button>
             </div>
 
                 <div class="table-responsive">
@@ -38,14 +38,13 @@
                                 <td> {{ ($category->cds->toFormattedDateString()) }}</td> 
                                 <td> {{ ($category->status == 1) ? "Active":"Inactive" }}</td>
                                 <td> 
-                                    <a href="/product/category/{{$category->id}}" class="btn btn-warning rounded">
-                                        <i class="fa-regular fa-pen-to-square text-light"></i>
-                                    </a>
-                                    <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/product/category/remove/{{$category->id}}" title="Remove Data"
-                                    class="btn btn-danger rounded">
-                                        <i class="fas fa-trash text-light"></i>
-                                    </a>
-                                    <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                    <a href="{{ route('product-category.edit', $category->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                    <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                        data-id="{{ $category->id }}"
+                                        data-status="{{ $category->status }}"
+                                        data-url="{{ route('product-category.delete', $category->id) }}" {{$buttons['Remove']}}>
+                                        <i class="fas fa-trash text-light fa-lg"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach

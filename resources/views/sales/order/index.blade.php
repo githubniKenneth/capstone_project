@@ -12,8 +12,8 @@
                         </ol>
                     </nav>
                     
-                <div class="d-flex flex-row-reverse pb-3">
-                    <a href="{{ route('order.create') }}"class="btn btn-success">+</a>
+                <div class="d-flex flex-row-reverse pb-3"> 
+                    <button class="btn btn-success" onclick="window.location.href='{{ route('order.create') }}'" {{$buttons['Create']}}>+</button>
                 </div>
                 
                 <div class="table-responsive">
@@ -26,7 +26,6 @@
                                 <th scope="col">Branch</th>
                                 <th scope="col">Client Name</th>
                                 <th scope="col">Amount</th>
-                                <th scope="col">Payment Method</th>
                                 <th scope="col">Payment Status</th>
                                 <th scope="col">Created By</th>
                                 <th scope="col">Posting Status</th>
@@ -56,13 +55,19 @@
                                 @endphp
                                 @switch($order->payment_status)
                                     @case(0)
-                                        @php $payment_status = 'Pending'; @endphp
+                                        @php $payment_status = 'Pending'; 
+                                             $status_color = 'status-pending';
+                                        @endphp
                                         @break
                                     @case(1)
-                                        @php $payment_status = 'Paid'; @endphp
+                                        @php $payment_status = 'Paid'; 
+                                             $status_color = 'status-ongoing';
+                                        @endphp
                                         @break
                                     @case(2)
-                                        @php $payment_status = 'Check Pending'; @endphp
+                                        @php $payment_status = 'Check'; 
+                                             $status_color = 'status-pending';
+                                        @endphp
                                         @break
                                 @endswitch
                                 <tr>
@@ -71,20 +76,27 @@
                                     <td>{{ $order->order_control_no }}</td>
                                     <td>{{ $order->branch->branch_name }}</td>
                                     <td>{{ $order->client->client_full_name }}</td>
-                                    <td>{{ $order->order_total_amount }}</td>
-                                    <td>{{ $payment_type }}</td>
-                                    <td>{{ $payment_status }}</td>
+                                    <td>{{ number_format($order->order_total_amount, 2, '.', ',') }}</td>
+                                    <td>
+                                        <button class="btn {{$status_color}}">
+                                            {{ $payment_status }} 
+                                        </button>
+                                    </td>
                                     <td>{{ $order->user->employee->emp_full_name }}</td>
                                     <td>{{ ($order->is_posted == 1) ? "Posted":"Drafted" }}</td>
-                                    <td>{{ ($order->order_status == 1) ? "Active":"Inactive" }}</td>
+                                    <td>
+                                        <button class="btn {{$order->status_color}}">
+                                        {{ ($order->order_status == 1) ? "Active":"Inactive" }}
+                                        </button>
+                                    </td>
                                     <td> 
-                                        <a href="{{ route('sales-order.edit', $order->id) }} " class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
-                                        <a href="# " title="Send Email with Payment" class="btn btn-success rounded"><i class="fa-regular fa-envelope text-light"></i></a>
-                                        <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/sales/order/remove/{{$order->id}}" title="Remove Data" 
-                                        class="btn btn-danger rounded">
+                                        <a href="{{ route('sales-order.edit', $order->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                        <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                            data-id="{{ $order->id }}"
+                                            data-status="{{ $order->status }}"
+                                            data-url="{{ route('sales-order.delete', $order->id) }}" {{$buttons['Remove']}}>
                                             <i class="fas fa-trash text-light fa-lg"></i>
-                                        </a>
-                                        <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -92,11 +104,7 @@
                     </table>
                 </div>
             </div>
-            <!-- remove modal -->
-            <x-remove-modal/>
             <script src="{{asset('js/remove-modal/open-modal.js')}}"></script>
-            <!-- remove modal -->
-       
     @endsection
         
 @section('script')

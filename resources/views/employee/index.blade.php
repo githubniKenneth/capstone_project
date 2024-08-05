@@ -13,7 +13,7 @@
                     </nav>
                     
                 <div class="d-flex flex-row-reverse pb-3">      
-                    <a href="{{ route('add-employee.create') }}"class="btn btn-success">+</a>
+                    <button class="btn btn-success" onclick="window.location.href='{{ route('add-employee.create') }}'" {{$buttons['Create']}}>+</button>
                 </div> 
 
                     <div class="table-responsive">
@@ -42,14 +42,19 @@
                                     <td> {{ $employee->role->empr_role }} </td>
                                     <td> {{ $employee->emp_email }} </td>
                                     <td> {{ ($employee->cds->toFormattedDateString()) }}</td>
-                                    <td> {{ ($employee->status == 1) ? "Active":"Inactive" }}</td>
                                     <td> 
-                                        <a href="/personnel/employee/{{$employee->id}}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
-                                        <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/personnel/employee/remove/{{$employee->id}}" title="Remove Data"
-                                        class="btn btn-danger rounded">
-                                            <i class="fas fa-trash text-light"></i>
-                                        </a>
-                                        <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                        <button class="btn {{$employee->status_color}}">
+                                        {{ ($employee->status == 1) ? "Active":"Inactive" }}
+                                        </button>
+                                    </td>
+                                    <td> 
+                                        <a href="{{ route('employee.edit', $employee->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                        <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                            data-id="{{ $employee->id }}"
+                                            data-status="{{ $employee->status }}"
+                                            data-url="{{ route('employee.delete', $employee->id) }}" {{$buttons['Remove']}}>
+                                            <i class="fas fa-trash text-light fa-lg"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -57,13 +62,7 @@
                         </table>
                     </div>
                 </div>
-                
-            <!-- remove modal -->
-            <x-remove-modal/>
             <script src="{{asset('js/remove-modal/open-modal.js')}}"></script>
-            <!-- remove modal -->
-        
-        
     @endsection
 
 @section('script')

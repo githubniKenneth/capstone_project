@@ -76,6 +76,11 @@ Route::middleware(['auth'])->prefix('/dashboard')->group(function () {
         Route::get('', 'DashboardController@index')->name('dashboard');
 });
 
+Route::middleware(['auth'])->prefix('/profile')->group(function () {
+        Route::get('/{id}', 'DashboardController@editProfile')->name('profile.edit');
+        Route::put('/{id}', 'DashboardController@update')->name('profile.update');
+});
+
 Route::post('/logout', 'LoginController@logout')->name('account.logout');
 // Route::get('/dashboard', function() {
 //     return view('partials.sidebar');
@@ -92,8 +97,7 @@ Route::middleware(['auth'])->prefix('/component')->group(function () {
                 Route::post('/add', 'Menu\GroupController@store')->name('group.store'); // insert datab
                 Route::get('/{id}', 'Menu\GroupController@edit')->name('group.edit'); // insert datab
                 Route::put('/{id}', 'Menu\GroupController@update')->name('group.update'); // update data
-                Route::get('remove/{id}', 'Menu\GroupController@remove'); // show remove modal
-                Route::put('delete/{id}', 'Menu\GroupController@delete'); // update to Active/inactive
+                Route::put('delete/{id}', 'Menu\GroupController@delete')->name('group.delete'); // update to Active/inactive
                 
         });
 
@@ -103,8 +107,7 @@ Route::middleware(['auth'])->prefix('/component')->group(function () {
                 Route::post('/add', 'Menu\ModuleController@store')->name('module.store'); // insert datab
                 Route::get('/{id}', 'Menu\ModuleController@edit')->name('module.edit'); // insert datab
                 Route::put('/{id}', 'Menu\ModuleController@update')->name('module.update'); // update data
-                Route::get('remove/{id}', 'Menu\ModuleController@remove'); // show remove modal
-                Route::put('delete/{id}', 'Menu\ModuleController@delete'); // update to Active/inactive
+                Route::put('delete/{id}', 'Menu\ModuleController@delete')->name('module.delete'); // update to Active/inactive
         });
         
         Route::prefix('/sub-module')->group(function () {
@@ -144,13 +147,17 @@ Route::prefix('/user-account')->group(function () {
                 Route::post('/store', 'UserController@store')->name('user.store');
                 Route::get('/edit/{id}', 'UserController@edit')->name('user.edit');
                 Route::put('/update/{id}', 'UserController@update')->name('user.update');
+                Route::put('delete/{id}', 'UserController@delete')->name('user.delete');
         });
         
         //          <---------USER ROLE---------------->
         Route::prefix('/user-role')->group(function () {
                 Route::get('', 'UserRoleController@index')->name('user-role.index');
                 Route::get('/create', 'UserRoleController@create')->name('user-role.create');
-                Route::get('/store', 'UserRoleController@store')->name('user-role.store');
+                Route::post('/store', 'UserRoleController@store')->name('user-role.store');
+                Route::get('/edit/{id}', 'UserRoleController@edit')->name('user-role.edit');
+                Route::put('/update/{id}', 'UserRoleController@update')->name('user-role.update');
+                Route::put('delete/{id}', 'UserRoleController@delete')->name('user-role.delete');
         });
         // 
 });
@@ -167,9 +174,8 @@ Route::middleware(['auth'])->prefix('/personnel')->group(function () {
                 Route::get('/{id}', 'Personnel\BranchController@edit')->name('branch.edit');  // show update page
                 Route::put('/{id}', 'Personnel\BranchController@update')->name('branch.update'); // update data
                 Route::get('remove/{id}', 'Personnel\BranchController@remove'); // show remove modal
-                Route::put('delete/{id}', 'Personnel\BranchController@delete'); // update to Active/inactive
+                Route::put('delete/{id}', 'Personnel\BranchController@delete')->name('branch.delete'); // update to Active/inactive
         });
-
         //          <----------------------- EMPLOYEE ---------------->
         Route::middleware(['auth'])->prefix('/employee')->group(function () {
                 Route::get('', 'Personnel\EmployeeController@index')->name('employee.index');
@@ -178,7 +184,7 @@ Route::middleware(['auth'])->prefix('/personnel')->group(function () {
                 Route::get('/{id}', 'Personnel\EmployeeController@show')->name('employee.edit'); // show update page
                 Route::put('/{id}', 'Personnel\EmployeeController@update')->name('employee.update'); // update data
                 Route::get('remove/{id}', 'Personnel\EmployeeController@remove'); // show remove modal
-                Route::put('delete/{id}', 'Personnel\EmployeeController@delete');  // update to Active/inactive
+                Route::put('delete/{id}', 'Personnel\EmployeeController@delete')->name('employee.delete');  // update to Active/inactive
         });
 
                 //          <----------------------- EMPLOYEE ROLE ---------------->
@@ -203,7 +209,7 @@ Route::middleware(['auth'])->prefix('/client')->group(function () {
                 Route::get('/{id}', 'ClientController@edit')->name('client.edit'); // show update page
                 Route::put('/{id}', 'ClientController@update')->name('client.update');// update data
                 Route::get('remove/{id}', 'ClientController@remove');  // show remove modal
-                Route::put('delete/{id}', 'ClientController@delete');  // update to Active/inactive
+                Route::put('delete/{id}', 'ClientController@delete')->name('client.delete');  // update to Active/inactive
 });
 
 //          <--------- CLIENT ---------------->
@@ -226,6 +232,8 @@ Route::middleware(['auth'])->prefix('deployment')->group(function () {
                 Route::get('/{id}', 'Deployment\OcularController@edit')->name('ocular.edit'); // insert datab
                 Route::put('update/{id}', 'Deployment\OcularController@update')->name('ocular.update'); // update data
                 Route::get('find-client/{id}', 'Deployment\OcularController@showClientAddress')->name('ocular.client-address');
+                Route::put('delete/{id}', 'Deployment\OcularController@delete')->name('ocular.delete');
+                Route::get('sendEmail/{id}', 'Deployment\OcularController@sendEmail')->name('ocular.email');
         });
 
         /* Job Order Routes */
@@ -239,6 +247,7 @@ Route::middleware(['auth'])->prefix('deployment')->group(function () {
                 Route::get('remove-technician/{deployment_id}/{emp_id}/{deployment_type}', 'Deployment\JobOrderController@removeTechnician')->name('technician.remove');
                 Route::get('print/{id}', 'Deployment\JobOrderController@print')->name('job-order.print'); 
                 Route::get('email/{id}', 'Deployment\JobOrderController@sendEmail')->name('job-order.email');
+                Route::put('delete/{id}', 'Deployment\JobOrderController@delete')->name('job-order.delete');
         });
         
         /* Installation Routes */
@@ -276,6 +285,19 @@ Route::middleware(['auth'])->prefix('inventory')->group(function () {
                 Route::get('', 'Inventory\IssuancesController@index')->name('issuances.index');
                 Route::get('create', 'Inventory\IssuancesController@create')->name('issuances.create');
                 Route::post('store', 'Inventory\IssuancesController@store')->name('issuances.store');
+                Route::get('/{id}', 'Inventory\IssuancesController@edit')->name('issuances.edit'); 
+                Route::put('/{id}', 'Inventory\IssuancesController@update')->name('issuances.update'); 
+                Route::put('delete/{id}', 'Inventory\IssuancesController@delete')->name('issuances.delete');
+        });
+
+        /* Issuances Routes */
+        Route::prefix('returns')->group(function () {
+                Route::get('', 'Inventory\ReturnController@index')->name('return.index');
+                Route::get('create', 'Inventory\ReturnController@create')->name('return.create');
+                Route::post('store', 'Inventory\ReturnController@store')->name('return.store');
+                Route::get('/{id}', 'Inventory\ReturnController@edit')->name('return.edit'); 
+                Route::put('/{id}', 'Inventory\ReturnController@update')->name('return.update'); 
+                Route::put('delete/{id}', 'Inventory\ReturnController@delete')->name('return.delete');
         });
 
         /* Receive Routes */
@@ -285,12 +307,14 @@ Route::middleware(['auth'])->prefix('inventory')->group(function () {
                 Route::post('/store', 'Inventory\ReceiveController@store')->name('inventory-receive.store'); // insert datab
                 Route::get('/{id}', 'Inventory\ReceiveController@edit')->name('inventory-receive.edit'); 
                 Route::put('/{id}', 'Inventory\ReceiveController@update')->name('inventory-receive.update'); 
+                Route::put('delete/{id}', 'Inventory\ReceiveController@delete')->name('inventory-receive.delete');
 
         });
 
         /* Stocks Routes */
         Route::prefix('stocks')->group(function () {
                 Route::get('', 'Inventory\StocksController@index')->name('stocks.index');
+                Route::post('/check-balance/{$items}', 'Inventory\StocksController@checkBalance')->name('stocks.index');
         });
 
         /* Issuances Routes */
@@ -333,9 +357,9 @@ Route::middleware(['auth'])->prefix('/product')->group(function () {
         Route::prefix('/uom')->group(function () {
                 Route::get('', 'Product\ProductUnitOfMeasurementController@index')->name('product-uom.index');
                 Route::get('add', 'Product\ProductUnitOfMeasurementController@create')->name('product-uom.create');  // show create page
-                Route::post('add', 'Product\ProductUnitOfMeasurementController@store')->name('product-brand.store'); // insert datab
-                Route::get('/{id}', 'Product\ProductUnitOfMeasurementController@edit')->name('product-brand.edit'); // insert datab
-                Route::put('/{id}', 'Product\ProductUnitOfMeasurementController@update')->name('product-brand.update'); // update data
+                Route::post('add', 'Product\ProductUnitOfMeasurementController@store')->name('product-uom.store'); // insert datab
+                Route::get('/{id}', 'Product\ProductUnitOfMeasurementController@edit')->name('product-uom.edit'); // insert datab
+                Route::put('/{id}', 'Product\ProductUnitOfMeasurementController@update')->name('product-uom.update'); // update data
                 Route::get('remove/{id}', 'Product\ProductUnitOfMeasurementController@remove')->name('product-uom.remove');
                 Route::put('delete/{id}', 'Product\ProductUnitOfMeasurementController@delete')->name('product-uom.delete');
 });
@@ -402,7 +426,7 @@ Route::middleware(['auth'])->prefix('/product')->group(function () {
                         Route::post('/store', 'Sales\OrderController@store')->name('order.store'); // insert datab
                         Route::get('/{id}', 'Sales\OrderController@edit')->name('sales-order.edit'); // insert datab
                         Route::put('/{id}', 'Sales\OrderController@update')->name('sales-order.update'); // update data
-                        // Route::get('item-list', 'Sales\QuotationController@showItems')->name('sales.item-list');
+                        Route::put('delete/{id}', 'Sales\OrderController@delete')->name('sales-order.delete');
                         Route::get('package-list', 'Sales\QuotationController@showPackages')->name('sales.package-list');
                         Route::get('find-order-data/{id}', 'Sales\OrderController@showOrderData')->name('sales.order-data');
                 });

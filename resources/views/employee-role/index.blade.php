@@ -37,7 +37,11 @@
                                 <td> {{ $role->empr_role}} </td>
                                 <td> {{ textShortener($role->empr_desc, $role->id, 'empr_desc', 25) }} </td>
                                 <td> {{ ($role->cds->toFormattedDateString()) }}</td>
-                                <td> {{ ($role->status == 1) ? "Active":"Inactive" }}</td>
+                                <td> 
+                                    <button class="btn {{$role->status_color}}">
+                                    {{ ($role->status == 1) ? "Active":"Inactive" }}
+                                    </button>
+                                </td>
 
                                 <td> 
                                     <a href="/personnel/employee-role/{{$role->id}}" class="btn btn-warning rounded">

@@ -19,6 +19,7 @@ use App\Models\ProductBrand;
 use App\Models\Client;
 use App\Models\ProductResolution;
 use App\Models\ProductPackages;
+use App\Models\Branch;
 
 class QuotationController extends Controller
 {
@@ -26,8 +27,14 @@ class QuotationController extends Controller
     {
         $data = SalesQuotation::orderBy('created_at', 'desc')->get();
         $brands = ProductBrand::orderBy('brand_name', 'asc')->where('status', '1')->get();
+        $branches = Branch::orderBy('created_at', 'desc')->where('branch_status', '1')->get();
         $resolutions = ProductResolution::orderBy('resolution_desc', 'asc')->where('status', '1')->get();
 
+        return view('website.quotation')->with(compact('brands','resolutions', 'branches'));
+    }
+
+    public function store(QuotationRequest $request)
+    {
         $currentYear = Carbon::now()->year;
         
         $last_quote_number = SalesQuotation::selectRaw('CAST(quote_number AS INTEGER) as numeric_value')->whereYear('created_at', $currentYear)->orderBy('numeric_value', 'desc')->first();
@@ -40,21 +47,17 @@ class QuotationController extends Controller
 
         $newControlNo = "Q".$currentYear."-".$newQuoteNumber;
 
-        return view('website.quotation')->with(compact('brands','resolutions', 'newQuoteNumber','newControlNo'));
-    }
-
-    public function store(QuotationRequest $request)
-    {
         $validated = $request->validated();
 
         $details = [
+            "branch_id" => $request->branch_id,
             "quote_name" => $request->quote_name,
             "quote_email" => $request->quote_email,
             "quote_contact_no" => $request->quote_contact_no,
             "quote_address" => $request->quote_address,
-            "quote_number" => $request->quote_number,
+            "quote_number" => $newQuoteNumber,
             "quote_date" => $request->quote_date,
-            "quote_control_number" => $request->quote_control_number,
+            "quote_control_number" => $newControlNo,
             "brand_id" => $request->brand_id,
             "resolution_desc" => $request->resolution_desc,
             "channel_id" => $request->channel_id,

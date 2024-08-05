@@ -16,83 +16,86 @@ use App\Models\InvStocks;
 use App\Models\InvIssuance;
 use App\Models\InvIssuanceItems;
 use App\Models\EmployeeInventory;
+use App\Models\Branch;
+use App\Helpers\InventoryHelper;
+use App\Helpers\PermissionHelper;
 
 class IssuancesController extends Controller
 {
     public function index() {
-        $data = InvIssuance::orderBy('created_at', 'desc')->where('status', '1')->get();
-        return view('inventory.issuances.index')->with(compact('data'));
-        // return view('sales.order.index')->with(compact('data'));
+        $is_authorized = PermissionHelper::checkAuthorization('/inventory/issuances', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/inventory/issuances');
+        $data_access = Auth::user()->data_access;
+        $emp_id = Auth::user()->emp_id; //employee id of the user
+
+        if ($data_access == 1)
+        {
+            $data = InvIssuance::orderBy('created_at', 'desc')->get();
+        }
+        elseif ($data_access == 3)
+        {
+            $data = InvIssuance::orderBy('created_at', 'desc')->where('received_by', $emp_id)->get();
+        }
+
+        foreach ($data as $status){
+            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+        }
+        
+        return view('inventory.issuances.index')->with(compact('data', 'buttons'));
     }
 
     public function create() {
+        $is_authorized = PermissionHelper::checkAuthorization('/inventory/issuances', 'Create');
         $employees = Employee::orderBy('emp_first_name', 'asc')->where('status', '1')->get();
         $issuances = InvIssuance::orderBy('id', 'asc')->where('status', '1')->get();
         
         // items
         $packages = ProductPackages::orderBy('created_at', 'desc')->where('status', '1')->get();
-        $products = ProductItem::orderBy('product_name', 'asc')->where('status', '1')->get();
+        $product = ProductItem::select('product_items.*', 'inv_stocks.balance_qty')
+                                ->join('inv_stocks', 'product_items.id', '=', 'inv_stocks.item_id')
+                                ->where('inv_stocks.balance_qty', '>', 0)
+                                ->where('product_items.status', 1)
+                                ->orderBy('product_name', 'asc')
+                                ->get();
+        $branches = Branch::orderBy('created_at', 'desc')->where('branch_status', '1')->get();
         $brands = ProductBrand::orderBy('brand_name', 'asc')->where('status', '1')->get();
         $resolutions = ProductResolution::orderBy('resolution_desc', 'asc')->where('status', '1')->get();
-        $payment_type = config('constant.payment_type');
-        return view('inventory.issuances.create')->with(compact('issuances', 'employees', 'products', 'brands','resolutions', 'packages',));
+        return view('inventory.issuances.create')->with(compact('issuances', 'employees', 'product', 'brands','resolutions', 'packages', 'branches'));
     }
 
     public function store(Request $request){
-
-        // check inventory
-
+        $is_authorized = PermissionHelper::checkAuthorization('/inventory/issuances', 'Create');
+        // Check inventory
         $selectedItems = $request->item;
-        // dd($selectedItems);
-        foreach ($selectedItems as $selectedItem) {
-            // selected items
-            $itemId = $selectedItem['item_id'];
-            // qty of items
-            $quantity = $selectedItem['issued_qty'];
-            
-            if ($itemId != 0){
-                // search the selected items 
-                $items = InvStocks::where('item_id', $itemId)->get();
-
-                // dd($item, $itemId);
-                foreach ($items as $item) {
-                    if ($item->item_id && $item->balance_qty >= $quantity){
-                        // dd("enough balance");
-                    } else {
-                        // Handle insufficient quantity
-                        // dd("not enough balance");
-                    }
-                }
-                
-            }
-            
+        $balanceCheck = InventoryHelper::checkBalance($selectedItems);
+        if (!$balanceCheck['success']) {
+            return response()->json([
+                'success' => false,
+                'error_type' => $balanceCheck['error_type'],
+                'message' => $balanceCheck['message'],
+                'item_name' => $balanceCheck['item_name'],
+                'item_qty' => $balanceCheck['item_qty']
+            ]);
         }
-
-
-        if ($request->has('action') && $request->input('action') == 'saveButton') {
-            $is_posted = 0;
-        } elseif ($request->has('action') && $request->input('action') == 'submitButton') {
-            $is_posted = 1;
-        } 
-
+    
+    
+        // Generate new issuance number and control number
         $currentYear = Carbon::now()->year;
         $lastTwoDigits = substr($currentYear, -2);
-        $last_issuance_number = InvIssuance::selectRaw('CAST(issuance_number AS INTEGER) as numeric_value')->whereYear('created_at', $currentYear)->orderBy('numeric_value', 'desc')->first();
-        
+        $last_issuance_number = InvIssuance::selectRaw('CAST(issuance_number AS INTEGER) as numeric_value')
+            ->whereYear('created_at', $currentYear)
+            ->orderBy('numeric_value', 'desc')
+            ->first();
+    
         if ($last_issuance_number) {
             $newIssuanceNumber = str_pad($last_issuance_number->numeric_value + 1, 5, '0', STR_PAD_LEFT);
         } else {
             $newIssuanceNumber = '00001';
         }
-
+    
         $newControlNo = "IS".$lastTwoDigits."-".$newIssuanceNumber;
-
-        
-
-        if ($is_posted == 1){
-
-        }
-
+    
+        // Create issuance record
         $details = array(
             "issuance_type" => 1,
             "issuance_date" => $request->issuance_date,
@@ -100,16 +103,17 @@ class IssuancesController extends Controller
             "issuance_control_no" => $newControlNo,
             "issued_by" => Auth::user()->id,
             "received_by" => $request->received_by,
+            "branch_id" => $request->branch_id,
             "remarks" => $request->remarks,
-            "is_posted" => $is_posted,
             "status" => 1,
             "created_by" => Auth::user()->id,
             "updated_by" => 0,
         );
+    
         $insert_issuance = InvIssuance::create($details);
-
+    
+        // Create issuance items
         foreach ($request->item as $item) {
-            
             $order_details = array(
                 "issuance_id" => $insert_issuance->id,
                 "item_id" => $item["item_id"], 
@@ -120,41 +124,72 @@ class IssuancesController extends Controller
             );
             InvIssuanceItems::create($order_details);
         }
-
-        // update inventory deduction
-        if($is_posted == 1)
-        {
+    
+        // Update inventory deduction if posted
             foreach ($request->item as $item) {
                 $item_qty = $item["issued_qty"];
                 $item_id = $item["item_id"];
                 DB::table('inv_stocks')->where('item_id', $item_id)->update(
-                    ['balance_qty' => DB::raw('balance_qty - ' . $item_qty)]
+                    ['balance_qty' => DB::raw('balance_qty - ' . $item_qty),
+                     'issued_qty' => DB::raw('issued_qty + ' . $item_qty),
+                    ]
                 );
             }
-
+    
             foreach ($request->item as $item) {
                 $item_qty = $item["issued_qty"];
-            
                 DB::table('employee_inventory')->updateOrInsert(
                     ['item_id' => $item["item_id"], 'emp_id' => $request->received_by],
-
                     ['balance_qty' => DB::raw('balance_qty + '. $item_qty ),
                      'issued_qty' => DB::raw('issued_qty + ' . $item_qty),
                      'emp_id' => $request->received_by,
                     ]
                 );
             }
+    
+        // Return success response
+        return response()->json([
+            'success' => true,
+            'message' => 'Data has been saved successfully'
+        ]);
+    }
+    
 
-            // $emp_inventory_data = array(
-            //     "emp_id" => $request->received_by,
-            //     "item_id" => $request->item_id,
-            //     "issued_qty" => $item["issued_qty"],
-            //     "returned_qty" => 0,
-            //     "balance_qty" => 0,
-            // );
-            // $insert_emp_inv = InvIssuance::create($emp_inventory_data);
+
+    public function delete($id)
+    {
+        $is_authorized = PermissionHelper::checkAuthorization('/inventory/issuances', 'Remove');
+        $issuance = InvIssuance::find($id);
+
+        if ($issuance) {
+            $new_status = $issuance->status == 1 ? 0 : 1;
+            $issuance->status = $new_status;
+
+            if ($issuance->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
         }
+    }
 
-        return back()->with('message','Data has been saved successfully');
+    public function edit($id)
+    {
+        $is_authorized = PermissionHelper::checkAuthorization('/inventory/issuances', 'Read');
+        $buttons = PermissionHelper::getButtonStates('/inventory/issuances');
+        $data = InvIssuance::findOrFail($id);
+        $item_details = InvIssuanceItems::where('issuance_id',$id)->get();
+        $employees = Employee::orderBy('emp_first_name', 'asc')->where('status', '1')->get();
+        
+        // items
+        $packages = ProductPackages::orderBy('created_at', 'desc')->where('status', '1')->get();
+        $product = ProductItem::orderBy('product_name', 'asc')->where('status', '1')->get();
+        $branches = Branch::orderBy('created_at', 'desc')->where('branch_status', '1')->get();
+        $brands = ProductBrand::orderBy('brand_name', 'asc')->where('status', '1')->get();
+        $resolutions = ProductResolution::orderBy('resolution_desc', 'asc')->where('status', '1')->get();
+
+        return view('inventory.issuances.edit')->with(compact('employees', 'product', 'brands','resolutions', 'packages', 'branches', 'data', 'item_details', 'buttons'));
     }
 }

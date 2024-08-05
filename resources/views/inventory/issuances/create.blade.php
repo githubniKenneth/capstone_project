@@ -16,7 +16,7 @@
             </ol>
         </nav>
         <div class="p-3 d-flex justify-content-center">
-            <form action="{{ route('issuances.store') }}" method="POST" class="d-flex flex-column w-100">
+            <form action="{{ route('issuances.store') }}" method="POST" class="d-flex flex-column w-100" id ="issuance-form">
             @csrf
                 <div class="accordion accordion-flush mb-2" id="accordion-flush-item">
                     <div class="accordion-item border">
@@ -41,25 +41,45 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
-                                        <label for="" class="form-label">Date</label>
+                                        <label for="" class="form-label">Date <span class="required-field">*</span></label>
                                         <input type="date" name="issuance_date" class="form-control" value="{{ now()->format('Y-m-d') }}">
+                                        @error('issuance_date')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
-                                        <label for="" class="form-label">Employee</label>
+                                        <label for="" class="form-label">Employee <span class="required-field">*</span></label>
                                         <select name="received_by" id="selectEmp" class="form-control">
                                             <option value="">Select Employee</option>
                                             @foreach ($employees as $employee)
                                                 <option value="{{$employee->id}}">{{$employee->emp_full_name}}</option>
                                             @endforeach
+                                            @error('received_by')
+                                                <p class="text-danger">
+                                                    {{$message}}
+                                                </p>
+                                            @enderror
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
-                                        <label for="" class="form-label">Branch</label>
-                                        <input class="form-control" type="text" name="">
+                                        <label for="" class="form-label">Branch <span class="required-field">*</span></label>
+                                        <select name="branch_id" id="" class="form-control">
+                                            <option value="">Select Branch</option>
+                                            @foreach ($branches as $branch)
+                                                <option value="{{$branch->id}}">{{$branch->branch_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('branch_id')
+                                            <p class="text-danger">
+                                                {{$message}}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -114,8 +134,8 @@
                 </div>
                     <div class="d-flex justify-content-end mt-2">
                         <div>
-                            <a href="{{ route('receive.index') }}" class="btn btn-secondary rounded">Cancel</a>
-                            <button class="btn btn-primary rounded" type="submit" name="action" value="submitButton">Submit</button>
+                            <a href="{{ route('issuances.index') }}" class="btn btn-secondary rounded">Cancel</a>
+                            <!-- <button class="btn btn-primary rounded" type="submit" name="action" value="submitButton">Submit</button> -->
                             <button class="btn btn-primary rounded" type="submit" name="action" value="saveButton">Save Changes</button>
                         </div>
                     </div>
@@ -144,8 +164,70 @@
 @endsection
 
 @section('script')
-<script src="{{asset('js/product-item/itemListModal.js')}}"></script>
-    <script src="{{asset('js/product-item/packageListModal.js')}}"></script>
+    <script>
+        $(document).ready(function() {
+        $('#issuance-form').on('submit', function(e) {
+            e.preventDefault();
 
+            var form = $(this);
+            var formData = form.serialize();
+
+            $.ajax({
+                url: form.attr('action'),
+                type: form.attr('method'),
+                data: formData,
+                success: function(response) {
+                    console.log(response);
+                    if (response.success) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "{{ route('issuances.index') }}";
+                            }
+                        });
+                    } else if(response.error_type == "no balance")
+                    {
+                        Swal.fire({
+                            title: response.message,
+                            html: `
+                                    Item: ${response.item_name}<br>
+                                    Balance: ${response.item_qty}
+                                `,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                    else if(response.error_type == "invalid quantity")
+                    {
+                        Swal.fire({
+                            title: response.message,
+                            html: `
+                                    Quantity: ${response.item_qty}
+                                `,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Something went wrong. Please try again later.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+    });
+    </script>
+
+    <script src="{{asset('js/product-item/itemListModal.js')}}"></script>
+    <script src="{{asset('js/product-item/packageListModal.js')}}"></script>
+    <script src="{{asset('js/inv-receiving/removeItem.js')}}"></script>
     <script src="{{asset('js/salesOrder/getSelectedItems.js')}}"></script>
 @endsection

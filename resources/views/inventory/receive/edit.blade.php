@@ -30,7 +30,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Control Number</label>
-                                        <input class="form-control" type="text" name="rec_code">
+                                        <input class="form-control" type="text" name="rec_code" value="{{ $inv_received->rec_code }}" readonly>
                                         @error('rec_code')
                                             <p class="text-danger">
                                                 {{$message}}
@@ -40,20 +40,20 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group d-flex flex-column">
-                                        <label for="" class="form-label">Supplier</label>
-                                        <input class="form-control" type="text" name="rec_supplier">
+                                        <label for="" class="form-label">Supplier <span class="required-field">*</span></label>
+                                        <input class="form-control" type="text" name="rec_supplier" value="{{ $inv_received->rec_supplier }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Date</label>
-                                        <input type="date" name="rec_date" class="form-control">
+                                        <input type="date" name="rec_date" class="form-control" value="{{ $inv_received->rec_date }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Remarks</label>
-                                        <textarea class="form-control" name="rec_remarks" id="" cols="30" rows="2"></textarea>
+                                        <textarea class="form-control" name="rec_remarks" id="" cols="30" rows="2">{{ $inv_received->rec_remarks }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +85,19 @@
                                     </tr>
                                     </thead>
                                     <tbody id="selectedDataList">
-                                        
+                                        @foreach($received_details as $details)
+                                            <tr>
+                                                <td class="col-md-2 d-none"><input name="item[{{$loop->iteration}}][item_id]" value='{{$details->item_id}}' class="col-md-5">asd</input>
+                                                <td class="col-md-5">{{$details->item->product_name}}</td>
+                                                <td class="col-md-2">{{$details->item->uom->uom_shortname}}</td>
+                                                <td class="col-md-2"><input class="form-control" type="text" name="item[{{$loop->iteration}}][item_qty]" value="{{$details->rec_qty}}"></input></td>
+                                                <td class="col-md-1">
+                                                    <button class="btn btn-danger removeItem" type="button" id="{{$loop->iteration}}" {{$inv_received->is_posted == 1 ? 'disabled':''}}> 
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>    
@@ -95,8 +107,8 @@
                     <div class="d-flex justify-content-end mt-2">
                         <div>
                             <a href="{{ route('receive.index') }}" class="btn btn-secondary rounded">Cancel</a>
-                            <button class="btn btn-primary rounded" type="submit" name="action" value="submitButton">Submit</button>
-                            <button class="btn btn-primary rounded" type="submit" name="action" value="saveButton">Save Changes</button>
+                            <button class="btn btn-primary rounded" type="submit" name="action" value="submitButton" {{$inv_received->is_posted == 1 ? 'disabled':''}} {{$buttons['Update']}}>Submit</button>
+                            <button class="btn btn-primary rounded" type="submit" name="action" value="saveButton" {{$inv_received->is_posted == 1 ? 'disabled':''}} {{$buttons['Update']}}>Save Changes</button>
                         </div>
                     </div>
                 </div>
@@ -109,13 +121,8 @@
 
 
 
-    <script src="{{asset('js/product-item/itemListModal.js')}}"></script>
+    
 
-    <script src="{{asset('js/inv-receiving/getSelectedItems.js')}}"></script>
-
-    <script>
-
-    </script>
 
         @if (Session::has('message'))
         <script>
@@ -133,5 +140,8 @@
 @endsection
 
 @section('script')
-    
+    <script src="{{asset('js/product-item/itemListModal.js')}}"></script>
+
+    <script src="{{asset('js/inv-receiving/getSelectedItems.js')}}"></script>
+    <script src="{{asset('js/inv-receiving/removeItem.js')}}"></script>
 @endsection

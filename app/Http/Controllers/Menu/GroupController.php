@@ -12,19 +12,27 @@ class GroupController extends Controller
 {
     public function index()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/component/group', 'Read');
         $data = Group::orderBy('created_at', 'desc')->get();
         // dd($data);
         // return view('students.index', $data);
+
+        foreach ($data as $status){
+            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+        }
+        
         return view('group.index')->with(compact('data'));
     }
 
     public function create()
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/component/group', 'Create');
         return view('group.create');
     }
 
     public function store(GroupStoreRequest $request)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/component/group', 'Create');
         $validated = $request->validated();
         
         $details = array(
@@ -42,12 +50,14 @@ class GroupController extends Controller
 
     public function edit($id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/component/group', 'Read');
         $data = Group::findOrFail($id);
         return view('group.edit', ['group' => $data]);
     }
 
     public function update(GroupStoreRequest $request, Group $id)
     {
+        $is_authorized = PermissionHelper::checkAuthorization('/component/group', 'Update');
         $validated = $request->validated();
         $details = array(
             "group_name" => $request->group_name, 
@@ -61,21 +71,22 @@ class GroupController extends Controller
         return back()->with('message','Data has been updated successfully');
     }
 
-    public function remove(Request $request, $id)
+    public function delete($id)
     {
-        $id = $id;
-        $action = "/component/group/delete/".$id; // kulang yung slug
-        return view('components.remove-form', compact('action'));
-    }
+        $is_authorized = PermissionHelper::checkAuthorization('/component/group', 'Remove');
+        $employee = Group::find($id);
 
-    public function delete(Group $group, $id)
-    {
-        $current_status = Group::find($id, ['status']);
-        $new_status = ($current_status->status == "1") ? "0" : "1";
-        $update = array(
-            "status" => $new_status,
-        );
-        $group->where('id', $id)->update($update);
-        return redirect('/component/group'); // kulang yung slug
+        if ($employee) {
+            $new_status = $employee->status == 1 ? 0 : 1;
+            $employee->status = $new_status;
+
+            if ($employee->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 }

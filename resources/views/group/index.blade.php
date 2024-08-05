@@ -40,16 +40,19 @@
                                     <td> {{ $group->group_icon }} </td>
                                     <td> {{ textShortener($group->group_description, $group->id, 'group_description', 25) }} </td>
                                     <td> {{ ($group->cds->toFormattedDateString()) }}</td>
-                                    <td> {{ ($group->status == 1) ? "Active":"Inactive" }}</td>
                                     <td> 
-                                        <a href="/component/group/{{$group->id}}" class="btn btn-warning rounded">
-                                            <i class="fa-regular fa-pen-to-square text-light"></i>
-                                        </a>
-                                        <a data-toggle="modal" id="removeButton" data-target="#removeModal" data-attr="/component/group/remove/{{$group->id}}" title="Remove Data"
-                                        class="btn btn-danger rounded">
-                                            <i class="fas fa-trash text-light"></i>
-                                        </a>
-                                        <!-- <a href="#" class="btn btn-danger rounded">Delete</a> -->
+                                        <button class="btn {{$group->status_color}}">
+                                        {{ ($group->status == 1) ? "Active":"Inactive" }}
+                                        </button>
+                                    </td>
+                                    <td> 
+                                        <a href="{{ route('group.edit', $group->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
+                                        <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                                            data-id="{{ $group->id }}"
+                                            data-status="{{ $group->status }}"
+                                            data-url="{{ route('group.delete', $group->id) }}">
+                                            <i class="fas fa-trash text-light fa-lg"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach

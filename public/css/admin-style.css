@@ -57,6 +57,7 @@ body {
 /* Additional styling for the sidebar links */
 .nav-pills .nav-link {
     color: white;
+    margin-bottom: 3px;
 }
 
 .nav-pills .nav-link:hover {
@@ -87,6 +88,15 @@ body {
     display: none;
 }
 
+.active_module {
+    background-color: #555;
+    border-radius: 3px;
+}
+
+.active_group {
+    background-color: #555;
+    border-radius: 3px;
+}
 
 .table-responsive{
     border-style: solid;
@@ -117,3 +127,57 @@ body {
     transform: scale(1.01); /* Scale up the card slightly */
 }
 
+.status-cancelled {
+    background-color: #F08080 !important; 
+    color: #000000 !important;
+    border: none;
+    cursor: default;
+    pointer-events: none;
+    width: 100px;
+}
+.status-ongoing {
+    background-color: #87CEFA !important; 
+    color: #000000 !important; 
+    border: none;
+    cursor: default;
+    pointer-events: none;
+    width: 100px;
+}
+.status-done {
+    background-color: #90EE90 !important; 
+    color: #000000 !important; 
+    border: none;
+    cursor: default;
+    pointer-events: none;
+    width: 100px;
+}
+.status-pending {
+    background-color: #dada67 !important;
+    color: #000000 !important; 
+    border: none;
+    cursor: default;
+    pointer-events: none;
+    width: 100px;
+}
+
+.status-active {
+    background-color: #87CEFA !important;
+    color: #000000 !important; 
+    border: none;
+    cursor: default;
+    pointer-events: none;
+    width: 100px;
+}
+
+.status-inactive {
+    background-color: #dada67 !important;
+    color: #000000 !important; 
+    border: none;
+    cursor: default;
+    pointer-events: none;
+    width: 100px;
+}
+
+.required-field {
+    color:red;
+}

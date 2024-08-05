@@ -3,9 +3,14 @@
 
     <main>    
         @include('website.header')
-        <div class="welcome">
+        <div class="welcome ">
             <h2>Welcome to Citi Security!</h2>
             <p>Get your security cameras and be secured now</p>
+            
+            
+            <a class="btn border-0 rounded quote-btn" id="" href="{{ route('website-quotation.index') }}" class="btn">
+                <button>Send Quotation</button>
+            </a>
         </div>
     </main>
     

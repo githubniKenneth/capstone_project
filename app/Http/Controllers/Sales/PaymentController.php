@@ -12,6 +12,9 @@ class PaymentController extends Controller
         // $data = SalesOrder::orderBy('created_at', 'desc')->get();
         // dd($data);
         // return view('students.index', $data);
+
+
+        
         return view('sales.payment.index');
     }
 }

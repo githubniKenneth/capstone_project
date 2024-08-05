@@ -24,7 +24,7 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-4">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Branch Name</label>
+                                            <label for="" class="form-label">Branch Name <span class="required-field">*</span></label>
                                             <input class="form-control" type="text" name="branch_name" value={{old('branch_name')}}>
                                             @error('branch_name')
                                                 <p class="text-danger">
@@ -41,7 +41,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Street</label>
+                                            <label for="" class="form-label">Street <span class="required-field">*</span></label>
                                             <input class="form-control" type="text" name="branch_street" value={{old('branch_street')}}>
                                         </div>
                                     </div>
@@ -49,7 +49,7 @@
                                 <div class="row d-flex p-3">
                                     <div class="col-md-4">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Barangay</label>
+                                            <label for="" class="form-label">Barangay <span class="required-field">*</span></label>
                                             <input class="form-control" type="text" name="branch_brgy" value={{old('branch_brgy')}}>
                                             @error('branch_brgy')
                                                 <p class="text-danger">
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">City</label>
+                                            <label for="" class="form-label">City <span class="required-field">*</span></label>
                                             <input class="form-control" type="text" name="branch_city" value={{old('branch_city')}}>
                                             @error('branch_city')
                                                 <p class="text-danger">
@@ -85,7 +85,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="" class="form-label">Telephone No.</label>
-                                            <input class="form-control" type="text" name="branch_tele_no" >
+                                            <input class="form-control" type="text" name="branch_tele_no" value={{old('branch_tele_no')}}>
                                             @error('branch_tele_no')
                                                 <p class="text-danger">
                                                     {{$message}}
@@ -95,7 +95,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="" class="form-label">Phone No.</label>
+                                            <label for="" class="form-label">Phone No. <span class="required-field">*</span></label>
                                             <input class="form-control" type="text" name="branch_phone_no" value={{old('branch_phone_no')}}>
                                             @error('branch_phone_no')
                                                 <p class="text-danger">
@@ -106,7 +106,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="" class="form-label">Email</label>
+                                            <label for="" class="form-label">Email <span class="required-field">*</span></label>
                                             <input class="form-control" type="text" name="branch_email" value={{old('branch_email')}}>
                                             @error('branch_email')
                                                 <p class="text-danger">
@@ -119,48 +119,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="accordion accordion-flush" id="accordion-flush-contact">
-                        <div class="accordion-item border">
-                            <h2 class="accordion-header mb-2" id="flush-headingOne">
-                                <button class="accordion-button collapsed p-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-contact" aria-expanded="true" aria-controls="flush-contact">
-                                    Contact Information
-                                </button>
-                            </h2>
-                            <div id="flush-contact" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordion-flush-contact">
-                                <div class="row d-flex p-3">
-                                    <div class="col-md-4">
-                                        <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Type of Certificate</label>
-                                            <select name="" id="" class="form-select">
-                                                <option selected value="">Please Select</option>
-                                                <option value="">Permit to Open Niche</option>
-                                                <option value="">Transfer of Cadaver</option>
-                                                <option value="">Transfer of Remain</option>
-                                            </select>
-                                            <input class="form-control" type="text" name="branch_city">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group d-flex flex-column">
-                                            <label for="" class="form-label">Relation to Deceased</label>
-                                            <select name="" id="" class="form-select">
-                                                <option selected value="">Please Select</option>
-                                                <option value="">Brother</option>
-                                                <option value="">Daughter</option>
-                                                <option value="">Friend</option>
-                                                <option value="">Husband</option>
-                                                <option value="">Relative</option>
-                                                <option value="">Son</option>
-                                                <option value="">Sister</option>
-                                                <option value="">Wife</option>
-                                            </select>
-                                            <input class="form-control" type="text" name="branch_city">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="d-flex justify-content-end mt-2">
                         <div>
                             <!-- hidden -->
