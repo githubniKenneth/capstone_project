@@ -35,24 +35,24 @@
                 <td> {{$return->return_control_no}} </td>
                 <td> {{ $return->returner->emp_full_name }} </td>
                 <td> {{ $return->receiver->emp_full_name }} </td>
-                <td>  Branch  </td>
+                <td>  {{ $return->branch->branch_name }}  </td>
                 <td> {{ $return->remarks }} </td>
                 <td> {{ ($return->cds->toFormattedDateString()) }}</td>
                 <td>
                     <button class="btn {{$return->status_color}}">
-                    {{ ($return->status == 1) ? "Active":"Inactive" }}
+                    {{ $return->status }}
                     </button>
                 </td>
                 
                 
                 <td> 
                     <a href="{{ route('return.edit', $return->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
-                    <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                    <!-- <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
                         data-id="{{ $return->id }}"
                         data-status="{{ $return->status }}"
                         data-url="{{ route('return.delete', $return->id) }}" {{$buttons['Remove']}}>
                         <i class="fas fa-trash text-light fa-lg"></i>
-                    </button>
+                    </button> -->
                 </td>
             </tr>
             @endforeach
@@ -65,6 +65,17 @@
 <script src="{{asset('js/remove-modal/open-modal.js')}}"></script>
 <!-- remove modal -->
 
+    @if (Session::has('message'))
+        <script>
+            swal({
+                title: "Success!",
+                text: "{{ Session::get('message') }}",
+                icon: 'success',
+                timer: 2000,
+                buttons: false
+            })
+        </script>
+    @endif 
 @endsection
 
 @section('script')

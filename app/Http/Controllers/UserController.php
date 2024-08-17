@@ -75,7 +75,7 @@ class UserController extends Controller
         $employees = Employee::select('id','emp_full_name')->where('status', 1)->get();
         $roles = UserRole::select('id','user_role')->where('status', 1)->get();
         $groups = Group::select('id','group_name')->where('status', 1)->get();
-        $permissions = Permission::select('id','name')->get();
+        $permissions = Permission::select('id','name')->where('status', 1)->get();
         $data_access = config('constant.data_access');
 
         // Fetch user access groups and modules
@@ -114,11 +114,16 @@ class UserController extends Controller
         }
 
         if ($request->group_id) {
+            UserAccessGroup::where('user_id', $id->id)->delete();
             foreach ($request->group_id as $group) {
-        
-                if (isset($request->group_permission[$group]) && is_array($request->group_permission[$group])) {
+
+                // permssion 
+                if (isset($request->group_permission[$group]) && is_array($request->group_permission[$group])) 
+                {
                     $permissions = implode(',', $request->group_permission[$group]);
-                } else {
+                } 
+                else 
+                {
                     $permissions = '';
                 }
         
@@ -132,26 +137,13 @@ class UserController extends Controller
                     "updated_by" => Auth::user()->id
                 ];
         
-                // Check if the record exists
-                $existing_group = UserAccessGroup::where('user_id', $id->id)
-                                                   ->where('group_id', $group)
-                                                   ->first();
-        
-                if ($existing_group) {
-                    // Update the existing record
-                    $existing_group->update([
-                        "permissions" => $permissions,
-                        "status" => 1, // Or any other status logic you need
-                        "updated_by" => Auth::user()->id
-                    ]);
-                } else {
-                    // Create a new record
-                    UserAccessGroup::create($group_data);
-                }
+                UserAccessGroup::create($group_data);
             }
         }
 
         if ($request->module_id) {
+            
+            UserAccessModule::where('user_id', $id->id)->delete();
             foreach ($request->module_id as $module) {
         
                 if (isset($request->module_permission[$module]) && is_array($request->module_permission[$module])) {
@@ -170,22 +162,7 @@ class UserController extends Controller
                     "updated_by" => Auth::user()->id
                 ];
         
-                // Check if the record exists
-                $existing_module = UserAccessModule::where('user_id', $id->id)
-                                                   ->where('module_id', $module)
-                                                   ->first();
-        
-                if ($existing_module) {
-                    // Update the existing record
-                    $existing_module->update([
-                        "permissions" => $permissions,
-                        "status" => 1, // Or any other status logic you need
-                        "updated_by" => Auth::user()->id
-                    ]);
-                } else {
-                    // Create a new record
-                    UserAccessModule::create($module_data);
-                }
+                UserAccessModule::create($module_data);
             }
         }
 
@@ -193,8 +170,8 @@ class UserController extends Controller
         
 
         $id->update($details);
-        return redirect('user-account/user');
-
+        // return redirect('user-account/user');
+        return redirect('user-account/user')->with('message','Data has been saved successfully');
 
     }
 

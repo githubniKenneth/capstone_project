@@ -16,7 +16,7 @@
             </ol>
         </nav>
         <div class="p-3 d-flex justify-content-center">
-            <form action="{{route('issuances.update', $data->id)}}" method="POST" class="d-flex flex-column w-100">
+            <form action="{{route('issuances.cancel', $data->id)}}" method="POST" class="d-flex flex-column w-100">
             @method('PUT')
             @csrf
                 <div class="accordion accordion-flush mb-2" id="accordion-flush-item">
@@ -43,13 +43,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Date</label>
-                                        <input type="date" name="issuance_date" class="form-control" value="{{$data->issuance_date}}">
+                                        <input type="date" name="issuance_date" class="form-control" value="{{$data->issuance_date}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Employee</label>
-                                        <select name="received_by" id="selectEmp" class="form-control">
+                                        <select name="received_by" id="selectEmp" class="form-control" disabled>
                                             <option value="">Select Employee</option>
                                             @foreach ($employees as $employee)
                                                 <option value="{{$employee->id}}" {{$data->received_by == $employee->id ? "selected":""}}>{{$employee->emp_full_name}}</option>
@@ -60,10 +60,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Branch</label>
-                                        <select name="branch_id" id="" class="form-control">
+                                        <select name="branch_id" id="" class="form-control" disabled>
                                             <option value="">Select Branch</option>
                                             @foreach ($branches as $branch)
-                                                <option value="{{$branch->id}}" {{$data->branch_id == $branch->id ? "selected":""}}>{{$branch->branch_name}}</option>
+                                                <option value="{{$branch->id}}"  {{$data->branch_id == $branch->id ? "selected":""}} >{{$branch->branch_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -71,7 +71,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Remarks</label>
-                                        <textarea class="form-control" name="remarks" id="" cols="30" rows="2">{{$data->remarks}}</textarea>
+                                        <textarea class="form-control" name="remarks" id="" cols="30" rows="2" readonly>{{$data->remarks}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -91,10 +91,10 @@
                         <div id="flush-employee" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordion-flush-employee">
                             <div class="p-3">
                                 <div class="d-flex justify-content-end pb-4" style="margin-left: 20px; margin-bottom: 20px; font-size: 20px; margin-top: 10px;">
-                                    <a href="{{ route('product.item-list') }}" data-toggle="modal" id="itemList" data-button-name="selectIssuances" data-target="#itemListModal" title="Show Items"
+                                    <!-- <a href="{{ route('product.item-list') }}" data-toggle="modal" id="itemList" data-button-name="selectIssuances" data-target="#itemListModal" title="Show Items"
                                         class="btn btn-success rounded" style="margin-left: 30px;">
                                             Show Item List
-                                    </a>
+                                    </a> -->
                                 </div>
                                 <table class="table" id="itemDetailsTable">
                                     <thead>
@@ -113,8 +113,8 @@
                                                 <td class="col-md-1">{{$loop->iteration}}</td>
                                                 <td class="col-md-6">{{$item->item->product_name}}</td>
                                                 <td class="col-md-2">{{$item->item->uom->uom_shortname}}</td>
-                                                <td class="col-md-2"><input class="form-control quantity" type="number" id="" name="item[{{$loop->iteration}}][issued_qty]" value="{{$item->issued_qty}}"></td>
-                                                <td class="col-md-1"><button class="btn btn-danger removeItem" type="button" id="{{$loop->iteration}}"><i class="fa-solid fa-trash"></i></button></td>
+                                                <td class="col-md-2"><input class="form-control quantity" type="number" id="" name="item[{{$loop->iteration}}][issued_qty]" value="{{$item->issued_qty}}" readonly></td>
+                                                <td class="col-md-1"><button class="btn btn-danger removeItem" type="button" id="{{$loop->iteration}}" disabled><i class="fa-solid fa-trash"></i></button></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -125,9 +125,8 @@
                 </div>
                     <div class="d-flex justify-content-end mt-2">
                         <div>
-                            <a href="{{ route('receive.index') }}" class="btn btn-secondary rounded">Cancel</a>
-                            <!-- <button class="btn btn-primary rounded" type="submit" name="action" value="submitButton">Submit</button> -->
-                            <button class="btn btn-primary rounded" type="submit" name="action" value="saveButton" {{$buttons['Update']}}>Save Changes</button>
+                            <a href="{{ route('issuances.index') }}" class="btn btn-secondary rounded">Cancel</a>
+                            <button class="btn btn-danger rounded" type="submit" {{ $data->status == 2 ? 'disabled':'' }} {{$buttons['Update']}}>Cancel Transaction</button>
                         </div>
                     </div>
                 </div>

@@ -8,7 +8,7 @@ use App\Models\ProductResolution;
 use App\Http\Requests\ProductResolutionRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
-
+use App\Helpers\PermissionHelper;
 
 class ResolutionController extends Controller
 {
@@ -17,7 +17,7 @@ class ResolutionController extends Controller
         $is_authorized = PermissionHelper::checkAuthorization('/product/resolution', 'Read');	
         $buttons = PermissionHelper::getButtonStates('/product/resolution');
         $data = ProductResolution::orderBy('created_at', 'desc')->get();
-        return view('product.resolution.index')->with(compact('data'));
+        return view('product.resolution.index')->with(compact('data', 'buttons'));
     }
 
     public function create()

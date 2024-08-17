@@ -37,8 +37,27 @@ class IssuancesController extends Controller
             $data = InvIssuance::orderBy('created_at', 'desc')->where('received_by', $emp_id)->get();
         }
 
+        // foreach ($data as $status){
+        //     $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+        // }
+
         foreach ($data as $status){
-            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
+            switch($status->status){
+                case 0:
+                    $status->status_color = 'status-inactive';
+                    $status->status = 'Inactive';
+                    break;
+                case 1:
+                    $status->status_color = 'status-active';
+                    $status->status = 'Active';
+                    break;
+                case 2:
+                    $status->status_color = 'status-cancelled';
+                    $status->status = 'Cancelled';
+                    break;
+                default:
+                    $status->status_color = 'status-inactive';
+            }
         }
         
         return view('inventory.issuances.index')->with(compact('data', 'buttons'));
@@ -191,5 +210,41 @@ class IssuancesController extends Controller
         $resolutions = ProductResolution::orderBy('resolution_desc', 'asc')->where('status', '1')->get();
 
         return view('inventory.issuances.edit')->with(compact('employees', 'product', 'brands','resolutions', 'packages', 'branches', 'data', 'item_details', 'buttons'));
+    }
+
+    public function cancelTransaction(Request $request, $id)
+    {
+        $is_authorized = PermissionHelper::checkAuthorization('/inventory/issuances', 'Update');
+        $data = InvIssuance::findOrFail($id);
+        $details = array(
+            "is_cancelled" => 1,
+            "status" => 2,
+            "updated_by" => Auth::user()->id,
+        );
+        InvIssuance::where('id', $id)->update($details);
+
+        // Update inventory deduction if posted
+        foreach ($request->item as $item) {
+            $item_qty = $item["issued_qty"];
+            $item_id = $item["item_id"];
+            DB::table('inv_stocks')->where('item_id', $item_id)->update(
+                ['balance_qty' => DB::raw('balance_qty + ' . $item_qty),
+                 'issued_qty' => DB::raw('issued_qty - ' . $item_qty),
+                ]
+            );
+        }
+
+        foreach ($request->item as $item) {
+            $item_qty = $item["issued_qty"];
+            DB::table('employee_inventory')->updateOrInsert(
+                ['item_id' => $item["item_id"], 'emp_id' => $data->received_by],
+                ['balance_qty' => DB::raw('balance_qty - '. $item_qty ),
+                 'issued_qty' => DB::raw('issued_qty - ' . $item_qty),
+                ]
+            );
+        }
+
+        
+        return back()->with('message','Data has been updated successfully');
     }
 }

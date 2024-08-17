@@ -56,16 +56,16 @@
                 </div>
     </div>
     @if (Session::has('message'))
-                <script>
-                    swal({
-                        title: "Success!",
-                        text: "{{ Session::get('message') }}",
-                        icon: 'success',
-                        timer: 2000,
-                        buttons: false
-                    })
-                </script>
-            @endif        
+        <script>
+            swal({
+                title: "Success!",
+                text: "{{ Session::get('message') }}",
+                icon: 'success',
+                timer: 2000,
+                buttons: false
+            })
+        </script>
+    @endif        
     @endsection
 
 @section('script')

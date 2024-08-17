@@ -40,19 +40,19 @@
                 <td> {{ ($issuances->cds->toFormattedDateString()) }}</td>
                 <td>
                     <button class="btn {{$issuances->status_color}}">
-                    {{ ($issuances->status == 1) ? "Active":"Inactive" }}
+                    {{ $issuances->status }}
                     </button>
                 </td>
                 
                 
                 <td> 
                     <a href="{{ route('issuances.edit', $issuances->id) }}" class="btn btn-warning rounded"><i class="fa-regular fa-pen-to-square text-light"></i></a>
-                    <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
+                    <!-- <button class="btn btn-danger rounded remove-btn" title="Remove Data" 
                         data-id="{{ $issuances->id }}"
                         data-status="{{ $issuances->status }}"
-                        data-url="{{ route('issuances.delete', $issuances->id) }}" {{$buttons['Remove']}}>
+                        data-url="{{ route('issuances.delete', $issuances->id) }}" {{$issuances->status == "Cancelled" ? 'disabled':'' }}{{$buttons['Remove']}}>
                         <i class="fas fa-trash text-light fa-lg"></i>
-                    </button>
+                    </button> -->
                 </td>
             </tr>
             @endforeach

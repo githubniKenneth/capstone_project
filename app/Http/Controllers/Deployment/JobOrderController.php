@@ -221,10 +221,13 @@ class JobOrderController extends Controller
         $jobOrder = JobOrder::where('id', $id->id)
                                 ->where('order_id', $id->order_id)
                                 ->first();
+                                
+        $ordered_items = SalesOrderDetails::where('order_id', $id->order_id)->get();
         // $quotation_items = SalesQuotationDetails::where('quotation_id', $id->id)->get();
 
         $data = array(
                         'job_order' => $jobOrder,
+                        'ordered_items' => $ordered_items,
                     );
         Mail::send('mail.job-order', $data, function($message) use ($id) {
             $message->to($id->client->client_email, $id->client->client_full_name)->subject
@@ -240,7 +243,7 @@ class JobOrderController extends Controller
         return "Payment Failed";
     }
 
-    public function paymentSuccess(JobOrder $id)
+    public function paymentSuccess(SalesOrder $id)
     {
         $job_order_details = array(
             "payment_type" => 2,

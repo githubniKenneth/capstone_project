@@ -3,7 +3,7 @@
 
 @include('website.header')
 <div class="w-100 p-3">
-    <div class="p-3 d-flex justify-content-center" >
+    <div class="p-3 d-flex justify-content-center quotation-form" >
         <form action=" {{ route('website-quotation.store') }} " method="POST" class="d-flex flex-column border w-50 p-4">
         @csrf
         <div class="accordion accordion-flush mb-2" id="accordion-flush-client">
@@ -181,7 +181,7 @@
         </div>
         <div class="d-flex justify-content-end mt-2">
             <div>
-                <button class="btn rounded" id="quote-btn" type="submit" name="action" value="saveButton">Send Request</button>
+                <button class="rounded quote-btn font-1" id="quote-btn" type="submit" name="action" value="saveButton">Send Request</button>
             </div>
         </div>
 

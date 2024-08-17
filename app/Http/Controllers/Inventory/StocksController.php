@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\InvStocks;
 use Illuminate\Support\Facades\DB;
-
+use App\Helpers\PermissionHelper;
 
 
 class StocksController extends Controller

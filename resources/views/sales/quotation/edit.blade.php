@@ -254,7 +254,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Material Cost</label>
-                                        <input class="form-control material_cost" type="number" name="material_cost" value="{{ number_format($data['quotation']->quote_material_cost, 2, '.', ',')}}" id="material_cost" readonly>
+                                        <input class="form-control material_cost" type="number" name="material_cost" value="{{ $data['quotation']->quote_material_cost }}" id="material_cost" readonly>
                                         
                                     </div>
                                 </div>
@@ -304,7 +304,7 @@
                                     <div class="col-md-1">
                                         <div class="form-group d-flex flex-column">
                                             <label for="" class="form-label">VAT</label>
-                                            <input type="checkbox" name="is_vat" class="form-check-input" id="is_vat">
+                                            <input type="checkbox" name="is_vat" class="form-check-input" id="is_vat" {{($data['quotation']->is_vat == 1) ? "checked" :""}}>
                                         </div>
                                     </div>
                             </div>
@@ -312,13 +312,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Vat Percentage</label>
-                                        <input type="number" name="vat_percent" class="form-control vat_percent" value="0" id="vat_percent" readonly>
+                                        <input type="number" name="vat_percent" class="form-control vat_percent" value="{{$data['quotation']->vat_percentage}}" id="vat_percent" {{($data['quotation']->is_vat == 0) ? "readonly" :"" }}>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">EWT Percentage</label>
-                                        <input type="number" name="ewt_percent" class="form-control ewt_percent" value="0" id="ewt_percent" readonly>
+                                        <input type="number" name="ewt_percent" class="form-control ewt_percent" value="{{$data['quotation']->ewt_percentage}}" id="ewt_percent" >
                                     </div>
                                 </div>
                             </div>
@@ -326,13 +326,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Vat Amount</label>
-                                        <input type="number" name="vat_amount" class="form-control vat_amount" value="0.00" id="vat_amount" readonly>
+                                        <input type="number" name="vat_amount" class="form-control vat_amount" value="{{$data['quotation']->vat_amount}}" id="vat_amount" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">EWT Amount</label>
-                                        <input type="number" name="ewt_amount" class="form-control ewt_amount" value="0.00" id="ewt_amount" readonly>
+                                        <input type="number" name="ewt_amount" class="form-control ewt_amount" value="{{$data['quotation']->ewt_amount}}" id="ewt_amount" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -489,7 +489,8 @@
 
 <script src="{{asset('js/salesOrder/getSelectedItems.js')}}"></script>
 
-<script src="{{asset('js/salesQuotation/amountFunctionality.js')}}"></script>
+<!-- <script src="{{asset('js/salesQuotation/amountFunctionality.js')}}"></script> -->
+<script src="{{asset('js/salesQuotation/test.js')}}"></script>
 <script src="{{asset('js/salesQuotation/dataTable.js')}}"></script>
 
 <script src="{{asset('js/salesQuotation/clientDetails.js')}}"></script>

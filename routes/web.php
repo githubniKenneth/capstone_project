@@ -288,6 +288,7 @@ Route::middleware(['auth'])->prefix('inventory')->group(function () {
                 Route::get('/{id}', 'Inventory\IssuancesController@edit')->name('issuances.edit'); 
                 Route::put('/{id}', 'Inventory\IssuancesController@update')->name('issuances.update'); 
                 Route::put('delete/{id}', 'Inventory\IssuancesController@delete')->name('issuances.delete');
+                Route::put('cancel/{id}', 'Inventory\IssuancesController@cancelTransaction')->name('issuances.cancel');
         });
 
         /* Issuances Routes */
@@ -298,6 +299,7 @@ Route::middleware(['auth'])->prefix('inventory')->group(function () {
                 Route::get('/{id}', 'Inventory\ReturnController@edit')->name('return.edit'); 
                 Route::put('/{id}', 'Inventory\ReturnController@update')->name('return.update'); 
                 Route::put('delete/{id}', 'Inventory\ReturnController@delete')->name('return.delete');
+                Route::put('cancel/{id}', 'Inventory\ReturnController@cancelTransaction')->name('return.cancel');
         });
 
         /* Receive Routes */

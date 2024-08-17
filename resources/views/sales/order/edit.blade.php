@@ -189,7 +189,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group d-flex flex-column">
                                         <label for="" class="form-label">Material Cost</label>
-                                        <input class="form-control material_cost" type="number" name="order_material_cost" value="{{ number_format($sales_order->order_material_cost, 2, '.', ',') }}" id="material_cost" readonly>
+                                        <input class="form-control material_cost" type="number" name="order_material_cost" value="{{ $sales_order->order_material_cost }}" id="material_cost" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

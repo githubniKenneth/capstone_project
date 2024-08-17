@@ -18,8 +18,8 @@
             <div class="modal-content" id="modal">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">Quotation Item List</h5>
-                    <p id="buttonName"></p>
+                    <h5 class="modal-title">Item List</h5>
+                    <p id="buttonName" class="d-none"></p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -51,7 +51,7 @@
                                         <td>{{optional($data->series)->series_name}}</td>
                                         <td>{{optional($data->resolution)->resolution_desc}}</td>
                                         <td>{{optional($data->uom)->uom_name}}</td>
-                                        <td> {{ $data->product_price }}</td>
+                                        <td> {{ number_format($data->product_price, 2, '.', ',') }}</td>
                                         <td>{{optional($data->uom)->uom_name}}</td>
                                         <!-- <td>{{optional($data->image)->file_path}}</td> -->
                                     </tr>

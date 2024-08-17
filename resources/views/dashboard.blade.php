@@ -3,7 +3,7 @@
 
 
 @section('content')
-<div class="row p-4">
+<div class="row m-0 p-4">
     <div class="col-md-3 mb-5 {{ $dashboard_access['Total Clients'] }}">
         <div class="card">
             <div class="card-body">
@@ -32,7 +32,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Total Sales</h5>
-                <p class="card-text">&#8369; {{ $data['orderTotalSales'] }}</p>
+                <p class="card-text">&#8369; {{ number_format($data['orderTotalSales'], 2, '.', ',') }}</p>
             </div>
         </div>
     </div>
@@ -64,18 +64,18 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Pending Payment</h5>
-                <p class="card-text">&#8369; {{ $data['orderTotalPendingSales']}}</p>
+                <p class="card-text">&#8369; {{ number_format($data['orderTotalPendingSales'], 2, '.', ',') }}</p>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row p-4">
+<div class="row m-0 p-4">
     <h5 class="col-md-6 {{ $dashboard_access['Recent Deployments'] }}">Recent Deployments</h5>
     <h5 class="col-md-6 {{ $dashboard_access['Recent Sales'] }}">Recent Sales</h5>
 </div>
 
-<div class="row p-4">
+<div class="row m-0 p-4">
 
     <div class="col-md-6 {{ $dashboard_access['Recent Deployments'] }}">
         <div class="card">
@@ -113,7 +113,7 @@
                     @foreach ($data['recentSales'] as $sales)
                         <tr>
                             <td>{{ $sales->client->client_full_name }}</td>
-                            <td>&#8369; {{ $sales->order_total_amount }}</td>
+                            <td>&#8369; {{ number_format($sales->order_total_amount, 2, '.', ',') }} </td>
                             <td>{{ $payment_status[$sales->id] }}</td>
                         </tr>
                     @endforeach

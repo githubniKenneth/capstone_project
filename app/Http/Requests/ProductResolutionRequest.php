@@ -25,7 +25,7 @@ class ProductResolutionRequest extends FormRequest
     {
         return [
             // column name => unique:table_name,id gumana na?
-            "resolution_desc" => ['required','unique:product_resolutions,id'],
+            "resolution_desc" => ['required','unique:product_resolutions,resolution_desc'],
             // "group_code" => ['required','unique:groups,id'],
             // "group_icon" => ['required']
             

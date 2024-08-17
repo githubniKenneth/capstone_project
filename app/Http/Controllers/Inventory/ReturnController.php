@@ -37,11 +37,26 @@ class ReturnController extends Controller
         {
             $data = InvReturn::orderBy('created_at', 'desc')->where('returned_by', $emp_id)->get();
         }
-
-        foreach ($data as $status){
-            $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
-        }
         
+        foreach ($data as $status){
+            switch($status->status){
+                case 0:
+                    $status->status_color = 'status-inactive';
+                    $status->status = 'Inactive';
+                    break;
+                case 1:
+                    $status->status_color = 'status-active';
+                    $status->status = 'Active';
+                    break;
+                case 2:
+                    $status->status_color = 'status-cancelled';
+                    $status->status = 'Cancelled';
+                    break;
+                default:
+                    $status->status_color = 'status-inactive';
+            }
+        }
+
         return view('inventory.return.index')->with(compact('data', 'buttons'));
     }
 
@@ -96,7 +111,7 @@ class ReturnController extends Controller
             $newReturnNumber = '00001';
         }
     
-        $newControlNo = "IS".$lastTwoDigits."-".$newReturnNumber;
+        $newControlNo = "RTN".$lastTwoDigits."-".$newReturnNumber;
     
         // Create issuance record
         $details = array(
@@ -160,4 +175,47 @@ class ReturnController extends Controller
             'message' => 'Data has been saved successfully'
         ]);
     }
+
+    public function edit($id)
+    {
+        $is_authorized = PermissionHelper::checkAuthorization('/inventory/returns', 'Update');
+        $buttons = PermissionHelper::getButtonStates('/inventory/returns');
+
+        $data = InvReturn::findOrFail($id);
+        $item_details = InvReturnItems::where('return_id',$id)->get();
+
+        return view('inventory.return.edit')->with(compact('data', 'buttons', 'item_details'));
+    }
+
+    public function cancelTransaction(Request $request, $id)
+    {
+        $is_authorized = PermissionHelper::checkAuthorization('/inventory/returns', 'Update');
+        $data = InvReturn::findOrFail($id);
+        $details = array(
+            "status" => 2,
+            "updated_by" => Auth::user()->id,
+        );
+        InvReturn::where('id', $id)->update($details);
+
+        // Update inventory deduction if posted
+        foreach ($request->item as $item) {
+            $item_qty = $item["issued_qty"];
+            $item_id = $item["item_id"];
+            DB::table('inv_stocks')->where('item_id', $item_id)->update(
+                ['balance_qty' => DB::raw('balance_qty - ' . $item_qty),
+                 'returned_qty' => DB::raw('returned_qty - ' . $item_qty),
+                ]
+            );
+
+            DB::table('employee_inventory')
+                ->where('item_id', $item_id)
+                ->where('emp_id' , $data->returned_by)
+                ->update(['balance_qty' => DB::raw('balance_qty + '. $item_qty ),
+                          'returned_qty' => DB::raw('returned_qty - '. $item_qty )
+                         ]
+            );
+        }
+        return redirect()->route('return.index')->with('message','Data has been updated successfully');
+    }
+    
 }

@@ -25,4 +25,9 @@ class InvReturn extends Model
     {
         return $this->belongsTo(Employee::class, 'received_by', 'id');
     }
+
+    public function branch()
+    {
+        return $this->belongsTo('App\Models\Branch', 'branch_id', 'id');
+    }
 }

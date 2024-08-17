@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2024 at 11:47 AM
+-- Generation Time: Aug 17, 2024 at 06:02 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -50,9 +50,9 @@ CREATE TABLE `branches` (
 --
 
 INSERT INTO `branches` (`id`, `branch_name`, `branch_lot_no`, `branch_street`, `branch_brgy`, `branch_city`, `full_address`, `branch_tele_no`, `branch_phone_no`, `branch_email`, `branch_status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'Cavite Branch', 'B38 L23', 'P1 Cityhomes Resortsville Langkaan 2', 'Dasmariñas', 'Cavite', 'B38 L23 P1 Cityhomes Resortsville Langkaan 2 Dasmariñas Cavite', '(046)-866-7729', '09123456789', 'citisec2020@gmail.com', 1, 1, 1, '2023-08-17 05:16:22', '2023-08-19 17:23:45'),
+(1, 'Cavite Branch', 'B38 L23', 'P1 Cityhomes Resortsville Langkaan 2', 'Dasmariñas', 'Cavite', 'B38 L23 P1 Cityhomes Resortsville Langkaan 2 Dasmariñas Cavite', '(046)-866-7729', '09123456789', 'citisec2020@gmail.com', 1, 1, 1, '2023-08-17 05:16:22', '2024-07-16 08:21:20'),
 (2, 'Manila Branch', NULL, '2675 Pinoy St.', 'Brgy. 135 Balut Tondo', 'Manila', ' 2675 Pinoy St. Brgy. 135 Balut Tondo Manila', '(02)-8-635-7552', '+639560896852', 'citisec2020@gmail.com', 1, 1, 1, '2023-08-17 18:13:15', '2023-08-18 19:31:37'),
-(3, 'Batangas Branch', NULL, 'Sitio Pulo 7B', 'Brgy. Tambo,', 'Lipa City Batangas', ' Sitio Pulo 7B Brgy. Tambo, Lipa City Batangas', '(046)-866-7729', '+639770553036', 'citisec2020@gmail.com', 1, 1, 1, '2023-08-17 18:28:18', '2023-10-14 00:46:03');
+(3, 'Batangas Branch', NULL, 'Sitio Pulo 7B', 'Brgy. Tambo,', 'Lipa City Batangas', ' Sitio Pulo 7B Brgy. Tambo, Lipa City Batangas', '(046)-866-7729', '+639770553036', 'citisec2020@gmail.com', 1, 1, 1, '2023-08-17 18:28:18', '2024-07-21 06:40:57');
 
 -- --------------------------------------------------------
 
@@ -96,6 +96,40 @@ INSERT INTO `clients` (`id`, `client_business_name`, `client_first_name`, `clien
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dashboard_access`
+--
+
+CREATE TABLE `dashboard_access` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `dashboard_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `dashboard_access`
+--
+
+INSERT INTO `dashboard_access` (`id`, `role_id`, `dashboard_id`, `created_at`, `updated_at`) VALUES
+(58, 3, 6, '2024-07-08 06:58:31', '2024-07-08 06:58:31'),
+(59, 3, 7, '2024-07-08 06:58:31', '2024-07-08 06:58:31'),
+(60, 3, 9, '2024-07-08 06:58:31', '2024-07-08 06:58:31'),
+(70, 1, 1, '2024-07-15 06:56:59', '2024-07-15 06:56:59'),
+(71, 1, 2, '2024-07-15 06:56:59', '2024-07-15 06:56:59'),
+(72, 1, 3, '2024-07-15 06:56:59', '2024-07-15 06:56:59'),
+(73, 1, 4, '2024-07-15 06:56:59', '2024-07-15 06:56:59'),
+(74, 1, 5, '2024-07-15 06:56:59', '2024-07-15 06:56:59'),
+(75, 1, 6, '2024-07-15 06:56:59', '2024-07-15 06:56:59'),
+(76, 1, 7, '2024-07-15 06:56:59', '2024-07-15 06:56:59'),
+(77, 1, 8, '2024-07-15 06:56:59', '2024-07-15 06:56:59'),
+(78, 1, 9, '2024-07-15 06:56:59', '2024-07-15 06:56:59'),
+(79, 1, 10, '2024-07-15 06:56:59', '2024-07-15 06:56:59'),
+(80, 5, 2, '2024-08-06 03:07:00', '2024-08-06 03:07:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dep_oculars`
 --
 
@@ -117,11 +151,7 @@ CREATE TABLE `dep_oculars` (
 --
 
 INSERT INTO `dep_oculars` (`id`, `client_id`, `ocular_date`, `ocular_landmark`, `ocular_status`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 2, '2024-06-07', 'QWE', 1, 1, 2, 0, '2024-06-07 10:27:00', '2024-06-07 10:27:00'),
-(2, 4, '2024-06-08', NULL, 1, 1, 2, 2, '2024-06-08 11:55:14', '2024-06-11 07:21:26'),
-(3, 2, '2024-06-11', NULL, 1, 1, 2, 2, '2024-06-11 08:49:26', '2024-06-11 08:54:41'),
-(4, 3, '2024-06-11', NULL, 1, 1, 2, 0, '2024-06-11 08:56:27', '2024-06-11 08:56:27'),
-(5, 3, '2024-06-11', NULL, 2, 1, 2, 2, '2024-06-11 08:58:35', '2024-06-11 10:11:15');
+(1, 4, '2024-07-27', NULL, 3, 1, 2, 2, '2024-07-27 04:09:14', '2024-08-06 11:51:48');
 
 -- --------------------------------------------------------
 
@@ -159,9 +189,18 @@ CREATE TABLE `employees` (
 
 INSERT INTO `employees` (`id`, `branch_id`, `empr_id`, `emp_first_name`, `emp_middle_name`, `emp_last_name`, `emp_full_name`, `emp_suffix`, `emp_lot_no`, `emp_street`, `emp_brgy`, `emp_city`, `emp_full_address`, `emp_tele_no`, `emp_phone_no`, `emp_email`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 'Kenneth', 'Buli', 'Hontucan', 'Kenneth Buli Hontucan ', NULL, '787-C', 'Limasawa St.', 'Pitogo', 'Makati City', '787-C Limasawa St. Pitogo Makati City', NULL, '09123123123', 'hontucankenneth@gmail.com', 1, 1, 1, '2023-08-18 19:58:33', '2023-11-06 03:47:48'),
-(2, 2, 2, 'Cyber', 'C', 'Angustia', 'Cyber C Angustia Jr.', 'Jr.', '1', 'Street', 'Barangay', 'City', '1 Street Barangay City', NULL, '09123613732', 'cyber@gmail.com', 1, 1, 1, '2023-08-18 19:59:08', '2023-08-18 19:59:08'),
+(2, 2, 2, 'Cyber', 'C', 'Angustia', 'Cyber C Angustia Jr.', 'Jr.', '3', 'Street', 'Barangay', 'City', '3 Street Barangay, City', NULL, '09123613732', 'cyber@gmail.com', 1, 1, 2, '2023-08-18 19:59:08', '2024-07-11 10:03:46'),
 (3, 3, 4, 'Roice Ivan', 'B', 'Bulalacao', 'Roice Ivan B Bulalacao ', NULL, '2', 'Street', 'BCDA', 'Taguig City', '2 Street BCDA Taguig City', NULL, '09123456789', 'roice@gmail.com', 1, 1, 1, '2023-08-18 19:59:34', '2023-08-18 19:59:34'),
-(4, 2, 2, 'Christy', NULL, 'Fab', 'Christy  Fab ', NULL, NULL, 'Limasawa St.', 'Pitogo', 'Makati City', ' Limasawa St. Pitogo Makati City', NULL, '09123456789', 'christy.fab@gmail.com', 1, 1, 1, '2023-10-15 05:43:56', '2024-04-03 02:35:22');
+(4, 2, 2, 'Christy', NULL, 'Fab', 'Christy  Fab ', NULL, NULL, 'Limasawa St.', 'Pitogo', 'Makati City', ' Limasawa St. Pitogo Makati City', NULL, '09123456789', 'christy.fab@gmail.com', 1, 1, 1, '2023-10-15 05:43:56', '2024-04-03 02:35:22'),
+(5, 1, 1, 'asd', NULL, 'dsa', 'asd  dsa asd', 'asd', 'qwe', 'qwe', 'qwe', 'qwe', 'qwe qwe qwe qwe', '213', '31231', 'zxc@gmail.com', 1, 1, 1, '2024-07-09 12:28:32', '2024-07-09 12:28:32'),
+(6, 1, 2, 'zxc', 'zxc', 'zxc', 'zxc zxc zxc ', NULL, 'zxc', 'zcx', 'zxc', 'zxc', 'zxc zcx zxc zxc', 'zxc', 'zxc', 'zxc@gmail.com', 1, 1, 1, '2024-07-09 12:54:40', '2024-07-09 12:54:40'),
+(7, 1, 1, 'qwe', 'qwe', 'wqe', 'qwe qwe wqe qwe', 'qwe', 'qwe', 'qwe', 'qwe', 'qwe', 'qwe qwe qwe qwe', 'qwe', 'qwe', 'qwe@gmail.com', 1, 1, 1, '2024-07-09 13:00:25', '2024-07-09 13:00:25'),
+(8, 1, 1, 'ty', 'ty', 'ty', 'ty ty ty ty', 'ty', 'ty', 'ty', 'ty', 'ty', 'ty ty ty ty', 'ty', 'ty', 'ty@gmail.com', 1, 1, 1, '2024-07-09 13:01:46', '2024-07-09 13:01:46'),
+(9, 1, 1, 'gg', 'gg', 'gg', 'gg gg gg gg', 'gg', 'gg', 'gg', 'gg', 'gg', 'gg gg gg gg', 'gg', 'gg', 'gg@gmail.com', 1, 1, 1, '2024-07-09 13:04:06', '2024-07-09 13:04:06'),
+(10, 1, 1, 'jj', 'jj', 'jj', 'jj jj jj ', NULL, 'jj', 'jj', 'jj', 'jj', 'jj jj jj jj', 'jj', 'jj', 'jj@gmail.com', 1, 1, 1, '2024-07-09 13:05:01', '2024-07-09 13:05:01'),
+(11, 1, 1, 'oo', 'oo', 'oo', 'oo oo oo oo', 'oo', NULL, 'oo', 'oo', 'oo', ' oo oo oo', 'oo', 'oo', 'oo@gmail.com', 1, 1, 1, '2024-07-09 13:05:40', '2024-07-09 13:05:40'),
+(12, 1, 1, 'pp', 'pp', 'pp', 'pp pp pp pp', 'pp', 'pp', 'pp', 'pp', 'pp', 'pp pp pp pp', 'pp', 'pp', 'pp@gmail.com', 1, 1, 1, '2024-07-09 13:11:29', '2024-07-09 13:11:29'),
+(13, 1, 1, 'mm', 'mm', 'mm', 'mm mm mm mm', 'mm', 'mm', 'mm', 'mm', 'mm', 'mm mm mm mm', 'mm', 'mm', 'mm@gmail.com', 1, 1, 1, '2024-07-09 13:13:02', '2024-07-16 10:40:43');
 
 -- --------------------------------------------------------
 
@@ -174,7 +213,7 @@ CREATE TABLE `employee_inventory` (
   `emp_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `issued_qty` int(11) NOT NULL,
-  `returned_qty` int(11) DEFAULT NULL,
+  `returned_qty` int(11) DEFAULT 0,
   `balance_qty` int(11) NOT NULL,
   `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -186,13 +225,7 @@ CREATE TABLE `employee_inventory` (
 --
 
 INSERT INTO `employee_inventory` (`id`, `emp_id`, `item_id`, `issued_qty`, `returned_qty`, `balance_qty`, `remarks`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, NULL, 1, NULL, '2024-03-30 09:11:59', '2024-03-30 09:13:32'),
-(2, 1, 2, 6, NULL, 6, NULL, '2024-03-30 09:11:59', '2024-03-30 09:13:32'),
-(3, 1, 4, 5, NULL, 5, NULL, '2024-03-30 09:11:59', '2024-03-30 09:13:32'),
-(4, 4, 1, 1, NULL, 1, NULL, '2024-03-30 09:12:48', '2024-03-30 09:13:32'),
-(5, 4, 2, 1, NULL, 1, NULL, '2024-03-30 09:12:48', '2024-03-30 09:13:32'),
-(6, 2, 4, 1, NULL, 1, NULL, '2024-03-30 09:14:44', '2024-03-30 09:14:44'),
-(7, 2, 6, 1, NULL, 1, NULL, '2024-03-30 09:14:44', '2024-03-30 09:14:44');
+(1, 10, 8, 6, 0, 6, NULL, '2024-08-06 09:26:03', '2024-08-06 09:26:03');
 
 -- --------------------------------------------------------
 
@@ -267,10 +300,10 @@ INSERT INTO `groups` (`id`, `group_name`, `group_code`, `group_icon`, `group_des
 (2, 'Product', '/product', 'fa-solid fa-suitcase', NULL, 1, 1, 1, '2023-09-05 05:59:27', '2023-09-05 05:59:27'),
 (3, 'User Account', '/user-account', 'fa-regular fa-user', NULL, 1, 1, 1, '2023-09-05 06:00:05', '2023-09-05 06:00:05'),
 (4, 'Component', '/component', 'fa-solid fa-bars', NULL, 1, 1, 1, '2023-09-05 06:00:19', '2023-09-05 06:00:19'),
-(5, 'Clients', '/client', 'fa fa-user', NULL, 1, 1, 1, '2023-10-15 05:32:20', '2024-04-03 12:30:47'),
-(6, 'Deployment', '/deployment/job-order', 'fa-solid fa-van-shuttle', NULL, 1, 1, 1, '2023-10-17 01:52:19', '2023-10-17 05:39:25'),
-(7, 'Sales', '/request', 'fa-solid fa-sack-dollar', NULL, 1, 1, 1, '2023-10-19 06:33:47', '2023-10-19 06:33:47'),
-(8, 'Inventory', '/inventory', 'fa-solid fa-warehouse', NULL, 1, 1, 1, '2024-01-17 17:22:30', '2024-01-17 17:22:30');
+(5, 'Client', '/client', 'fa fa-user', NULL, 1, 1, 1, '2023-10-15 05:32:20', '2024-07-21 07:39:43'),
+(6, 'Deployment', '/deployment', 'fa-solid fa-van-shuttle', NULL, 1, 1, 1, '2023-10-17 01:52:19', '2024-07-12 03:30:33'),
+(7, 'Sales', '/sales', 'fa-solid fa-sack-dollar', NULL, 1, 1, 1, '2023-10-19 06:33:47', '2024-07-12 03:30:02'),
+(8, 'Inventory', '/inventory', 'fa-solid fa-warehouse', NULL, 1, 1, 1, '2024-01-17 17:22:30', '2024-07-18 04:08:39');
 
 -- --------------------------------------------------------
 
@@ -286,8 +319,9 @@ CREATE TABLE `inv_issuances` (
   `issuance_control_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `issued_by` int(11) NOT NULL,
   `received_by` int(11) NOT NULL,
+  `branch_id` int(11) NOT NULL,
   `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_posted` int(11) NOT NULL,
+  `is_cancelled` int(11) DEFAULT NULL COMMENT 'if 1 = cancelled',
   `status` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
   `updated_by` int(11) NOT NULL,
@@ -299,8 +333,8 @@ CREATE TABLE `inv_issuances` (
 -- Dumping data for table `inv_issuances`
 --
 
-INSERT INTO `inv_issuances` (`id`, `issuance_type`, `issuance_date`, `issuance_number`, `issuance_control_no`, `issued_by`, `received_by`, `remarks`, `is_posted`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, '2024-04-30', '00001', 'IS24-00001', 2, 2, '5', 0, 1, 2, 0, '2024-04-30 08:53:05', '2024-04-30 08:53:05');
+INSERT INTO `inv_issuances` (`id`, `issuance_type`, `issuance_date`, `issuance_number`, `issuance_control_no`, `issued_by`, `received_by`, `branch_id`, `remarks`, `is_cancelled`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 1, '2024-08-06', '00001', 'IS24-00001', 2, 10, 3, NULL, NULL, 1, 2, 0, '2024-08-06 06:44:37', '2024-08-06 06:44:37');
 
 -- --------------------------------------------------------
 
@@ -327,9 +361,7 @@ CREATE TABLE `inv_issuance_items` (
 --
 
 INSERT INTO `inv_issuance_items` (`id`, `issuance_id`, `item_id`, `uom_id`, `issued_qty`, `is_posted`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 4, NULL, 1, NULL, 1, 2, 0, '2024-04-30 08:53:05', '2024-04-30 08:53:05'),
-(2, 1, 5, NULL, 1, NULL, 1, 2, 0, '2024-04-30 08:53:05', '2024-04-30 08:53:05'),
-(3, 1, 6, NULL, 1, NULL, 1, 2, 0, '2024-04-30 08:53:05', '2024-04-30 08:53:05');
+(1, 1, 8, NULL, 6, NULL, 1, 2, 0, '2024-08-06 06:44:37', '2024-08-06 06:44:37');
 
 -- --------------------------------------------------------
 
@@ -340,6 +372,7 @@ INSERT INTO `inv_issuance_items` (`id`, `issuance_id`, `item_id`, `uom_id`, `iss
 CREATE TABLE `inv_receivings` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `rec_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rec_number` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rec_supplier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rec_date` date NOT NULL,
   `rec_remarks` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -355,10 +388,9 @@ CREATE TABLE `inv_receivings` (
 -- Dumping data for table `inv_receivings`
 --
 
-INSERT INTO `inv_receivings` (`id`, `rec_code`, `rec_supplier`, `rec_date`, `rec_remarks`, `status`, `is_posted`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'h', 'i', '2024-02-19', 'o', 1, 1, 2, 0, '2024-02-19 05:36:52', '2024-02-19 05:36:52'),
-(2, '2', 'k', '2024-02-19', NULL, 1, 1, 2, 0, '2024-02-19 05:38:33', '2024-02-19 05:38:33'),
-(3, '03', 'ASDXW', '2024-03-11', 'QWE', 1, 1, 2, 0, '2024-03-11 12:22:52', '2024-03-11 12:22:52');
+INSERT INTO `inv_receivings` (`id`, `rec_code`, `rec_number`, `rec_supplier`, `rec_date`, `rec_remarks`, `status`, `is_posted`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'RCV24-00001', '00001', 'qwe', '2024-07-26', NULL, 1, 1, 2, 0, '2024-07-26 03:07:54', '2024-07-26 03:07:54'),
+(2, 'RCV24-00002', '00002', 'qwe', '2024-07-26', 'qwe', 1, 0, 2, 2, '2024-07-26 03:44:33', '2024-07-26 03:57:13');
 
 -- --------------------------------------------------------
 
@@ -370,7 +402,7 @@ CREATE TABLE `inv_receiving_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `rec_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
-  `uom_id` int(11) NOT NULL,
+  `uom_id` int(11) DEFAULT NULL,
   `rec_qty` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `is_posted` int(11) NOT NULL,
@@ -385,17 +417,69 @@ CREATE TABLE `inv_receiving_details` (
 --
 
 INSERT INTO `inv_receiving_details` (`id`, `rec_id`, `item_id`, `uom_id`, `rec_qty`, `status`, `is_posted`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2, 2, 1, 1, 2, 0, '2024-02-19 05:36:52', '2024-02-19 05:36:52'),
-(2, 1, 4, 5, 5, 1, 1, 2, 0, '2024-02-19 05:36:52', '2024-02-19 05:36:52'),
-(3, 2, 1, 1, 1, 1, 1, 2, 0, '2024-02-19 05:38:33', '2024-02-19 05:38:33'),
-(4, 2, 4, 1, 1, 1, 1, 2, 0, '2024-02-19 05:38:33', '2024-02-19 05:38:33'),
-(5, 2, 6, 10, 10, 1, 1, 2, 0, '2024-02-19 05:38:33', '2024-02-19 05:38:33'),
-(6, 3, 1, 50, 50, 1, 1, 2, 0, '2024-03-11 12:22:52', '2024-03-11 12:22:52'),
-(7, 3, 2, 50, 50, 1, 1, 2, 0, '2024-03-11 12:22:52', '2024-03-11 12:22:52'),
-(8, 3, 3, 50, 50, 1, 1, 2, 0, '2024-03-11 12:22:52', '2024-03-11 12:22:52'),
-(9, 3, 4, 50, 50, 1, 1, 2, 0, '2024-03-11 12:22:52', '2024-03-11 12:22:52'),
-(10, 3, 5, 50, 50, 1, 1, 2, 0, '2024-03-11 12:22:52', '2024-03-11 12:22:52'),
-(11, 3, 6, 50, 50, 1, 1, 2, 0, '2024-03-11 12:22:52', '2024-03-11 12:22:52');
+(1, 1, 1, NULL, 10, 1, 1, 2, 0, '2024-07-26 03:07:54', '2024-07-26 03:07:54'),
+(2, 1, 7, NULL, 10, 1, 1, 2, 0, '2024-07-26 03:07:54', '2024-07-26 03:07:54'),
+(3, 1, 8, NULL, 10, 1, 1, 2, 0, '2024-07-26 03:07:54', '2024-07-26 03:07:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inv_returns`
+--
+
+CREATE TABLE `inv_returns` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `return_date` date NOT NULL,
+  `return_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `return_control_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `returned_by` int(11) NOT NULL,
+  `received_by` int(11) NOT NULL,
+  `branch_id` int(11) NOT NULL,
+  `remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `inv_returns`
+--
+
+INSERT INTO `inv_returns` (`id`, `return_date`, `return_number`, `return_control_no`, `returned_by`, `received_by`, `branch_id`, `remarks`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, '2024-08-06', '00001', 'RTN24-00001', 10, 2, 2, 'qwe', 2, 2, 2, '2024-08-06 09:00:31', '2024-08-06 09:19:54'),
+(2, '2024-08-06', '00002', 'RTN24-00002', 10, 2, 2, NULL, 2, 2, 2, '2024-08-06 09:23:14', '2024-08-06 09:23:28'),
+(3, '2024-08-06', '00003', 'RTN24-00003', 10, 2, 1, NULL, 2, 2, 2, '2024-08-06 09:24:39', '2024-08-06 09:24:50'),
+(4, '2024-08-06', '00004', 'RTN24-00004', 10, 2, 2, NULL, 2, 2, 2, '2024-08-06 09:25:57', '2024-08-06 09:26:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inv_return_items`
+--
+
+CREATE TABLE `inv_return_items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `return_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `return_qty` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `inv_return_items`
+--
+
+INSERT INTO `inv_return_items` (`id`, `return_id`, `item_id`, `return_qty`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 1, 8, 6, 1, 2, 0, '2024-08-06 09:00:31', '2024-08-06 09:00:31'),
+(2, 2, 8, 6, 1, 2, 0, '2024-08-06 09:23:14', '2024-08-06 09:23:14'),
+(3, 3, 8, 6, 1, 2, 0, '2024-08-06 09:24:40', '2024-08-06 09:24:40'),
+(4, 4, 8, 6, 1, 2, 0, '2024-08-06 09:25:57', '2024-08-06 09:25:57');
 
 -- --------------------------------------------------------
 
@@ -406,6 +490,7 @@ INSERT INTO `inv_receiving_details` (`id`, `rec_id`, `item_id`, `uom_id`, `rec_q
 CREATE TABLE `inv_stocks` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `item_id` int(11) NOT NULL,
+  `received_qty` int(11) NOT NULL,
   `issued_qty` int(11) NOT NULL,
   `ordered_qty` int(11) NOT NULL,
   `returned_qty` int(11) NOT NULL,
@@ -423,13 +508,10 @@ CREATE TABLE `inv_stocks` (
 -- Dumping data for table `inv_stocks`
 --
 
-INSERT INTO `inv_stocks` (`id`, `item_id`, `issued_qty`, `ordered_qty`, `returned_qty`, `sold_qty`, `adjusted_qty`, `balance_qty`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 0, 1, 0, 0, 0, 41, 1, 2, 0, NULL, NULL),
-(2, 4, 0, 15, 0, 2, 0, 33, 1, 2, 0, NULL, NULL),
-(3, 6, 0, 15, 0, 2, 0, 42, 1, 2, 0, NULL, NULL),
-(4, 2, 0, 16, 0, 2, 0, 21, 1, 2, 0, NULL, NULL),
-(5, 3, 0, 15, 0, 2, 0, 33, 1, 2, 0, NULL, NULL),
-(6, 5, 0, 15, 0, 2, 0, 33, 1, 2, 0, NULL, NULL);
+INSERT INTO `inv_stocks` (`id`, `item_id`, `received_qty`, `issued_qty`, `ordered_qty`, `returned_qty`, `sold_qty`, `adjusted_qty`, `balance_qty`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 1, 10, 0, 0, 0, 0, 0, 10, 1, 2, 0, NULL, NULL),
+(2, 7, 10, 0, 0, 0, 0, 0, 10, 1, 2, 0, NULL, NULL),
+(3, 8, 10, 6, 0, 0, 0, 0, 4, 1, 2, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -459,8 +541,7 @@ CREATE TABLE `job_orders` (
 --
 
 INSERT INTO `job_orders` (`id`, `jo_number`, `jo_control_no`, `client_id`, `order_id`, `scope_id`, `jo_landmark`, `jo_date`, `jo_turnover_date`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, '00001', 'JO24-00001', 3, 1, 1, NULL, '2024-06-07T18:39:24', '2024-06-07T18:39', 1, 2, 0, '2024-06-07 10:39:47', '2024-06-07 10:39:47'),
-(2, '00002', 'JO24-00002', 4, 2, 2, NULL, '2024-06-07T18:59', '2024-06-07T19:00', 1, 2, 0, '2024-06-07 11:00:39', '2024-06-07 11:00:39');
+(1, '00001', 'JO24-00001', 4, 1, 2, NULL, '2024-07-27T15:12:59', '2024-07-27T15:13', 1, 2, 0, '2024-07-27 07:13:14', '2024-07-29 04:09:23');
 
 -- --------------------------------------------------------
 
@@ -485,13 +566,9 @@ CREATE TABLE `jo_employees` (
 --
 
 INSERT INTO `jo_employees` (`id`, `deployment_id`, `deployment_type`, `emp_id`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 4, 1, 2, 0, '2024-06-07 10:27:00', '2024-06-07 10:27:00'),
-(2, 1, 2, 3, 1, 2, 0, '2024-06-07 10:39:47', '2024-06-07 10:39:47'),
-(4, 2, 2, 4, 1, 2, 0, '2024-06-07 11:00:39', '2024-06-07 11:00:39'),
-(5, 2, 2, 3, 1, 2, 0, '2024-06-08 11:55:14', '2024-06-08 11:55:14'),
-(8, 4, 1, 3, 1, 2, 0, '2024-06-11 08:56:27', '2024-06-11 08:56:27'),
-(30, 5, 1, 1, 1, 2, 0, '2024-06-11 10:11:15', '2024-06-11 10:11:15'),
-(31, 5, 1, 4, 1, 2, 0, '2024-06-11 10:11:15', '2024-06-11 10:11:15');
+(3, 1, 2, 3, 1, 2, 0, '2024-07-27 07:13:14', '2024-07-27 07:13:14'),
+(4, 1, 1, 9, 1, 2, 0, '2024-08-06 11:51:48', '2024-08-06 11:51:48'),
+(5, 1, 1, 11, 1, 2, 0, '2024-08-06 11:51:48', '2024-08-06 11:51:48');
 
 -- --------------------------------------------------------
 
@@ -545,7 +622,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (66, '2024_03_28_195612_create_inv_issuance_items_table', 30),
 (67, '2024_03_22_201048_create_employee_inventory_table', 31),
 (68, '2024_05_21_231433_create_user_access_groups_table', 32),
-(70, '2024_05_21_231444_create_user_access_modules_table', 33);
+(70, '2024_05_21_231444_create_user_access_modules_table', 33),
+(71, '2024_05_01_104421_create_user_roles_table', 34),
+(72, '2024_07_08_142612_create_dashboard_access_table', 35),
+(73, '2024_07_25_135816_create_inv_returns_table', 36),
+(74, '2024_07_25_135830_create_inv_return_items_table', 37);
 
 -- --------------------------------------------------------
 
@@ -573,7 +654,7 @@ CREATE TABLE `modules` (
 INSERT INTO `modules` (`id`, `group_id`, `module_name`, `module_code`, `module_description`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Branch', '/personnel/branch', NULL, 1, 1, 1, '2023-09-13 06:38:24', '2023-10-17 05:59:05'),
 (2, 1, 'Employee', '/personnel/employee', NULL, 1, 1, 1, '2023-10-08 02:36:57', '2023-10-17 05:59:20'),
-(3, 1, 'Employee Role', '/personnel/employee-role', NULL, 1, 1, 1, '2023-10-08 02:37:17', '2023-10-17 05:59:29'),
+(3, 8, 'q', '/qwe', NULL, 0, 1, 1, '2023-10-08 02:37:17', '2024-07-18 07:07:09'),
 (4, 2, 'Item', '/product/item', NULL, 1, 1, 1, '2023-10-11 06:41:47', '2023-10-17 06:01:55'),
 (5, 2, 'Brand', '/product/brand', NULL, 1, 1, 1, '2023-10-11 06:42:32', '2023-10-11 06:42:32'),
 (6, 2, 'Category', '/product/category', NULL, 1, 1, 1, '2023-10-11 06:43:07', '2023-10-11 06:43:07'),
@@ -582,7 +663,7 @@ INSERT INTO `modules` (`id`, `group_id`, `module_name`, `module_code`, `module_d
 (9, 3, 'User Role', '/user-account/user-role', NULL, 1, 1, 1, '2023-10-11 06:44:32', '2023-10-11 06:44:32'),
 (10, 4, 'Group', '/component/group', NULL, 1, 1, 1, '2023-10-11 06:45:07', '2023-10-11 06:45:07'),
 (11, 4, 'Module', '/component/module', NULL, 1, 1, 1, '2023-10-11 06:45:34', '2023-10-11 06:45:34'),
-(12, 4, 'Sub-Module', '/component/sub-module', NULL, 1, 1, 1, '2023-10-11 06:46:42', '2023-10-11 06:46:42'),
+(12, 4, 'Sub-Module', '/component/sub-module', NULL, 0, 1, 1, '2023-10-11 06:46:42', '2024-07-18 04:10:01'),
 (13, 3, 'User', '/user-account/user', NULL, 0, 1, 1, '2023-10-14 06:10:48', '2023-11-07 21:18:45'),
 (14, 3, 'User Role', '/user-account/user-role', NULL, 0, 1, 1, '2023-10-14 06:12:40', '2023-11-07 21:18:51'),
 (15, 6, 'Ocular', '/deployment/ocular', NULL, 1, 1, 1, '2023-10-17 05:08:42', '2023-10-17 05:08:42'),
@@ -602,8 +683,9 @@ INSERT INTO `modules` (`id`, `group_id`, `module_name`, `module_code`, `module_d
 (29, 8, 'Stocks', '/inventory/stocks', NULL, 1, 1, 1, '2024-01-17 17:26:34', '2024-01-17 17:26:34'),
 (30, 8, 'Issuance', '/inventory/issuances', NULL, 1, 1, 1, '2024-03-21 12:34:02', '2024-03-21 12:34:02'),
 (31, 8, 'Employee Items', '/inventory/employee-items', NULL, 1, 1, 1, '2024-03-22 13:27:04', '2024-03-22 13:27:04'),
-(32, 5, 'Feed Back', '/clients/feedback', NULL, 1, 1, 1, '2024-04-03 12:22:51', '2024-04-03 12:22:51'),
-(33, 5, 'Client List', '/client', NULL, 1, 1, 1, '2024-04-03 12:23:56', '2024-04-03 12:24:12');
+(32, 5, 'Payments', '/clients/payments', NULL, 1, 1, 1, '2024-04-03 12:22:51', '2024-07-21 07:41:23'),
+(33, 5, 'Client List', '/client/', NULL, 1, 1, 1, '2024-04-03 12:23:56', '2024-07-21 07:39:05'),
+(34, 8, 'Returns', '/inventory/returns', NULL, 1, 1, 1, '2024-07-18 07:07:21', '2024-07-25 09:10:28');
 
 -- --------------------------------------------------------
 
@@ -635,7 +717,7 @@ CREATE TABLE `packaged_items` (
 
 INSERT INTO `packaged_items` (`id`, `brand_id`, `resolution_id`, `camera_number`, `technical_specification`, `pack_name`, `pack_price`, `pack_description`, `pack_remarks`, `path_name`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 1, '', 'PC SET', 20000.00, 'INTEL RyZWEN', 'COmputer settings', NULL, 1, 2, 0, '2024-03-11 12:38:35', '2024-03-11 12:38:35'),
-(2, 2, 1, 2, 'r', 'Package 2', 45000.00, 'r', 'r', NULL, 1, 2, 0, '2024-06-09 10:16:35', '2024-06-09 10:16:35');
+(2, 2, 1, 2, 'r', 'Package 2', 45000.00, 'r', 'r', NULL, 1, 2, 0, '2024-06-09 10:16:35', '2024-07-17 04:52:25');
 
 -- --------------------------------------------------------
 
@@ -691,6 +773,7 @@ CREATE TABLE `permissions` (
   `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -699,15 +782,16 @@ CREATE TABLE `permissions` (
 -- Dumping data for table `permissions`
 --
 
-INSERT INTO `permissions` (`id`, `code`, `name`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'create', 'Create', 'Can create Data', '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
-(2, 'read', 'Read', 'Can Read', '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
-(3, 'update', 'Update', 'Can Update', '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
-(4, 'delete', 'Delete', 'Can Delete', '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
-(5, 'remove', 'Remove', 'Can Remove', '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
-(6, 'approve', 'Approve', 'Can Approve', '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
-(7, 'disapprove', 'Disapprove', 'Can Disapprove', '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
-(8, 'download', 'Download', 'Can Download', '2023-05-29 03:24:28', '2023-05-29 03:24:28');
+INSERT INTO `permissions` (`id`, `code`, `name`, `description`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'create', 'Create', 'Can create Data', 1, '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
+(2, 'read', 'Read', 'Can Read', 1, '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
+(3, 'update', 'Update', 'Can Update', 1, '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
+(4, 'delete', 'Delete', 'Can Delete', 0, '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
+(5, 'remove', 'Remove', 'Can Remove', 1, '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
+(6, 'approve', 'Approve', 'Can Approve', 0, '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
+(7, 'disapprove', 'Disapprove', 'Can Disapprove', 0, '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
+(8, 'download', 'Download', 'Can Download', 0, '2023-05-29 03:24:28', '2023-05-29 03:24:28'),
+(9, 'email', 'Email', 'Can send Email', 1, '2023-05-29 03:24:28', '2023-05-29 03:24:28');
 
 -- --------------------------------------------------------
 
@@ -748,7 +832,7 @@ CREATE TABLE `product_brands` (
 --
 
 INSERT INTO `product_brands` (`id`, `brand_name`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'ASUS', 1, 1, 1, '2023-11-07 22:40:17', '2023-11-07 22:40:17'),
+(1, 'ASUS', 1, 1, 1, '2023-11-07 22:40:17', '2024-07-17 04:48:48'),
 (2, 'Rapoo', 1, 1, 1, '2023-11-27 01:35:00', '2023-11-27 01:35:00'),
 (3, 'A4TECH', 1, 1, 1, '2023-11-27 01:35:18', '2023-11-27 01:35:18');
 
@@ -773,7 +857,7 @@ CREATE TABLE `product_categories` (
 --
 
 INSERT INTO `product_categories` (`id`, `category_name`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'Digital Camera', 1, 1, 1, '2023-11-08 06:43:28', '2023-11-08 06:43:28');
+(1, 'Digital Camera', 1, 1, 1, '2023-11-08 06:43:28', '2024-07-17 04:54:49');
 
 -- --------------------------------------------------------
 
@@ -814,7 +898,7 @@ INSERT INTO `product_items` (`id`, `item_type`, `uom_id`, `brand_id`, `category_
 (5, 1, 2, 3, NULL, NULL, NULL, NULL, 'Mouse Pad', NULL, 5151.00, NULL, NULL, 0, 2, 1, '2024-01-22 23:38:19', '2024-03-11 12:21:14'),
 (6, 1, 1, 2, NULL, NULL, NULL, NULL, 'Mouse', NULL, 14.00, NULL, NULL, 0, 2, 1, '2024-01-22 23:38:35', '2024-03-11 12:20:59'),
 (7, 1, 1, 2, 1, 1, 1, NULL, 'Dome Type Camera', 'Cam', 3000.00, NULL, NULL, 2, 0, 1, '2024-06-09 10:15:10', '2024-06-09 10:15:10'),
-(8, 2, 1, 1, NULL, NULL, NULL, NULL, 'Connector', 'e', 50.00, 'r', NULL, 2, 0, 1, '2024-06-09 10:15:49', '2024-06-09 10:15:49');
+(8, 2, 1, 1, NULL, NULL, NULL, NULL, 'Connector', 'e', 50.00, 'r', NULL, 2, 0, 1, '2024-06-09 10:15:49', '2024-07-17 04:45:12');
 
 -- --------------------------------------------------------
 
@@ -837,7 +921,9 @@ CREATE TABLE `product_resolutions` (
 --
 
 INSERT INTO `product_resolutions` (`id`, `resolution_desc`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, '1080p 60fps', 1, 1, 1, '2023-11-26 01:31:56', '2023-11-26 01:31:56');
+(1, '1080p 60fps', 1, 1, 1, '2023-11-26 01:31:56', '2024-07-18 03:58:51'),
+(2, '2MP / 1080p', 1, 1, 1, '2024-08-10 09:04:22', '2024-08-10 09:04:22'),
+(3, '1 MP / 720p', 1, 1, 1, '2024-08-10 09:05:43', '2024-08-10 09:05:53');
 
 -- --------------------------------------------------------
 
@@ -860,7 +946,10 @@ CREATE TABLE `product_series` (
 --
 
 INSERT INTO `product_series` (`id`, `series_name`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'Value Series', 1, 1, 1, '2023-11-07 22:20:14', '2023-11-07 22:38:18');
+(1, 'Value Series', 1, 1, 1, '2023-11-07 22:20:14', '2024-07-17 05:07:13'),
+(2, 'Turbo Series', 1, 1, 1, '2024-08-10 09:01:01', '2024-08-10 09:01:01'),
+(3, 'Webcam Series', 1, 1, 1, '2024-08-10 09:01:12', '2024-08-10 09:01:12'),
+(4, 'Ultra Series', 1, 1, 1, '2024-08-10 09:01:30', '2024-08-10 09:01:56');
 
 -- --------------------------------------------------------
 
@@ -903,16 +992,7 @@ CREATE TABLE `sales_orders` (
 --
 
 INSERT INTO `sales_orders` (`id`, `branch_id`, `quotation_id`, `client_id`, `order_control_no`, `order_number`, `order_material_cost`, `order_sub_total`, `order_labor_cost`, `order_other_cost`, `order_discount`, `is_vat`, `vat_percentage`, `ewt_percentage`, `vat_amount`, `ewt_amount`, `order_total_amount`, `payment_type`, `payment_status`, `order_date`, `order_remarks`, `order_status`, `is_posted`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 3, 1, 3, 'O24-00001', '00001', '20000.00', 20001.00, 1.00, 0.00, 1.00, 1, 12, 1, '2400.12', '200.01', 22200.11, 2, 0, '2024-06-07', NULL, 1, 1, 2, 0, '2024-06-07 10:31:04', '2024-06-07 10:31:04'),
-(2, 3, 2, 4, 'O24-00002', '00002', '20000.00', 20000.00, 0.00, 0.00, 0.00, 0, 0, 0, '0.00', '0.00', 20000.00, 1, 0, '2024-06-07', NULL, 1, 1, 2, 0, '2024-06-07 10:47:23', '2024-06-07 10:47:23'),
-(3, 3, 3, 4, 'O24-00003', '00003', '20000.00', 20000.00, 0.00, 0.00, 0.00, 0, 0, 0, '0.00', '0.00', 20000.00, 1, 1, '2024-06-09', NULL, 1, 1, 2, 0, '2024-06-09 03:15:02', '2024-06-09 03:15:02'),
-(4, 3, 4, 4, 'O24-00006', '00004', NULL, 53151.00, NULL, 0.00, 0.00, 0, 0, 0, '0.00', '0.00', 53151.00, 1, 0, '2024-06-16', NULL, 1, 1, 2, 0, '2024-06-09 03:42:28', '2024-06-17 02:17:19'),
-(5, 3, 4, 4, 'O24-00005', '00005', '52751.00', 52751.00, 0.00, 0.00, 0.00, 1, 12, 0, '6330.12', '0.00', 59081.12, 1, 0, '2024-06-16', NULL, 1, 1, 2, 0, '2024-06-16 10:25:18', '2024-06-16 10:25:18'),
-(6, 3, 4, 4, 'O24-00006', '00006', '53151.00', 53151.00, NULL, 0.00, 0.00, 0, 0, 0, '0.00', '0.00', 53151.01, 1, 0, '2024-06-16', NULL, 1, 1, 2, 0, '2024-06-16 10:34:01', '2024-06-17 02:25:08'),
-(7, 3, 4, 4, 'O24-00007', '00007', '50251.00', 70251.00, NULL, 20000.00, 0.00, 0, 0, 0, '0.00', '0.00', 70251.00, 1, 0, '2024-06-18', NULL, 1, 1, 2, 0, '2024-06-18 00:57:15', '2024-06-18 01:01:18'),
-(8, 3, 4, 4, 'O24-00008', '00008', '52100.00', 119100.00, NULL, 67000.00, 0.00, 0, 0, 0, '0.00', '0.00', 119100.00, 1, 0, '2024-06-18', NULL, 1, 1, 2, 0, '2024-06-18 01:02:42', '2024-06-18 01:15:34'),
-(9, 3, 4, 4, 'O24-00009', '00009', '46150.00', 50200.00, NULL, 4050.00, 0.00, 0, 0, 0, '0.00', '0.00', 50200.00, 1, 1, '2024-06-18', NULL, 1, 1, 2, 0, '2024-06-18 01:17:17', '2024-06-18 03:16:11'),
-(10, 3, 4, 4, 'O24-00010', '00010', '48600.00', 71223.00, NULL, 22623.00, 0.00, 0, 0, 0, '0.00', '0.00', 71223.00, 1, 0, '2024-06-18', NULL, 1, 1, 2, 0, '2024-06-18 03:17:26', '2024-06-18 04:09:08');
+(1, 2, 1, 4, 'O24-00001', '00001', '20000.00', 20550.00, 500.00, 50.00, 1.00, 1, 12, 0, '2466.00', '0.00', 23015.00, 2, 1, '2024-07-27', NULL, 1, 1, 2, 0, '2024-07-27 04:10:57', '2024-08-11 09:17:42');
 
 -- --------------------------------------------------------
 
@@ -941,73 +1021,13 @@ CREATE TABLE `sales_order_details` (
 --
 
 INSERT INTO `sales_order_details` (`id`, `order_id`, `item_id`, `package_id`, `is_package`, `order_qty`, `order_amount`, `order_total_amount`, `is_additional`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 0, 1, 1, 1, 20000.00, 20000.00, 0, 2, 0, '2024-06-07 10:31:04', '2024-06-07 10:31:04'),
-(2, 1, 2, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 10:31:04', '2024-06-07 10:31:04'),
-(3, 1, 3, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 10:31:04', '2024-06-07 10:31:04'),
-(4, 1, 4, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 10:31:04', '2024-06-07 10:31:04'),
-(5, 1, 5, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 10:31:04', '2024-06-07 10:31:04'),
-(6, 1, 6, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 10:31:04', '2024-06-07 10:31:04'),
-(13, 2, 0, 1, 1, 1, 20000.00, 20000.00, 0, 2, 0, '2024-06-07 10:47:23', '2024-06-07 10:47:23'),
-(14, 2, 2, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 10:47:23', '2024-06-07 10:47:23'),
-(15, 2, 3, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 10:47:23', '2024-06-07 10:47:23'),
-(16, 2, 4, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 10:47:23', '2024-06-07 10:47:23'),
-(17, 2, 5, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 10:47:23', '2024-06-07 10:47:23'),
-(18, 2, 6, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 10:47:23', '2024-06-07 10:47:23'),
-(19, 2, 0, 1, 1, 1, 20000.00, 20000.00, 0, 2, 0, '2024-06-07 11:00:39', '2024-06-07 11:00:39'),
-(20, 2, 2, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 11:00:39', '2024-06-07 11:00:39'),
-(21, 2, 3, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 11:00:39', '2024-06-07 11:00:39'),
-(22, 2, 4, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 11:00:39', '2024-06-07 11:00:39'),
-(23, 2, 5, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 11:00:39', '2024-06-07 11:00:39'),
-(24, 2, 6, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-07 11:00:39', '2024-06-07 11:00:39'),
-(25, 3, 0, 1, 1, 1, 20000.00, 20000.00, 0, 2, 0, '2024-06-09 03:15:02', '2024-06-09 03:15:02'),
-(26, 3, 2, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-09 03:15:02', '2024-06-09 03:15:02'),
-(27, 3, 3, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-09 03:15:02', '2024-06-09 03:15:02'),
-(28, 3, 4, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-09 03:15:02', '2024-06-09 03:15:02'),
-(29, 3, 5, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-09 03:15:02', '2024-06-09 03:15:02'),
-(30, 3, 6, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-09 03:15:02', '2024-06-09 03:15:02'),
-(37, 5, 8, 0, 0, 2, 50.00, 100.00, 0, 2, 0, '2024-06-16 10:25:18', '2024-06-16 10:25:18'),
-(38, 5, 0, 2, 1, 1, 45000.00, 45000.00, 0, 2, 0, '2024-06-16 10:25:18', '2024-06-16 10:25:18'),
-(39, 5, 7, 2, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-16 10:25:18', '2024-06-16 10:25:18'),
-(40, 5, 8, 2, 1, 5, 0.00, 0.00, 0, 2, 0, '2024-06-16 10:25:18', '2024-06-16 10:25:18'),
-(52, 4, 0, 2, 1, 1, 45000.00, 45000.00, 0, 2, 0, '2024-06-17 02:17:19', '2024-06-17 02:17:19'),
-(53, 4, 7, 2, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-17 02:17:19', '2024-06-17 02:17:19'),
-(54, 4, 8, 2, 1, 5, 0.00, 0.00, 0, 2, 0, '2024-06-17 02:17:19', '2024-06-17 02:17:19'),
-(55, 4, 7, 0, 0, 1, 3000.00, 3000.00, 0, 2, 0, '2024-06-17 02:17:19', '2024-06-17 02:17:19'),
-(56, 4, 5, 0, 0, 1, 5151.00, 5151.00, 0, 2, 0, '2024-06-17 02:17:19', '2024-06-17 02:17:19'),
-(57, 6, 0, 2, 1, 1, 45000.00, 45000.00, 0, 2, 0, '2024-06-17 02:25:08', '2024-06-17 02:25:08'),
-(58, 6, 7, 2, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-17 02:25:08', '2024-06-17 02:25:08'),
-(59, 6, 8, 2, 1, 5, 0.00, 0.00, 0, 2, 0, '2024-06-17 02:25:08', '2024-06-17 02:25:08'),
-(60, 6, 7, 0, 0, 1, 3000.00, 3000.00, 0, 2, 0, '2024-06-17 02:25:08', '2024-06-17 02:25:08'),
-(61, 6, 5, 0, 0, 1, 5151.00, 5151.00, 0, 2, 0, '2024-06-17 02:25:08', '2024-06-17 02:25:08'),
-(72, 7, 8, 0, 0, 2, 50.00, 100.00, 0, 2, 0, '2024-06-18 01:01:18', '2024-06-18 01:01:18'),
-(73, 7, 0, 2, 1, 1, 45000.00, 45000.00, 0, 2, 0, '2024-06-18 01:01:18', '2024-06-18 01:01:18'),
-(74, 7, 7, 2, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-18 01:01:18', '2024-06-18 01:01:18'),
-(75, 7, 0, 1, 1, 1, 20000.00, 20000.00, 0, 2, 0, '2024-06-18 01:01:18', '2024-06-18 01:01:18'),
-(76, 7, 2, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-18 01:01:18', '2024-06-18 01:01:18'),
-(77, 7, 3, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-18 01:01:18', '2024-06-18 01:01:18'),
-(78, 7, 4, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-18 01:01:18', '2024-06-18 01:01:18'),
-(79, 7, 5, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-18 01:01:18', '2024-06-18 01:01:18'),
-(80, 7, 6, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-18 01:01:18', '2024-06-18 01:01:18'),
-(143, 8, 0, 2, 1, 1, 45000.00, 45000.00, 1, 2, 0, '2024-06-18 01:15:34', '2024-06-18 01:15:34'),
-(144, 8, 7, 2, 1, 1, 0.00, 0.00, 1, 2, 0, '2024-06-18 01:15:34', '2024-06-18 01:15:34'),
-(145, 8, 8, 2, 1, 5, 0.00, 0.00, 1, 2, 0, '2024-06-18 01:15:34', '2024-06-18 01:15:34'),
-(159, 9, 1, 0, 0, 1, 1000.00, 1000.00, 1, 2, 0, '2024-06-18 03:16:11', '2024-06-18 03:16:11'),
-(160, 9, 7, 0, 0, 1, 3000.00, 3000.00, 1, 2, 0, '2024-06-18 03:16:11', '2024-06-18 03:16:11'),
-(161, 9, 8, 0, 0, 1, 50.00, 50.00, 1, 2, 0, '2024-06-18 03:16:11', '2024-06-18 03:16:11'),
-(176, 10, 8, 0, 0, 2, 50.00, 100.00, 0, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(177, 10, 0, 2, 1, 1, 45000.00, 45000.00, 0, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(178, 10, 7, 2, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(179, 10, 8, 2, 1, 5, 0.00, 0.00, 0, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(180, 10, 1, 0, 0, 1, 1000.00, 1000.00, 0, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(181, 10, 3, 0, 0, 1, 2500.00, 2500.00, 0, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(182, 10, 4, 0, 0, 1, 123.00, 123.00, 1, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(183, 10, 3, 0, 0, 1, 2500.00, 2500.00, 1, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(184, 10, 0, 1, 1, 1, 20000.00, 20000.00, 1, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(185, 10, 2, 1, 1, 1, 0.00, 0.00, 1, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(186, 10, 3, 1, 1, 1, 0.00, 0.00, 1, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(187, 10, 4, 1, 1, 1, 0.00, 0.00, 1, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(188, 10, 5, 1, 1, 1, 0.00, 0.00, 1, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08'),
-(189, 10, 6, 1, 1, 1, 0.00, 0.00, 1, 2, 0, '2024-06-18 04:09:08', '2024-06-18 04:09:08');
+(1, 1, 0, 1, 1, 1, 20000.00, 20000.00, 0, 2, 0, '2024-07-27 04:10:57', '2024-07-27 04:10:57'),
+(2, 1, 2, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-07-27 04:10:57', '2024-07-27 04:10:57'),
+(3, 1, 3, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-07-27 04:10:57', '2024-07-27 04:10:57'),
+(4, 1, 4, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-07-27 04:10:57', '2024-07-27 04:10:57'),
+(5, 1, 5, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-07-27 04:10:57', '2024-07-27 04:10:57'),
+(6, 1, 6, 1, 1, 1, 0.00, 0.00, 0, 2, 0, '2024-07-27 04:10:57', '2024-07-27 04:10:57'),
+(7, 1, 8, 0, 0, 1, 50.00, 50.00, 1, 2, 0, '2024-07-27 04:10:57', '2024-07-27 04:10:57');
 
 -- --------------------------------------------------------
 
@@ -1058,11 +1078,9 @@ CREATE TABLE `sales_quotations` (
 --
 
 INSERT INTO `sales_quotations` (`id`, `branch_id`, `quote_number`, `quote_control_number`, `is_request`, `brand_id`, `installation_type`, `resolution_id`, `channel_id`, `indoor_cam_no`, `outdoor_cam_no`, `quote_date`, `client_id`, `quote_name`, `quote_email`, `quote_contact_no`, `quote_address`, `remarks`, `quote_material_cost`, `quote_labor_cost`, `quote_other_cost`, `quote_sub_total`, `quote_discount`, `is_vat`, `vat_percentage`, `ewt_percentage`, `vat_amount`, `ewt_amount`, `total_amount`, `status`, `is_posted`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, '00001', 'RFQ24-00001', 0, 3, 1, 1, 2, 2, 2, '2024-06-07', 3, 'qej ndqwj qwd', 'hontucankenneth@gmail.com', '09124124124', 'Nlex Pampanga', NULL, 20000.00, 0.00, 0.00, 20000.00, 0.00, 0, 0, 0, 0.00, 0.00, 20000.00, 1, 1, 2, 0, '2024-06-07 10:30:12', '2024-06-07 10:30:12'),
-(2, 1, '00002', 'RFQ24-00002', 0, 2, 1, 1, 1, 1, 1, '2024-06-07', 4, 'Rakk Enroll', 'hontucankenneth@gmail.com', '123123', 'QWE QWE ASD', NULL, 20000.00, 0.00, 0.00, 20000.00, 0.00, 0, 0, 0, 0.00, 0.00, 20000.00, 1, 1, 2, 0, '2024-06-07 10:46:36', '2024-06-07 10:46:36'),
-(3, 1, '00003', 'RFQ24-00003', 0, 3, NULL, 1, 1, 1, 1, '2024-06-09', 4, 'Rakk Enroll', 'hontucankenneth@gmail.com', '123123', 'QWE QWE ASD', NULL, 20000.00, 0.00, 0.00, 20000.00, 0.00, 0, 0, 0, 0.00, 0.00, 20000.00, 1, 1, 2, 0, '2024-06-09 03:14:37', '2024-06-20 03:05:08'),
-(4, 2, '00004', 'RFQ24-00004', 0, 1, NULL, NULL, NULL, NULL, NULL, '2024-06-09', 4, 'Rakk Enroll', 'hontucankenneth@gmail.com', '123123', 'QWE QWE ASD', NULL, 46100.00, 0.00, 0.00, 46100.00, 0.00, 0, 0, 0, 0.00, 0.00, 46100.00, 1, 1, 2, 0, '2024-06-09 03:41:23', '2024-06-20 03:01:16'),
-(5, 3, '00005', 'RFQ24-00005', 0, NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-20', 4, 'Rakk Enroll', 'hontucankenneth@gmail.com', '123123', 'QWE QWE ASD', NULL, 45000.00, 0.00, 0.00, 45000.00, 0.00, 0, 0, 0, 0.00, 0.00, 45000.00, 1, 1, 2, 0, '2024-06-20 03:31:06', '2024-06-20 03:31:06');
+(1, 3, '00001', 'RFQ24-00001', 0, NULL, NULL, NULL, NULL, NULL, NULL, '2024-07-27', 4, 'Rakk Enroll', 'hontucankenneth@gmail.com', '123123', 'QWE QWE ASD', NULL, 20000.00, 0.00, 0.00, 20000.00, 0.00, 0, 0, 0, 0.00, 0.00, 20000.00, 1, 1, 2, 0, '2024-07-27 04:09:44', '2024-07-27 04:09:44'),
+(2, 3, '00002', 'RFQ24-00002', 0, NULL, NULL, NULL, NULL, NULL, NULL, '2024-08-06', 4, 'Rakk Enroll', 'hontucankenneth@gmail.com', '123123', 'QWE QWE ASD', NULL, 40000.00, 0.00, 0.00, 40000.00, 0.00, 1, 12, 0, 4800.00, 0.00, 44800.00, 1, 0, 2, 0, '2024-08-06 09:44:59', '2024-08-06 09:44:59'),
+(3, 3, '00003', 'RFQ24-00003', 0, NULL, NULL, NULL, NULL, NULL, NULL, '2024-08-06', 4, 'Rakk Enroll', 'hontucankenneth@gmail.com', '123123', 'QWE QWE ASD', NULL, 20000.00, 1.00, 2.00, 20003.00, 3.00, 1, 12, 2, 2400.36, 400.06, 22000.30, 1, 0, 2, 0, '2024-08-06 09:48:09', '2024-08-06 09:48:09');
 
 -- --------------------------------------------------------
 
@@ -1091,32 +1109,24 @@ CREATE TABLE `sales_quotation_details` (
 --
 
 INSERT INTO `sales_quotation_details` (`id`, `quotation_id`, `item_id`, `package_id`, `is_package`, `quote_qty`, `quote_total_amount`, `quote_amount`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 0, 1, 1, 1, '20000.00', 20000.00, 1, 2, 0, '2024-06-07 10:30:12', '2024-06-07 10:30:12'),
-(2, 1, 2, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-07 10:30:12', '2024-06-07 10:30:12'),
-(3, 1, 3, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-07 10:30:12', '2024-06-07 10:30:12'),
-(4, 1, 4, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-07 10:30:12', '2024-06-07 10:30:12'),
-(5, 1, 5, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-07 10:30:12', '2024-06-07 10:30:12'),
-(6, 1, 6, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-07 10:30:12', '2024-06-07 10:30:12'),
-(7, 2, 0, 1, 1, 1, '20000.00', 20000.00, 1, 2, 0, '2024-06-07 10:46:36', '2024-06-07 10:46:36'),
-(8, 2, 2, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-07 10:46:36', '2024-06-07 10:46:36'),
-(9, 2, 3, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-07 10:46:36', '2024-06-07 10:46:36'),
-(10, 2, 4, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-07 10:46:36', '2024-06-07 10:46:36'),
-(11, 2, 5, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-07 10:46:36', '2024-06-07 10:46:36'),
-(12, 2, 6, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-07 10:46:36', '2024-06-07 10:46:36'),
-(55, 4, 8, 0, 0, 2, '100.00', 50.00, 1, 2, 0, '2024-06-20 03:01:16', '2024-06-20 03:01:16'),
-(56, 4, 0, 2, 1, 1, '45000.00', 45000.00, 1, 2, 0, '2024-06-20 03:01:16', '2024-06-20 03:01:16'),
-(57, 4, 7, 2, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-20 03:01:16', '2024-06-20 03:01:16'),
-(58, 4, 8, 2, 1, 5, '0.00', 0.00, 1, 2, 0, '2024-06-20 03:01:16', '2024-06-20 03:01:16'),
-(59, 4, 1, 0, 0, 1, '1000.00', 1000.00, 1, 2, 0, '2024-06-20 03:01:16', '2024-06-20 03:01:16'),
-(66, 3, 0, 1, 1, 1, '20000.00', 20000.00, 1, 2, 0, '2024-06-20 03:05:08', '2024-06-20 03:05:08'),
-(67, 3, 2, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-20 03:05:08', '2024-06-20 03:05:08'),
-(68, 3, 3, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-20 03:05:08', '2024-06-20 03:05:08'),
-(69, 3, 4, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-20 03:05:08', '2024-06-20 03:05:08'),
-(70, 3, 5, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-20 03:05:08', '2024-06-20 03:05:08'),
-(71, 3, 6, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-20 03:05:08', '2024-06-20 03:05:08'),
-(72, 5, 0, 2, 1, 1, '45000.00', 45000.00, 1, 2, 0, '2024-06-20 03:31:06', '2024-06-20 03:31:06'),
-(73, 5, 7, 2, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-06-20 03:31:06', '2024-06-20 03:31:06'),
-(74, 5, 8, 2, 1, 5, '0.00', 0.00, 1, 2, 0, '2024-06-20 03:31:06', '2024-06-20 03:31:06');
+(1, 1, 0, 1, 1, 1, '20000.00', 20000.00, 1, 2, 0, '2024-07-27 04:09:44', '2024-07-27 04:09:44'),
+(2, 1, 2, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-07-27 04:09:44', '2024-07-27 04:09:44'),
+(3, 1, 3, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-07-27 04:09:44', '2024-07-27 04:09:44'),
+(4, 1, 4, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-07-27 04:09:44', '2024-07-27 04:09:44'),
+(5, 1, 5, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-07-27 04:09:44', '2024-07-27 04:09:44'),
+(6, 1, 6, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-07-27 04:09:44', '2024-07-27 04:09:44'),
+(7, 2, 0, 1, 1, 2, '40000.00', 20000.00, 1, 2, 0, '2024-08-06 09:44:59', '2024-08-06 09:44:59'),
+(8, 2, 2, 1, 1, 2, '0.00', 0.00, 1, 2, 0, '2024-08-06 09:44:59', '2024-08-06 09:44:59'),
+(9, 2, 3, 1, 1, 2, '0.00', 0.00, 1, 2, 0, '2024-08-06 09:44:59', '2024-08-06 09:44:59'),
+(10, 2, 4, 1, 1, 2, '0.00', 0.00, 1, 2, 0, '2024-08-06 09:44:59', '2024-08-06 09:44:59'),
+(11, 2, 5, 1, 1, 2, '0.00', 0.00, 1, 2, 0, '2024-08-06 09:44:59', '2024-08-06 09:44:59'),
+(12, 2, 6, 1, 1, 2, '0.00', 0.00, 1, 2, 0, '2024-08-06 09:44:59', '2024-08-06 09:44:59'),
+(13, 3, 0, 1, 1, 1, '20000.00', 20000.00, 1, 2, 0, '2024-08-06 09:48:09', '2024-08-06 09:48:09'),
+(14, 3, 2, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-08-06 09:48:09', '2024-08-06 09:48:09'),
+(15, 3, 3, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-08-06 09:48:09', '2024-08-06 09:48:09'),
+(16, 3, 4, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-08-06 09:48:09', '2024-08-06 09:48:09'),
+(17, 3, 5, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-08-06 09:48:09', '2024-08-06 09:48:09'),
+(18, 3, 6, 1, 1, 1, '0.00', 0.00, 1, 2, 0, '2024-08-06 09:48:09', '2024-08-06 09:48:09');
 
 -- --------------------------------------------------------
 
@@ -1161,7 +1171,7 @@ CREATE TABLE `unit_of_measurements` (
 INSERT INTO `unit_of_measurements` (`id`, `uom_name`, `uom_shortname`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (1, 'Piece', 'PC', 1, 1, 1, '2023-11-07 21:54:37', '2023-11-07 21:54:37'),
 (2, 'Box', 'BOX', 1, 1, 1, '2023-11-07 21:54:48', '2023-11-07 21:54:48'),
-(3, 'Meter', 'M', 1, 1, 1, '2023-11-07 21:55:03', '2023-11-07 21:55:03');
+(3, 'Meter', 'M', 1, 1, 1, '2023-11-07 21:55:03', '2024-07-17 05:10:27');
 
 -- --------------------------------------------------------
 
@@ -1172,7 +1182,9 @@ INSERT INTO `unit_of_measurements` (`id`, `uom_name`, `uom_shortname`, `status`,
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `emp_id` int(11) DEFAULT NULL,
-  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `data_access` int(11) NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1188,11 +1200,20 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `emp_id`, `username`, `email`, `email_verified_at`, `password`, `remember_token`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Test', 'test@account.com', NULL, '$2y$10$G4CsE4CEahMU3We5EUG56eDXNm2i/VPfQreTAUGthpWtuH/XGSwZe', NULL, 1, 1, NULL, '2023-10-09 06:30:18', '2024-06-24 08:54:50'),
-(2, 2, 'cyber123', 'cyber.angustia@gmail.com', NULL, '$2y$10$K9.H3tIJmPxL8OJGJ0z2puGSAPGozq5Sd9LwvGgYuTcBtW1rRu0Q2', 'mVqvxPo82ORt88YdeDTnpcrT5rPezeY1xH7u2dqud1qNaldTas52ejBePIxt', 1, 2, NULL, '2023-10-09 06:33:48', '2023-10-09 06:33:48'),
-(3, 0, 'guest1', 'guest@email.com', NULL, '$2y$10$mWiPywDBALhp0Y4BYe1hqudfcpTYu.mbHCai2N9AFeGUOdxDTSHTG', NULL, 1, 2, NULL, '2024-04-30 13:23:01', '2024-04-30 13:23:01'),
-(4, 4, 'christy', 'chr@gmail.com', NULL, '$2y$10$3lRNMflh1Dyt8utT6a1GtOKciVbVVL3jm34fAAtrBKVpHHxU6ZLCO', NULL, 1, 1, NULL, '2024-05-01 03:00:59', '2024-06-24 08:54:18');
+INSERT INTO `users` (`id`, `emp_id`, `role_id`, `data_access`, `username`, `email`, `email_verified_at`, `password`, `remember_token`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 'Test', 'test@account.com', NULL, '$2y$10$G4CsE4CEahMU3We5EUG56eDXNm2i/VPfQreTAUGthpWtuH/XGSwZe', NULL, 1, 1, 2, '2023-10-09 06:30:18', '2024-08-05 17:55:28'),
+(2, 2, 1, 1, 'cyber123', 'cyber.angustia@gmail.com', NULL, '$2y$10$NpR3iF.Tuw4ueahzD0.Txefg8OIPQZ2UnXgFVuJMvGUEu2ZTeDxRe', 'slGSVkCkpy77DmyMa51xUEP6h01IDig3H8fe0pDJXDoUenLwr1bCViJrqOYN', 1, 2, 2, '2023-10-09 06:33:48', '2024-07-18 03:58:17'),
+(3, 0, 1, 1, 'guest1', 'guest@email.com', NULL, '$2y$10$mWiPywDBALhp0Y4BYe1hqudfcpTYu.mbHCai2N9AFeGUOdxDTSHTG', NULL, 1, 2, NULL, '2024-04-30 13:23:01', '2024-04-30 13:23:01'),
+(4, 4, 1, 1, 'christy', 'chr@gmail.com', NULL, '$2y$10$3lRNMflh1Dyt8utT6a1GtOKciVbVVL3jm34fAAtrBKVpHHxU6ZLCO', NULL, 1, 1, NULL, '2024-05-01 03:00:59', '2024-06-24 08:54:18'),
+(5, 5, 1, 1, NULL, 'asd@gmail.com', NULL, '$2y$10$Tb8f9Y9s7Y0OaX8KcqR2mOtOq1XGrRShu/SbI456wWK.9eCUgu6Oq', NULL, 1, 2, NULL, '2024-07-09 12:44:29', '2024-07-09 12:44:29'),
+(6, 6, 1, 1, NULL, 'zxc@gmail.com', NULL, '$2y$10$YsI6Zz4Z.YN2D537hHTpdOA1mO2RFeAu/KQ3VaBPhf8s0ZVXSozK2', NULL, 1, 2, NULL, '2024-07-09 12:59:03', '2024-07-09 12:59:03'),
+(7, 7, 1, 1, NULL, 'qwe@gmail.com', NULL, '$2y$10$1pV8a6ARmp9y/3B.8yovp.YJ7vJitZFaTK55EsBJoL2J.l8FHGm8u', NULL, 1, 2, NULL, '2024-07-09 13:00:37', '2024-07-09 13:00:37'),
+(8, 8, 1, 1, NULL, 'ty@gmail.com', NULL, '$2y$10$SHYZd/d/jh0yQ6Qwa7Vyxe1IBLoe4TDs0kU1sULwTaLnvcMCUMccW', NULL, 1, 2, NULL, '2024-07-09 13:02:29', '2024-07-09 13:02:29'),
+(9, 9, 1, 1, NULL, 'gg@gmail.com', NULL, '$2y$10$vnJ6mldAOWw6W0C6t9MYUe1PsI9/Z2QPYb1nwCsO/QmYXwki68yjm', NULL, 1, 2, NULL, '2024-07-09 13:04:26', '2024-07-09 13:04:26'),
+(10, 10, 1, 1, NULL, 'jj@gmail.com', NULL, '$2y$10$Qw.kT4OWE7Tz3s0q1mCD0uafL4azAE5qv9TlBFUr55Pgkjf5Pvw.C', NULL, 1, 2, NULL, '2024-07-09 13:05:12', '2024-07-09 13:05:12'),
+(11, 11, 1, 1, NULL, 'oo@gmail.com', NULL, '$2y$10$L8huhiai2q3lcMXXDhk0n.CZ4XbFDO6S7AaAFWkXcpey5CRW8hwz2', NULL, 1, 2, NULL, '2024-07-09 13:05:55', '2024-07-09 13:05:55'),
+(12, 12, 1, 1, NULL, 'pp@gmail.com', NULL, '$2y$10$4acnZBtfcQ2qcIT0HiR2tOTtHGNec7p8omPZD0a4JWaOOHsAb4ulC', NULL, 1, 2, NULL, '2024-07-09 13:11:48', '2024-07-09 13:11:48'),
+(13, 13, 3, 3, NULL, 'mm@gmail.com', NULL, '$2y$10$RGDj/Z.NofgY56cSHW6OHe/5rki5HCgUR59Vajir7yVSX4FyindHG', NULL, 1, 2, 2, '2024-07-09 13:13:15', '2024-07-18 07:15:04');
 
 -- --------------------------------------------------------
 
@@ -1237,23 +1258,29 @@ CREATE TABLE `user_access_groups` (
 
 INSERT INTO `user_access_groups` (`id`, `user_id`, `group_id`, `permissions`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (1, 4, 1, 'Create,Read,Delete,Remove', 1, 2, 1, '2024-05-22 09:30:25', '2024-06-24 08:54:18'),
-(2, 2, 2, 'Read,Update,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-22 09:30:58', '2024-05-24 03:10:28'),
 (3, 4, 6, 'Create', 1, 2, 1, '2024-05-22 09:31:30', '2024-06-24 08:54:18'),
 (4, 4, 1, 'Create,Delete', 1, 2, 2, '2024-05-22 12:17:58', '2024-05-22 12:17:58'),
-(5, 2, 1, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-22 12:23:24', '2024-05-24 03:10:28'),
-(82, 2, 3, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-24 08:59:32', '2024-05-24 08:59:32'),
-(83, 2, 4, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-24 08:59:57', '2024-05-24 08:59:57'),
 (84, 3, 1, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-24 09:04:14', '2024-05-24 09:04:14'),
-(85, 2, 6, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(86, 2, 7, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(87, 2, 8, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(88, 1, 1, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(89, 1, 2, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(90, 1, 3, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(91, 1, 4, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(92, 1, 6, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(93, 1, 7, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(94, 1, 8, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50');
+(88, 1, 1, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(89, 1, 2, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(90, 1, 3, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(91, 1, 4, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(92, 1, 6, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(93, 1, 7, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(94, 1, 8, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(98, 1, 5, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-05 17:55:27', '2024-08-05 17:55:27'),
+(159, 13, 1, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(160, 13, 2, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(161, 13, 3, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(162, 13, 4, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(163, 2, 1, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(164, 2, 2, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(165, 2, 3, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(166, 2, 4, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(167, 2, 5, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(168, 2, 6, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(169, 2, 7, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(170, 2, 8, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08');
 
 -- --------------------------------------------------------
 
@@ -1278,63 +1305,120 @@ CREATE TABLE `user_access_modules` (
 --
 
 INSERT INTO `user_access_modules` (`id`, `user_id`, `module_id`, `permissions`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-22 12:23:24', '2024-05-24 03:05:43'),
-(2, 2, 2, 'Create,Read,Update,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-22 12:23:24', '2024-05-24 03:08:29'),
-(3, 2, 3, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-22 12:23:24', '2024-05-24 03:05:43'),
-(4, 2, 4, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-22 12:23:24', '2024-05-22 12:23:24'),
-(5, 2, 5, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-22 12:23:24', '2024-05-22 12:23:24'),
-(32, 2, 8, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-24 03:36:46', '2024-05-24 03:36:46'),
-(33, 2, 9, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-24 03:36:46', '2024-05-24 03:36:46'),
-(34, 2, 10, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-24 08:59:57', '2024-05-24 08:59:57'),
-(35, 2, 11, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-24 08:59:57', '2024-05-24 08:59:57'),
-(36, 2, 12, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-24 08:59:57', '2024-05-24 08:59:57'),
 (37, 3, 1, 'Read,Update,Remove,Approve,Download', 1, 2, 2, '2024-05-24 09:04:14', '2024-05-24 09:40:26'),
 (38, 3, 2, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-24 09:04:14', '2024-05-24 09:04:14'),
 (39, 3, 3, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-05-24 09:04:14', '2024-05-24 09:04:14'),
-(40, 2, 15, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(41, 2, 16, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(42, 2, 17, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(43, 2, 18, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(44, 2, 19, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(45, 2, 20, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(46, 2, 21, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(47, 2, 22, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(48, 2, 23, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(49, 2, 24, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(50, 2, 28, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(51, 2, 29, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(52, 2, 30, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(53, 2, 31, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-05 08:07:20', '2024-06-05 08:07:20'),
-(54, 2, 27, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-09 08:49:43', '2024-06-09 08:49:43'),
-(55, 1, 1, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(56, 1, 2, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
+(55, 1, 1, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(56, 1, 2, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
 (57, 1, 3, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(58, 1, 4, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(59, 1, 5, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(60, 1, 6, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(61, 1, 7, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(62, 1, 25, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(63, 1, 26, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(64, 1, 27, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(65, 1, 8, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(66, 1, 9, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(67, 1, 10, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(68, 1, 11, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
+(58, 1, 4, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(59, 1, 5, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(60, 1, 6, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(61, 1, 7, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(62, 1, 25, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(63, 1, 26, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(64, 1, 27, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(65, 1, 8, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(66, 1, 9, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(67, 1, 10, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:27'),
+(68, 1, 11, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
 (69, 1, 12, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(70, 1, 15, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(71, 1, 16, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(72, 1, 17, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(73, 1, 18, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(74, 1, 19, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(75, 1, 20, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(76, 1, 21, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(77, 1, 22, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(78, 1, 23, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
+(70, 1, 15, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
+(71, 1, 16, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
+(72, 1, 17, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
+(73, 1, 18, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
+(74, 1, 19, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
+(75, 1, 20, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
+(76, 1, 21, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
+(77, 1, 22, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
+(78, 1, 23, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
 (79, 1, 24, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(80, 1, 28, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(81, 1, 29, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(82, 1, 30, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50'),
-(83, 1, 31, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 1, '2024-06-24 08:49:37', '2024-06-24 08:54:50');
+(80, 1, 28, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
+(81, 1, 29, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
+(82, 1, 30, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
+(83, 1, 31, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-06-24 08:49:37', '2024-08-05 17:55:28'),
+(102, 1, 33, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-05 17:55:28', '2024-08-05 17:55:28'),
+(103, 1, 34, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-05 17:55:28', '2024-08-05 17:55:28'),
+(279, 13, 1, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(280, 13, 2, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(281, 13, 4, 'Create,Read,Update,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(282, 13, 5, 'Read,Update,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(283, 13, 6, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(284, 13, 7, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(285, 13, 25, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(286, 13, 26, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(287, 13, 27, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(288, 13, 8, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(289, 13, 9, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(290, 13, 10, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(291, 13, 11, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(292, 13, 15, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(293, 13, 16, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(294, 13, 17, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(295, 13, 18, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(296, 13, 19, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(297, 13, 20, 'Read,Update,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(298, 13, 28, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(299, 13, 29, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(300, 13, 30, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(301, 13, 31, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(302, 13, 34, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-06 03:08:25', '2024-08-06 03:08:25'),
+(303, 2, 1, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(304, 2, 2, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(305, 2, 4, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(306, 2, 5, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(307, 2, 6, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(308, 2, 7, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(309, 2, 25, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(310, 2, 26, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(311, 2, 27, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(312, 2, 8, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(313, 2, 9, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(314, 2, 10, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(315, 2, 11, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(316, 2, 32, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(317, 2, 33, 'Read,Update,Delete,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(318, 2, 15, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(319, 2, 16, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(320, 2, 17, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(321, 2, 18, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(322, 2, 19, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(323, 2, 20, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(324, 2, 21, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(325, 2, 22, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(326, 2, 23, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(327, 2, 28, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(328, 2, 29, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(329, 2, 30, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(330, 2, 31, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08'),
+(331, 2, 34, 'Create,Read,Update,Delete,Remove,Approve,Disapprove,Download', 1, 2, 2, '2024-08-11 03:39:08', '2024-08-11 03:39:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_roles`
+--
+
+CREATE TABLE `user_roles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_roles`
+--
+
+INSERT INTO `user_roles` (`id`, `user_role`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 1, 2, 2, '2024-06-30 11:08:10', '2024-06-30 11:08:10'),
+(2, 'Staff', 1, 2, 2, '2024-06-30 11:12:58', '2024-06-30 11:12:58'),
+(3, 'Technicians', 1, 2, 2, '2024-06-30 11:14:02', '2024-07-08 05:25:33'),
+(4, 'ASD', 1, 2, 2, '2024-07-09 12:40:25', '2024-07-09 12:40:25'),
+(5, 'Test', 1, 2, 2, '2024-07-16 08:36:44', '2024-07-18 04:06:07');
 
 -- --------------------------------------------------------
 
@@ -1371,6 +1455,12 @@ ALTER TABLE `branches`
 -- Indexes for table `clients`
 --
 ALTER TABLE `clients`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dashboard_access`
+--
+ALTER TABLE `dashboard_access`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1432,6 +1522,18 @@ ALTER TABLE `inv_receivings`
 -- Indexes for table `inv_receiving_details`
 --
 ALTER TABLE `inv_receiving_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `inv_returns`
+--
+ALTER TABLE `inv_returns`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `inv_return_items`
+--
+ALTER TABLE `inv_return_items`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1589,6 +1691,12 @@ ALTER TABLE `user_access_modules`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `user_roles`
+--
+ALTER TABLE `user_roles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `work_scopes`
 --
 ALTER TABLE `work_scopes`
@@ -1611,22 +1719,28 @@ ALTER TABLE `clients`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `dashboard_access`
+--
+ALTER TABLE `dashboard_access`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+
+--
 -- AUTO_INCREMENT for table `dep_oculars`
 --
 ALTER TABLE `dep_oculars`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `employee_inventory`
 --
 ALTER TABLE `employee_inventory`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `employee_roles`
@@ -1656,49 +1770,61 @@ ALTER TABLE `inv_issuances`
 -- AUTO_INCREMENT for table `inv_issuance_items`
 --
 ALTER TABLE `inv_issuance_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `inv_receivings`
 --
 ALTER TABLE `inv_receivings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `inv_receiving_details`
 --
 ALTER TABLE `inv_receiving_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `inv_returns`
+--
+ALTER TABLE `inv_returns`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `inv_return_items`
+--
+ALTER TABLE `inv_return_items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `inv_stocks`
 --
 ALTER TABLE `inv_stocks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `job_orders`
 --
 ALTER TABLE `job_orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `jo_employees`
 --
 ALTER TABLE `jo_employees`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `packaged_items`
@@ -1716,7 +1842,7 @@ ALTER TABLE `packaged_item_details`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -1746,37 +1872,37 @@ ALTER TABLE `product_items`
 -- AUTO_INCREMENT for table `product_resolutions`
 --
 ALTER TABLE `product_resolutions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `product_series`
 --
 ALTER TABLE `product_series`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `sales_orders`
 --
 ALTER TABLE `sales_orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `sales_order_details`
 --
 ALTER TABLE `sales_order_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `sales_quotations`
 --
 ALTER TABLE `sales_quotations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sales_quotation_details`
 --
 ALTER TABLE `sales_quotation_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `sub_modules`
@@ -1794,7 +1920,7 @@ ALTER TABLE `unit_of_measurements`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `user_access_controls`
@@ -1806,13 +1932,19 @@ ALTER TABLE `user_access_controls`
 -- AUTO_INCREMENT for table `user_access_groups`
 --
 ALTER TABLE `user_access_groups`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
 
 --
 -- AUTO_INCREMENT for table `user_access_modules`
 --
 ALTER TABLE `user_access_modules`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=332;
+
+--
+-- AUTO_INCREMENT for table `user_roles`
+--
+ALTER TABLE `user_roles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `work_scopes`
