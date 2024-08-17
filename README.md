@@ -1,4 +1,12 @@
-# Web-based Sales and Inventory System
+
+
+## Local login Credentials
+
+<p>http://127.0.0.1:8000/login</p>
+<p>test@account.com</p>
+<p>123456</p>.
+
+## Web-based Sales and Inventory System
 
 A web-based application designed to manage Business Transactions of the selected Capstone Client. This project is built using Laravel, PHP, HTML, CSS, Bootstrap, Javascript, JQuery, AJAX. 
 
