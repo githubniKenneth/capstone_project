@@ -14,6 +14,7 @@ use App\Models\ProductItem;
 use App\Models\ProductResolution;
 use App\Models\ProductBrand;
 use App\Models\ProductPackages;
+use App\Models\OnlinePayment;
 use Carbon\Carbon;
 use Mail;
 use Auth;
@@ -236,115 +237,7 @@ class JobOrderController extends Controller
         });
 
         return back()->with('message','Email has been sent successfully');
-    }
-
-    public function paymentFailed()
-    {
-        return "Payment Failed";
-    }
-
-    public function paymentSuccess(SalesOrder $id)
-    {
-        $job_order_details = array(
-            "payment_type" => 2,
-            "payment_status" => 1,
-        );
-        $id->update($job_order_details);
-        return "Payment Success";
-    }
-
-    public function gcash($id)
-    {
-        $client = new GuzzleClient();
-        $data = JobOrder::findOrFail($id);
-        $secret_key = env('PAYMONGO_SECRET_KEY');
-        $order_amount = $data->orders->order_total_amount;
-        $numberString = number_format($order_amount, 2, '.', '');
-        $convertedNumber = str_replace('.', '', $numberString);
-        $amount = (int)$convertedNumber;
-
-        $response = $client->request('POST', 'https://api.paymongo.com/v1/sources', [
-            'body' => json_encode([
-                'data' => [
-                    'attributes' => [
-                        'amount' => $amount,
-                        'redirect' => [
-                            'failed' => route('job-order.failed'),
-                            'success' => route('job-order.success', ['id' => $id]),
-                        ],
-                        'type' => 'gcash',
-                        'currency' => 'PHP'
-                    ]
-                ]
-            ]),
-            'headers' => [
-                'accept' => 'application/json',
-                'authorization' => 'Basic '. $secret_key,
-                'content-type' => 'application/json',
-            ],
-        ]);
-
-        // echo $response->getBody();
-        $data = json_decode($response->getBody(), true);
-    
-        $redirect = $data['data']['attributes']['redirect']['checkout_url'];
-        echo "Redirecting in 3 seconds..";
-        header('Refresh: 3;URL='. $redirect);
-
-        // return response()->json(json_decode($response->getBody(), true), 200);
-        // return $response->getBody();
-    }
-
-    public function webhook()
-    {
-        $secret_key = env('PAYMONGO_SECRET_KEY');
-        header('Content-Type: application/json');
-        $request = file_get_contents('php://input');
-        $payload = json_decode($request, true);
-        $type = $payload['data']['attributes']['type'];
-
-        //If event type is source.chargeable, call the createPayment API
-        if ($type == 'source.chargeable') {
-        $amount = $payload['data']['attributes']['data']['attributes']['amount'];
-        $id = $payload['data']['attributes']['data']['id'];
-        $description = "GCash Payment Description";
-        $curl = curl_init();
-        $fields = array("data" => array ("attributes" => array ("amount" => $amount, "source" => array ("id" => $id, "type" => "source"), "currency" => "PHP", "description" => $description)));
-        $jsonFields = json_encode($fields);
-            
-        curl_setopt_array($curl, [
-            CURLOPT_URL => "https://api.paymongo.com/v1/payments",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => $jsonFields,
-            CURLOPT_HTTPHEADER => [
-            "Accept: application/json",
-            //Input your encoded API keys below for authorization
-            "Authorization: 'Basic '. $secret_key" ,
-            "Content-Type: application/json"
-            ],
-        ]);
-
-        $response = curl_exec($curl);
-        //Log the response
-        $fp = file_put_contents( 'test.log', $response );
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
-            echo "cURL Error #:" . $err;
-            //Log the response
-            $fp = file_put_contents( 'test.log', $err );
-        } else {
-            echo $response;
-        }
-        }
-    }
+    } 
     
     public function delete($id)
     {
@@ -363,5 +256,5 @@ class JobOrderController extends Controller
         } else {
             return response()->json(['success' => false]);
         }
-    }
+    }  
 }

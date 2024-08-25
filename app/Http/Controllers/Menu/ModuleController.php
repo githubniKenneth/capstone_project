@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Module;
 use App\Models\Group;
 use App\Http\Requests\ModuleStoreRequest;
+use App\Helpers\PermissionHelper;
 
 class ModuleController extends Controller
 {

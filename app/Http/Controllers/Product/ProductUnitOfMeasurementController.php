@@ -18,7 +18,7 @@ class ProductUnitOfMeasurementController extends Controller
         $data = UnitOfMeasurement::orderBy('created_at', 'desc')->get();
         // dd($data);
         // return view('students.index', $data);
-        return view('product.uom.index')->with(compact('data'));
+        return view('product.uom.index')->with(compact('data', 'buttons'));
     }
 
     public function create()

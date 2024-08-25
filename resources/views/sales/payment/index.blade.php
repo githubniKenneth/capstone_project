@@ -13,7 +13,7 @@
                     </nav>
                     
                 <div class="d-flex flex-row-reverse pb-3">
-                    <a href="{{ route('sales-quotation.create') }}"class="btn btn-success">+</a>
+                    <!-- <a href="{{ route('sales-quotation.create') }}"class="btn btn-success">+</a> -->
                 </div>
                 
                 <div class="table-responsive">
@@ -21,28 +21,29 @@
                         <thead >
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">_______</th>
-                                <th scope="col">_______</th>
-                                <th scope="col">_______</th>
-                                <th scope="col">_______</th>
-                                <th scope="col">_______</th>
-                                <th scope="col">_______</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Reference No.</th>
+                                <th scope="col">Client</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Payment Status</th>
+                                <th scope="col">Job Order No.</th>
+                                <th scope="col">Branch</th>
                             </tr>
                         </thead>
-                        <!-- <tbody>
-
-                            for each data as ____
+                        @foreach ($data as $payment)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{$loop->iteration}}</td>
+                                <td> {{ $payment->payment_control_no }} </td> 
+                                <td> {{ $payment->client->client_full_name }} </td>
+                                <td> {{ number_format($payment->total_amount, 2, '.', ',') }} </td>
+                                <td> 
+                                    <button class="btn {{$payment->payment_status == 1 ? 'status-done' : 'status-cancelled'}}">
+                                        {{ $payment->payment_status == 1 ? "Success" : "Failed" }}
+                                    </button>
+                                </td>
+                                <td> {{ $payment->job_order_id }}</td> 
+                                <td> {{ $payment->branch->branch_name }}</td>  
                             </tr>
-                            endforeach
-
-                        </tbody>-->
+                        @endforeach
                     </table>
                 </div>
             </div>

@@ -4,7 +4,7 @@
 @include('website.header')
 
 <div class="w-100 p-3 product-form d-flex">
-    <div class="filter border col-2">
+    <div class="filter col-2">
         <div id="content">
             <div class="border-bottom h5 text-uppercase">Filter By</div>
             <div class="box border-bottom">
@@ -15,7 +15,7 @@
                     </button> 
                 </div>
                 <div id="BRANDS" class="collapse show"> 
-                    @foreach ($data['brands'] as $brand)
+                    @foreach ($brands as $brand)
                         <div class="my-1">
                             <label class="tick"> {{$brand->brand_name}} <input type="checkbox" name="brand" value="{{$brand->id}}">
                                 <span class="check"></span>
@@ -33,7 +33,7 @@
                     </button> 
                 </div>
                 <div id="RESOLUTION" class="collapse show">
-                    @foreach ($data['camera_resolutions'] as $resolution)
+                    @foreach ($camera_resolutions as $resolution)
                         <div class="my-1">
                             <label class="tick"> {{ $resolution->resolution_desc }} <input type="checkbox" name="resolution"  value="{{$resolution->id}}">
                                 <span class="check"></span>
@@ -51,7 +51,7 @@
                     </button> 
                 </div>
                 <div id="SERIES" class="collapse show">
-                    @foreach ($data['series'] as $series_data)
+                    @foreach ($series as $series_data)
                         <div class="my-1">
                             <label class="tick"> {{ $series_data->series_name }} <input type="checkbox" name="series"  value="{{$series_data->id}}">
                                 <span class="check"></span>
@@ -63,12 +63,12 @@
         </div>
     </div>
 
-    <div class="products border col-10 p-3">
+    <div class="products col-10 p-3">
         <div class="container ">
             <div class="row">
                 <div class="col-md-12 "> <!-- text-center -->
                     <div class="row justify-content-center">
-                        @foreach ($data['items'] as $item)
+                        @foreach ($items as $item)
                             <div class="col-md-4 mb-3 product-card" 
                             data-brand="{{ $item->brand->id }}" 
                             data-resolution="{{ optional($item->resolution)->id }}" 

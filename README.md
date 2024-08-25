@@ -15,6 +15,7 @@ A web-based application designed to manage Business Transactions of the selected
 - **User Authentication and Data Access Limitation**: Secure login and Limited access to Dashboard and Module Data by Branch or with User's relation data.
 - **Roles and Permission**: Admin can set the User's Accessable Module and Functionalities that can be Used. 
 - **Email Notification**: For Clients notification of Quotations, Orders and for Employees Field Works Reminder. 
+- **Online Payment**: Paymongo API for online payment transactions via Gcash. 
 - **Dashboard**: To summarize the Data such as Clients, Employees, Sales and Deployments that can be filter the data depending on User need. 
 - **Client Management**: List of Clients and their details.  
 - **Employee Management**: List of Employees to be used for Business Transactions. 

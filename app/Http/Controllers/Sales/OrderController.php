@@ -24,8 +24,18 @@ class OrderController extends Controller
     public function index()
     {
         $is_authorized = PermissionHelper::checkAuthorization('/sales/order', 'Read');
-        $buttons = PermissionHelper::getButtonStates('/sales/order');
-        $data = SalesOrder::orderBy('created_at', 'desc')->get();
+        $buttons = PermissionHelper::getButtonStates('/sales/order'); 
+        $data_access = Auth::user()->data_access;
+        $branch_id =Auth::user()->employee->branch_id; 
+
+        if ($data_access == 1)
+        {
+            $data = SalesOrder::orderBy('created_at', 'desc')->get();
+        }
+        elseif ($data_access == 2)
+        {
+            $data = SalesOrder::orderBy('created_at', 'desc')->where('branch_id', $branch_id)->get(); 
+        } 
 
         foreach ($data as $status){
             $status->status_color = $status->order_status == 1 ? 'status-active' : 'status-inactive';

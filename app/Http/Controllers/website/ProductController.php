@@ -21,26 +21,12 @@ class ProductController extends Controller
 {
     public function index()
     {
-        // $data = ProductItem::select('product_items.*', 'product_brands.brand_name', 'unit_of_measurements.uom_shortname')
-        // ->orderBy('product_items.created_at', 'desc')
-        // ->leftJoin('product_brands', 'product_brands.id', '=', 'product_items.brand_id')
-        // ->leftJoin('unit_of_measurements', 'unit_of_measurements.id', '=', 'product_items.uom_id')
-        // ->get();
+        $items = ProductItem::where('status', 1)->get();
+        $brands = ProductBrand::orderBy('brand_name', 'asc')->where('status', '1')->get();
+        $camera_resolutions = ProductResolution::orderBy('resolution_desc', 'asc')->where('status', '1')->get();
+        $series = ProductSeries::orderBy('series_name', 'asc')->where('status', '1')->get();
 
-        // Variable for checking active database and pagination will be disabled if < 9 items is on the website
-        // $activeItemsCount = ProductItem::where('status', 1)->count();
-        // $data = $activeItemsCount <= 9 ? ProductItem::where('status', 1)->get() : ProductItem::where('status', 1)->paginate(9)->onEachSide(3);
-
-        // $data = ProductItem::where('status', 1)->get();
-        // dd($data);
-
-        $data = [
-            'items' => ProductItem::where('status', 1)->get(),
-            'brands' => ProductBrand::orderBy('brand_name', 'asc')->where('status', '1')->get(),
-            'camera_resolutions' => ProductResolution::orderBy('resolution_desc', 'asc')->where('status', '1')->get(),
-            'series' => ProductSeries::orderBy('series_name', 'asc')->where('status', '1')->get(),
-        ];
-        return view('website.product')->with(compact('data'));
+        return view('website.product')->with(compact('items', 'brands', 'camera_resolutions', 'series'));
     }
 
 

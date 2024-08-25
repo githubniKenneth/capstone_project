@@ -216,10 +216,10 @@ Route::middleware(['auth'])->prefix('/client')->group(function () {
 
 // paymongo
 
-Route::middleware(['auth'])->prefix('paymongo')->group(function () {
-        Route::get('payment-failed', 'Deployment\JobOrderController@paymentFailed')->name('job-order.failed'); 
-        Route::get('payment-success/{id}', 'Deployment\JobOrderController@paymentSuccess')->name('job-order.success'); 
-        Route::get('gcash/{id}', 'Deployment\JobOrderController@gcash')->name('job-order.gcash');
+Route::prefix('paymongo')->group(function () {
+        Route::get('payment-failed/{id}', 'Sales\PaymentController@paymentFailed')->name('job-order.failed'); 
+        Route::get('payment-success/{id}', 'Sales\PaymentController@paymentSuccess')->name('job-order.success'); 
+        Route::get('gcash/{id}', 'Sales\PaymentController@gcash')->name('job-order.gcash');
 });
 //          <--------- Deployment Routes ---------------->
 Route::middleware(['auth'])->prefix('deployment')->group(function () {
@@ -435,6 +435,7 @@ Route::middleware(['auth'])->prefix('/product')->group(function () {
 
                 Route::prefix('/payment')->group(function () {
                         Route::get('', 'Sales\PaymentController@index')->name('payment.index');
+                        Route::get('/edit/{id}', 'Sales\PaymentController@edit')->name('payment.edit');
                 });
 
                 Route::prefix('/remittance')->group(function () {

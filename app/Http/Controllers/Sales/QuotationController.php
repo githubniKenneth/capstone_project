@@ -24,7 +24,19 @@ class QuotationController extends Controller
     {
         $is_authorized = PermissionHelper::checkAuthorization('/sales/quotation', 'Read');	
         $buttons = PermissionHelper::getButtonStates('/sales/quotation');
-        $data = SalesQuotation::orderBy('created_at', 'desc')->get();
+        $data_access = Auth::user()->data_access;
+        $branch_id =Auth::user()->employee->branch_id; 
+
+        if ($data_access == 1)
+        {
+            $data = SalesQuotation::orderBy('created_at', 'desc')->get();
+        }
+        elseif ($data_access == 2)
+        {
+            $data = SalesQuotation::orderBy('created_at', 'desc')->where('branch_id', $branch_id)->get(); 
+        } 
+
+        
 
         foreach ($data as $status){
             $status->status_color = $status->status == 1 ? 'status-active' : 'status-inactive';
