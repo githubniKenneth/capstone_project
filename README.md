@@ -6,7 +6,7 @@
 <p>test@account.com</p>
 <p>123456</p>.
 
-## Web-based Sales and Inventory System
+## Web-based Sales and Inventory System with Paymongo API Integration
 
 A web-based application designed to manage Business Transactions of the selected Capstone Client. This project is built using Laravel, PHP, HTML, CSS, Bootstrap, Javascript, JQuery, AJAX. 
 
